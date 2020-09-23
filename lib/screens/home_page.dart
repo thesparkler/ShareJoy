@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              MdiIcons.heartMultipleOutline,
+              MdiIcons.feather,
             ),
             title: Text("Sher-O-Shayari"),
           ),
