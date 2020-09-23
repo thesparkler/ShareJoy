@@ -1,6 +1,7 @@
 import 'package:Meme/config.dart';
 import 'package:Meme/screens/memes_screen.dart';
 import 'package:Meme/screens/setting_screen.dart';
+import 'package:Meme/theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -68,5 +69,6 @@ class DetailView extends StatelessWidget {
       case 3:
         return SettingScreen();
     }
+    return CustomTheme.placeHolder;
   }
 }
