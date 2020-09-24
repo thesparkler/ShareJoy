@@ -75,11 +75,36 @@ class PostWidget extends StatelessWidget {
           context, index, Provider.of<PostProvider>(context, listen: false)),
       child: Card(
         margin: EdgeInsets.all(12.0),
-        child: Image.network(
-          item.image,
-          width: double.infinity,
-        ),
+        child: item.renderType == "image"
+            ? Image.network(
+                item.image,
+                width: double.infinity,
+              )
+            : TextPost(item: item),
       ),
+    );
+  }
+}
+
+class TextPost extends StatelessWidget {
+  final Post item;
+
+  const TextPost({Key key, this.item}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(30.0),
+      height: MediaQuery.of(context).size.height * 0.5,
+      color: item.bg,
+      child: Center(
+          child: Text(
+        item.caption,
+        textAlign: TextAlign.center,
+        style: Theme.of(context)
+            .textTheme
+            .headline5
+            .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+      )),
     );
   }
 }
