@@ -27,6 +27,7 @@ dependencies:
   provider: ^4.3.2+2
   http: ^0.12.2
   material_design_icons_flutter: ^4.0.5655
+  flat_icons_flutter: any
   esys_flutter_share: ^1.0.2
   permission_handler: ^5.0.1+1
   flutter_downloader: 1.5.0
@@ -72,10 +73,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+     - family: Meme
+       fonts:
+         - asset: assets/fonts/Meme.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
