@@ -77,6 +77,10 @@ flutter:
      - family: Meme
        fonts:
          - asset: assets/fonts/Meme.ttf
+
+     - family: RobotoMedium
+       fonts:
+         - asset: assets/fonts/RobotoMedium.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

@@ -14,7 +14,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.light()
-          .copyWith(primaryColor: Colors.red, accentColor: Colors.yellow),
+          .copyWith(primaryColor: new Color(0xFFD70404), accentColor: Colors.yellow),
       debugShowCheckedModeBanner: false,
       title: "Meme App",
       home: HomePage(),

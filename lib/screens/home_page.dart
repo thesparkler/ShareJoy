@@ -36,21 +36,23 @@ class _HomePageState extends State<HomePage> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(MdiIcons.ghost),
-            title: Text("Memes"),
+            title: Text("Memes", style: TextStyle(fontFamily: 'RobotoMedium'),),
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              MdiIcons.feather,
+            icon: Center(
+              child: Icon(
+                MdiIcons.feather,
+              ),
             ),
-            title: Text("Shayari"),
+            title: Center(child: Text("Shero Shayari", style: TextStyle(fontFamily: 'RobotoMedium'),)),
           ),
           BottomNavigationBarItem(
             icon: Icon(Meme.greetings),
-            title: Text("Status"),
+            title: Text("Status", style: TextStyle(fontFamily: 'RobotoMedium'),),
           ),
           BottomNavigationBarItem(
             icon: Icon(MdiIcons.cog),
-            title: Text("Settings"),
+            title: Text("Settings", style: TextStyle(fontFamily: 'RobotoMedium'),),
           ),
         ],
       ),
