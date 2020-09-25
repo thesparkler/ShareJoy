@@ -1,5 +1,6 @@
 import 'package:Meme/models/post.dart';
 import 'package:Meme/providers/meme_provider.dart';
+import 'package:Meme/screens/single_swiper_view.dart';
 import 'package:Meme/theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +50,7 @@ class PostList extends StatelessWidget {
               return CustomTheme.placeHolder;
             }
             final item = mp.items[index];
-            return PostWidget(item: item);
+            return PostWidget(item: item, index: index);
           },
         );
       },
@@ -61,18 +62,49 @@ class PostWidget extends StatelessWidget {
   const PostWidget({
     Key key,
     @required this.item,
+    this.index,
   }) : super(key: key);
 
   final Post item;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(12.0),
-      child: Image.network(
-        item.image,
-        width: double.infinity,
+    return GestureDetector(
+      onTap: () => SingleSwiperView.route(
+          context, index, Provider.of<PostProvider>(context, listen: false)),
+      child: Card(
+        margin: EdgeInsets.all(12.0),
+        child: item.renderType == "image"
+            ? Image.network(
+                item.image,
+                width: double.infinity,
+              )
+            : TextPost(item: item),
       ),
+    );
+  }
+}
+
+class TextPost extends StatelessWidget {
+  final Post item;
+
+  const TextPost({Key key, this.item}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(30.0),
+      height: MediaQuery.of(context).size.height * 0.5,
+      color: item.bg,
+      child: Center(
+          child: Text(
+        item.caption,
+        textAlign: TextAlign.center,
+        style: Theme.of(context)
+            .textTheme
+            .headline5
+            .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+      )),
     );
   }
 }
