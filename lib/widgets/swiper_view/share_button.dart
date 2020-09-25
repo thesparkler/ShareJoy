@@ -1,12 +1,15 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:Meme/models/post.dart';
+import 'package:Meme/providers/meme_provider.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'dart:ui' as ui;
+
+import 'package:provider/provider.dart';
 
 class ShareButton extends StatefulWidget {
   const ShareButton({
@@ -46,7 +49,7 @@ class _ShareButtonState extends State<ShareButton> {
     setState(() {
       processing = true;
     });
-
+    Provider.of<PostProvider>(context, listen: false).share(widget.item.id);
     if (widget.rKey != null) {
       RenderRepaintBoundary boundary =
           widget.rKey.currentContext.findRenderObject();

@@ -35,7 +35,6 @@ Future<Response> get(url, {Map<String, String> headers}) async {
 
   if (headers == null) headers = {};
   headers.addAll(await getAuthorizationHeaders());
-  print("get request $url");
   try {
     final res = await http.get(url, headers: headers);
     return Response(res);

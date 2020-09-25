@@ -159,4 +159,20 @@ class PostProvider extends ChangeNotifier {
       fetchPosts();
     }
   }
+
+  Future<bool> like(Post post) async {
+    post.isLiked = true;
+    await get(Config.baseUrl + "/like/${post.id}");
+    return true;
+  }
+
+  Future<bool> view(id) async {
+    await get(Config.baseUrl + "/view/$id");
+    return true;
+  }
+
+  Future<bool> share(id) async {
+    await get(Config.baseUrl + "/share/$id");
+    return true;
+  }
 }

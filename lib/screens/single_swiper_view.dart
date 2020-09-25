@@ -4,10 +4,10 @@ import 'package:Meme/theme_data.dart';
 import 'package:Meme/widgets/swiper_view/CopyButton.dart';
 import 'package:Meme/widgets/swiper_view/bg_change_button.dart';
 import 'package:Meme/widgets/swiper_view/download_button.dart';
+import 'package:Meme/widgets/swiper_view/like_button.dart';
 import 'package:Meme/widgets/swiper_view/share_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
 class SingleSwiperView extends StatefulWidget {
@@ -98,15 +98,10 @@ class SinglePostWidget extends StatelessWidget {
           ),
         ),
         Positioned(
-            left: 5,
-            bottom: 10,
-            child: IconButton(
-              onPressed: () {},
-              icon: Icon(
-                MdiIcons.heartOutline,
-                color: Colors.white,
-              ),
-            )),
+          left: 5,
+          bottom: 10,
+          child: LikeButton(item: item),
+        ),
         Positioned(
           right: 5,
           bottom: 10,
@@ -138,6 +133,7 @@ class SingleTextPostWidget extends StatefulWidget {
 class _SingleTextPostWidgetState extends State<SingleTextPostWidget> {
   final GlobalKey _key = new GlobalKey();
   var bg;
+  var bgImage;
   @override
   Widget build(BuildContext context) {
     if (bg == null) bg = widget.item.bg;
@@ -149,7 +145,10 @@ class _SingleTextPostWidgetState extends State<SingleTextPostWidget> {
             color: Colors.white,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 30.0),
-              color: bg,
+              decoration: BoxDecoration(
+                color: bg,
+                image: bgImage,
+              ),
               child: Center(
                 child: Text(
                   widget.item.caption,
@@ -164,15 +163,10 @@ class _SingleTextPostWidgetState extends State<SingleTextPostWidget> {
           ),
         ),
         Positioned(
-            left: 5,
-            bottom: 10,
-            child: IconButton(
-              onPressed: () {},
-              icon: Icon(
-                MdiIcons.heartOutline,
-                color: Colors.white,
-              ),
-            )),
+          left: 5,
+          bottom: 10,
+          child: LikeButton(item: widget.item),
+        ),
         Positioned(
           right: 5,
           bottom: 10,
@@ -182,10 +176,11 @@ class _SingleTextPostWidgetState extends State<SingleTextPostWidget> {
               widget.item.canChangeBackgroundColor()
                   ? BGChangeButton(
                       item: widget.item,
-                      onChange: (v) {
+                      onChange: (v, img) {
                         print(v);
                         setState(() {
                           bg = v;
+                          bgImage = img;
                         });
                       })
                   : CustomTheme.placeHolder,

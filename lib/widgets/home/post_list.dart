@@ -73,14 +73,38 @@ class PostWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () => SingleSwiperView.route(
           context, index, Provider.of<PostProvider>(context, listen: false)),
-      child: Card(
-        margin: EdgeInsets.all(12.0),
-        child: item.renderType == "image"
-            ? Image.network(
-                item.image,
-                width: double.infinity,
-              )
-            : TextPost(item: item),
+      child: Stack(
+        children: [
+          Card(
+            elevation: 12.0,
+            margin: EdgeInsets.all(12.0),
+            child: item.renderType == "image"
+                ? Image.network(
+                    item.image,
+                    width: double.infinity,
+                  )
+                : TextPost(item: item),
+          ),
+          Positioned(
+            bottom: 20.0,
+            right: 20.0,
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 12.0),
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                borderRadius: BorderRadius.circular(14.0),
+              ),
+              child: Text(
+                item.category ?? '',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 11.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
