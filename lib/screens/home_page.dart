@@ -1,7 +1,9 @@
 import 'package:Meme/config.dart';
+import 'package:Meme/meme_icons.dart';
 import 'package:Meme/screens/memes_screen.dart';
 import 'package:Meme/screens/setting_screen.dart';
 import 'package:Meme/theme_data.dart';
+import 'package:flat_icons_flutter/flat_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -37,12 +39,12 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              MdiIcons.heartMultipleOutline,
+              MdiIcons.feather,
             ),
             title: Text("Sher-O-Shayari"),
           ),
           BottomNavigationBarItem(
-            icon: Icon(MdiIcons.humanGreeting),
+            icon: Icon(Meme.greetings),
             title: Text("Greetings"),
           ),
           BottomNavigationBarItem(
