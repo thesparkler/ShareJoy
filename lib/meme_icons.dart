@@ -11,7 +11,7 @@
 ///      fonts:
 ///       - asset: fonts/Meme.ttf
 ///
-/// 
+///
 ///
 import 'package:flutter/widgets.dart';
 
@@ -20,6 +20,6 @@ class Meme {
 
   static const _kFontFam = 'Meme';
   static const _kFontPkg = null;
-
-  static const IconData greetings = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData greetings =
+      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

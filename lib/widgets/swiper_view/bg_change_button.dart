@@ -3,6 +3,7 @@ import 'package:Meme/models/post.dart';
 import 'package:Meme/theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class BGChangeButton extends StatelessWidget {
   final Post item;
@@ -64,7 +65,7 @@ class BGChangeButton extends StatelessWidget {
             ));
       },
       icon: Icon(
-        Icons.edit,
+        MdiIcons.palette,
         color: Colors.white,
       ),
     );
