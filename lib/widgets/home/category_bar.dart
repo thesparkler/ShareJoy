@@ -26,7 +26,7 @@ class CategoryBar extends StatelessWidget {
                   mp: mp,
                 ))
             .toList();
-        var shorts = childs.sublist(0, Math.min(8, childs.length));
+        //var shorts = childs.sublist(0, Math.min(8, childs.length));
         return Wrap(
           spacing: 2.0,
           alignment: WrapAlignment.center,

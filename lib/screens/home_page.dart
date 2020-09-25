@@ -42,11 +42,11 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(
               MdiIcons.feather,
             ),
-            title: Text("Sher-O-Shayari"),
+            title: Text("Shayari"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Meme.greetings),
-            title: Text("Greetings"),
+            title: Text("Status"),
           ),
           BottomNavigationBarItem(
             icon: Icon(MdiIcons.cog),
