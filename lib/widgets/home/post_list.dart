@@ -2,8 +2,11 @@ import 'package:Meme/models/post.dart';
 import 'package:Meme/providers/meme_provider.dart';
 import 'package:Meme/screens/single_swiper_view.dart';
 import 'package:Meme/theme_data.dart';
+import 'package:Meme/widgets/home/list_shimmer.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class PostList extends StatelessWidget {
   const PostList({
@@ -20,12 +23,7 @@ class PostList extends StatelessWidget {
         print("meme state consumer ${mp.memeState}");
 
         if (mp.memeState == ViewState.loading) {
-          return Container(
-            height: MediaQuery.of(context).size.height * 0.7,
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
+          return ListShimmer();
         }
         if (mp.items.length == 0) {
           return Container(
@@ -90,9 +88,24 @@ class PostWidget extends StatelessWidget {
             elevation: 12.0,
             margin: EdgeInsets.all(12.0),
             child: item.renderType == "image"
-                ? Image.network(
-                    item.image,
+                ? CachedNetworkImage(
                     width: double.infinity,
+                    imageUrl: item.image,
+                    placeholder: (context, url) => Shimmer.fromColors(
+                      baseColor: Colors.grey[300],
+                      highlightColor: Colors.grey[400],
+                      child: Container(
+                        color: Colors.grey,
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.height * 0.4,
+                      ),
+                    ),
+                    errorWidget: (context, url, error) => Container(
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      child: Center(
+                        child: Icon(Icons.warning),
+                      ),
+                    ),
                   )
                 : TextPost(item: item),
           ),

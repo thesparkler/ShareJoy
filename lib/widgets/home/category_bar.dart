@@ -1,6 +1,7 @@
 import 'package:Meme/models/category.dart';
 import 'package:Meme/providers/meme_provider.dart';
 import 'package:Meme/theme_data.dart';
+import 'package:Meme/widgets/home/category_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:math' as Math;
@@ -25,8 +26,8 @@ class _CategoryBarState extends State<CategoryBar> {
     return Consumer<PostProvider>(
       builder: (context, mp, child) {
         print("Category state consumer ${mp.categoryState}");
-        if (mp.categoryState == ViewState.loading)
-          return CustomTheme.placeHolder;
+        if (mp.categoryState == ViewState.loading) return CategoryShimmer();
+        // return CustomTpheme.placeHolder;
 
         final childs = mp.categories[widget.type]
             .map<Widget>((e) => CategoryWidget(
