@@ -9,6 +9,7 @@ class CopyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+      tooltip: "Copy Text",
       onPressed: () {
         Clipboard.setData(new ClipboardData(text: item.caption));
         Scaffold.of(context).showSnackBar(SnackBar(

@@ -21,7 +21,11 @@ class SettingScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-
+                Text(
+                  "ShareJoy",
+                  style: Theme.of(context).textTheme.headline5,
+                ),
+                CustomTheme.h24,
                 Container(
                   height: 120,
                     width: 120,
@@ -30,10 +34,7 @@ class SettingScreen extends StatelessWidget {
                         image: new DecorationImage(
                           image: new AssetImage("assets/images/app_icon.png"),
                           fit: BoxFit.fill,
-                        )
-                    )
-                ),
-
+                        ))),
                 CustomTheme.h12,
                 Text("version 1.0.0", style: TextStyle(fontFamily: 'RobotoRegular'),),
               ],

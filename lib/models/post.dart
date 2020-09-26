@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+
+import 'package:ShareJoy/local_storage.dart';
+import 'package:ShareJoy/config.dart';
 import 'package:ShareJoy/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as Math;
@@ -38,7 +41,7 @@ class Post {
 
     if (this.renderType == "text") {
       this.bg =
-          Colors.primaries[Math.Random().nextInt(Colors.primaries.length - 1)];
+          Config.bgColors[Math.Random().nextInt(Config.bgColors.length - 1)];
     }
   }
 

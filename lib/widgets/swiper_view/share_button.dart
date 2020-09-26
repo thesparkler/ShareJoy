@@ -29,6 +29,7 @@ class _ShareButtonState extends State<ShareButton> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+      tooltip: "Share",
       onPressed: processing ? null : shareImage,
       icon: processing
           ? Container(

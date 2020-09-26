@@ -20,6 +20,7 @@ class _LikeButtonState extends State<LikeButton> {
   Widget build(BuildContext context) {
     if (isLiked == null) isLiked = widget.item.isLiked;
     return IconButton(
+      tooltip: "Like",
       onPressed: _like,
       icon: processing
           ? Container(

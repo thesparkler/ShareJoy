@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Config {
   static const host =
       "http://ec2-13-233-228-241.ap-south-1.compute.amazonaws.com/";
@@ -12,6 +14,20 @@ class Config {
   static const titles = {
     "meme": "Memes",
     "shayari": "Sher-O-Shayari",
-    "greetings": "Greetings / Statuses"
+    "greetings": "Statuses"
   };
+
+  static const bgColors = [
+    Colors.red,
+    Colors.blue,
+    Colors.pink,
+    Colors.purple,
+    Colors.teal,
+    Colors.deepOrange,
+    Colors.deepPurple,
+    Colors.indigo,
+    Colors.brown,
+    Colors.green,
+    Colors.blue,
+  ];
 }
