@@ -30,8 +30,19 @@ class PostList extends StatelessWidget {
         if (mp.items.length == 0) {
           return Container(
             height: MediaQuery.of(context).size.height * 0.7,
-            child: Center(
-              child: Text("no $type found"),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  "assets/images/nothingfound.png",
+                  width: 200.0,
+                ),
+                Text(
+                  "No data found",
+                  style: Theme.of(context).textTheme.headline6,
+                  textAlign: TextAlign.center,
+                )
+              ],
             ),
           );
         }
@@ -85,25 +96,25 @@ class PostWidget extends StatelessWidget {
                   )
                 : TextPost(item: item),
           ),
-          Positioned(
-            bottom: 20.0,
-            right: 20.0,
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 12.0),
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                borderRadius: BorderRadius.circular(14.0),
-              ),
-              child: Text(
-                item.category ?? '',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 11.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          )
+          // Positioned(
+          //   bottom: 20.0,
+          //   right: 20.0,
+          //   child: Container(
+          //     padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 12.0),
+          //     decoration: BoxDecoration(
+          //       color: Theme.of(context).primaryColor,
+          //       borderRadius: BorderRadius.circular(14.0),
+          //     ),
+          //     child: Text(
+          //       item.category ?? '',
+          //       style: TextStyle(
+          //         color: Colors.white,
+          //         fontSize: 11.0,
+          //         fontWeight: FontWeight.bold,
+          //       ),
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:Meme/config.dart';
 import 'package:Meme/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as Math;
@@ -38,7 +39,7 @@ class Post {
 
     if (this.renderType == "text") {
       this.bg =
-          Colors.primaries[Math.Random().nextInt(Colors.primaries.length - 1)];
+          Config.bgColors[Math.Random().nextInt(Config.bgColors.length - 1)];
     }
   }
 

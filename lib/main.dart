@@ -13,8 +13,8 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.light()
-          .copyWith(primaryColor: new Color(0xFFD70404), accentColor: Colors.yellow),
+      theme: ThemeData.light().copyWith(
+          primaryColor: new Color(0xFFD70404), accentColor: Colors.redAccent),
       debugShowCheckedModeBanner: false,
       title: "Meme App",
       home: HomePage(),

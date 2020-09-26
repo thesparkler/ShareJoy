@@ -12,57 +12,59 @@ class BGChangeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+      tooltip: "Change Background",
       onPressed: () {
-        Scaffold.of(context).showBottomSheet((context) => Container(
-              height: MediaQuery.of(context).size.height * 0.5,
-              width: double.infinity,
-              // color: Colors.blue,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            MaterialButton(
-                              onPressed: () => _customPicker(context),
-                              textColor: Colors.white,
-                              color: Theme.of(context).primaryColor,
-                              child: Text("Pick Custom Color"),
-                            ),
-                            CustomTheme.w8,
-                            MaterialButton(
-                              onPressed: () => _customImagePicker(context),
-                              textColor: Colors.white,
-                              color: Theme.of(context).primaryColor,
-                              child: Text("Pick Image"),
-                            ),
-                          ],
-                        ),
-                        IconButton(
-                            onPressed: () => Navigator.pop(context),
-                            icon: Icon(Icons.clear)),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: BlockPicker(
-                        pickerColor: Colors.black,
-                        onColorChanged: (v) => onChange(v, null),
+        Scaffold.of(context).showBottomSheet(
+          (context) => Container(
+            height: MediaQuery.of(context).size.height * 0.5,
+            width: double.infinity,
+            // color: Colors.blue,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          MaterialButton(
+                            onPressed: () => _customPicker(context),
+                            textColor: Colors.white,
+                            color: Theme.of(context).primaryColor,
+                            child: Text("Pick Custom Color"),
+                          ),
+                          CustomTheme.w8,
+                          MaterialButton(
+                            onPressed: () => _customImagePicker(context),
+                            textColor: Colors.white,
+                            color: Theme.of(context).primaryColor,
+                            child: Text("Pick Image"),
+                          ),
+                        ],
                       ),
+                      IconButton(
+                          onPressed: () => Navigator.pop(context),
+                          icon: Icon(Icons.clear)),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: BlockPicker(
+                      pickerColor: Colors.black,
+                      onColorChanged: (v) => onChange(v, null),
                     ),
                   ),
-                  // ColorPicker(
-                  //   pickerColor: Colors.black,
-                  //   onColorChanged: onChange,
-
-                  // )
-                ],
-              ),
-            ));
+                ),
+                // ColorPicker(
+                //   pickerColor: Colors.black,
+                //   onColorChanged: onChange,
+                // )
+              ],
+            ),
+          ),
+        );
       },
       icon: Icon(
         MdiIcons.palette,

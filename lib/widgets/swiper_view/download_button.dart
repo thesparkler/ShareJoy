@@ -31,6 +31,7 @@ class _DownlaodButtonState extends State<DownlaodButton> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+      tooltip: "Download Image",
       onPressed: processing ? null : () => shareImage(context),
       icon: processing
           ? Container(
@@ -100,7 +101,7 @@ class _DownlaodButtonState extends State<DownlaodButton> {
           await ImageSaver().saveImage(
             imageBytes: bytes,
             imageName: name,
-            directoryName: "Memes",
+            directoryName: "ShareJoy",
           );
           Scaffold.of(context).showSnackBar(SnackBar(
             content: Text("File is saved in your gallery"),
