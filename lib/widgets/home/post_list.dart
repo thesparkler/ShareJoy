@@ -1,7 +1,7 @@
-import 'package:Meme/models/post.dart';
-import 'package:Meme/providers/meme_provider.dart';
-import 'package:Meme/screens/single_swiper_view.dart';
-import 'package:Meme/theme_data.dart';
+import 'package:ShareJoy/models/post.dart';
+import 'package:ShareJoy/providers/meme_provider.dart';
+import 'package:ShareJoy/screens/single_swiper_view.dart';
+import 'package:ShareJoy/theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

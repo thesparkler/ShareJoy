@@ -1,6 +1,6 @@
-import 'package:Meme/config.dart';
-import 'package:Meme/models/post.dart';
-import 'package:Meme/theme_data.dart';
+import 'package:ShareJoy/config.dart';
+import 'package:ShareJoy/models/post.dart';
+import 'package:ShareJoy/theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';

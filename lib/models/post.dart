@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:Meme/local_storage.dart';
+import 'package:ShareJoy/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as Math;
 

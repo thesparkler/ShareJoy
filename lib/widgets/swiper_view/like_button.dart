@@ -1,6 +1,6 @@
-import 'package:Meme/local_storage.dart';
-import 'package:Meme/models/post.dart';
-import 'package:Meme/providers/meme_provider.dart';
+import 'package:ShareJoy/local_storage.dart';
+import 'package:ShareJoy/models/post.dart';
+import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
