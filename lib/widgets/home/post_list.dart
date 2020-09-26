@@ -1,9 +1,13 @@
+
+import 'package:ShareJoy/NoGlowBehaviour.dart';
 import 'package:ShareJoy/models/post.dart';
 import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:ShareJoy/screens/single_swiper_view.dart';
 import 'package:ShareJoy/theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../NoGlowBehaviour.dart';
 
 class PostList extends StatelessWidget {
   const PostList({
@@ -35,11 +39,12 @@ class PostList extends StatelessWidget {
               children: [
                 Image.asset(
                   "assets/images/nothingfound.png",
-                  width: 200.0,
+                  width: 150.0,
                 ),
                 Text(
                   "No data found",
-                  style: Theme.of(context).textTheme.headline6,
+                    style: TextStyle(fontFamily: 'RobotoMedium'),
+            //      style: Theme.of(context).textTheme.headline6,
                   textAlign: TextAlign.center,
                 )
               ],
@@ -48,21 +53,21 @@ class PostList extends StatelessWidget {
         }
         // return Container(child: Text("$type loaded"));
         return ListView.builder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: mp.items.length + 1,
-          itemBuilder: (context, index) {
-            if (mp.items.length == index) {
-              if (mp.memeState == ViewState.showMore) {
-                return Container(
-                    height: 30.0,
-                    child: Center(child: CircularProgressIndicator()));
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: mp.items.length + 1,
+            itemBuilder: (context, index) {
+              if (mp.items.length == index) {
+                if (mp.memeState == ViewState.showMore) {
+                  return Container(
+                      height: 30.0,
+                      child: Center(child: CircularProgressIndicator()));
+                }
+                return CustomTheme.placeHolder;
               }
-              return CustomTheme.placeHolder;
-            }
-            final item = mp.items[index];
-            return PostWidget(item: item, index: index);
-          },
+              final item = mp.items[index];
+              return PostWidget(item: item, index: index);
+            },
         );
       },
     );
