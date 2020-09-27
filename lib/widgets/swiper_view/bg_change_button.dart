@@ -24,22 +24,37 @@ class BGChangeButton extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(18.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
                           MaterialButton(
                             onPressed: () => _customPicker(context),
-                            textColor: Colors.white,
-                            color: Theme.of(context).primaryColor,
-                            child: Text("Pick Custom Color"),
+                            textColor: Colors.black,
+
+                          //  color: Colors.black,
+                          //  color: Theme.of(context).primaryColor,
+                            child: Container(
+                              padding: EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(0.0),
+                              ),
+                                child: Text("Pick Custom Color")
+                            ),
                           ),
-                          CustomTheme.w8,
+                       //   CustomTheme.w2,
                           MaterialButton(
                             onPressed: () => _customImagePicker(context),
                             textColor: Colors.white,
                             color: Theme.of(context).primaryColor,
-                            child: Text("Pick Image"),
+                            child: Container(
+                               // padding: EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                 // border: Border.all(color: Colors.black),
+                               //   borderRadius: BorderRadius.circular(5.0),
+                                ),
+                                child: Text("Pick Image")),
                           ),
                         ],
                       ),
@@ -52,6 +67,7 @@ class BGChangeButton extends StatelessWidget {
                 Expanded(
                   child: SingleChildScrollView(
                     child: BlockPicker(
+                      a,
                       pickerColor: Colors.black,
                       onColorChanged: (v) => onChange(v, null),
                     ),
