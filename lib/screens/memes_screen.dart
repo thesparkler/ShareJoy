@@ -1,7 +1,7 @@
-import 'package:Meme/config.dart';
-import 'package:Meme/providers/meme_provider.dart';
-import 'package:Meme/widgets/home/category_bar.dart';
-import 'package:Meme/widgets/home/post_list.dart';
+import 'package:ShareJoy/config.dart';
+import 'package:ShareJoy/providers/meme_provider.dart';
+import 'package:ShareJoy/widgets/home/category_bar.dart';
+import 'package:ShareJoy/widgets/home/post_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,22 +20,28 @@ class MemesScreen extends StatelessWidget {
       // lazy: false,
       value: memeProvider,
 
-      child: SingleChildScrollView(
-        controller: scroll,
-        child: Column(
-          children: [
-            AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              title: Text(Config.titles[type],
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline6
-                      .copyWith(fontSize: 24.0)),
-            ),
-            CategoryBar(type: type),
-            PostList(type: type)
-          ],
+      child: NotificationListener<OverscrollIndicatorNotification>(
+        onNotification: (OverscrollIndicatorNotification overscroll) {
+          overscroll.disallowGlow();
+          return;
+        },
+        child: SingleChildScrollView(
+          controller: scroll,
+          child: Column(
+            children: [
+              AppBar(
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                title: Text(Config.titles[type],
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline6
+                        .copyWith(fontSize: 24.0)),
+              ),
+              CategoryBar(type: type),
+              PostList(type: type)
+            ],
+          ),
         ),
       ),
     );

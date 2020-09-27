@@ -1,8 +1,8 @@
-import 'package:Meme/config.dart';
-import 'package:Meme/models/category.dart';
-import 'package:Meme/models/post.dart';
+import 'package:ShareJoy/config.dart';
+import 'package:ShareJoy/models/category.dart';
+import 'package:ShareJoy/models/post.dart';
 import 'package:flutter/widgets.dart';
-import 'package:Meme/http_service.dart' show get;
+import 'package:ShareJoy/http_service.dart' show get;
 
 enum ViewState { loading, loaded, showMore, error }
 

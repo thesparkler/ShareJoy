@@ -1,4 +1,4 @@
-import 'package:Meme/models/post.dart';
+import 'package:ShareJoy/models/post.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

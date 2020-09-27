@@ -42,6 +42,43 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:228841215607:android:07283652d2993724ca9872",
+        "android_client_info": {
+          "package_name": "com.app.sharejoy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "228841215607-ph40irp7hmt1u2ms8cr6va09qvmr2a9d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.sharejoy",
+            "certificate_hash": "40a151258f63d180af5993acdb640636ce08bc07"
+          }
+        },
+        {
+          "client_id": "228841215607-7hcoqsapvt2o3ise9oaubsm2k6fpn4t3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCDBvvHb7-CQIXYI5kSCpd2l9D74iC0Ew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "228841215607-7hcoqsapvt2o3ise9oaubsm2k6fpn4t3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

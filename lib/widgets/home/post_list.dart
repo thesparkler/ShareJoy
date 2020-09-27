@@ -1,8 +1,8 @@
-import 'package:Meme/models/post.dart';
-import 'package:Meme/providers/meme_provider.dart';
-import 'package:Meme/screens/single_swiper_view.dart';
-import 'package:Meme/theme_data.dart';
-import 'package:Meme/widgets/home/list_shimmer.dart';
+import 'package:ShareJoy/models/post.dart';
+import 'package:ShareJoy/providers/meme_provider.dart';
+import 'package:ShareJoy/screens/single_swiper_view.dart';
+import 'package:ShareJoy/theme_data.dart';
+import 'package:ShareJoy/widgets/home/list_shimmer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,11 +33,12 @@ class PostList extends StatelessWidget {
               children: [
                 Image.asset(
                   "assets/images/nothingfound.png",
-                  width: 200.0,
+                  width: 150.0,
                 ),
                 Text(
                   "No data found",
-                  style: Theme.of(context).textTheme.headline6,
+                  style: TextStyle(fontFamily: 'RobotoMedium'),
+                  //      style: Theme.of(context).textTheme.headline6,
                   textAlign: TextAlign.center,
                 )
               ],

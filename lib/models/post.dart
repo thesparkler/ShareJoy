@@ -1,9 +1,8 @@
 import 'dart:convert';
 
-import 'package:Meme/config.dart';
-import 'package:Meme/local_storage.dart';
+import 'package:ShareJoy/local_storage.dart';
+import 'package:ShareJoy/config.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as Math;
 
 class Post {
   static var current = 0;

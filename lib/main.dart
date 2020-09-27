@@ -1,5 +1,5 @@
-import 'package:Meme/local_storage.dart';
-import 'package:Meme/screens/home_page.dart';
+import 'package:ShareJoy/local_storage.dart';
+import 'package:ShareJoy/screens/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -16,7 +16,7 @@ class App extends StatelessWidget {
       theme: ThemeData.light().copyWith(
           primaryColor: new Color(0xFFD70404), accentColor: Colors.redAccent),
       debugShowCheckedModeBanner: false,
-      title: "Meme App",
+      title: "ShareJoy",
       home: HomePage(),
     );
   }

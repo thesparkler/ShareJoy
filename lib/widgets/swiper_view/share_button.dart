@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:Meme/models/post.dart';
-import 'package:Meme/providers/meme_provider.dart';
+import 'package:ShareJoy/models/post.dart';
+import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

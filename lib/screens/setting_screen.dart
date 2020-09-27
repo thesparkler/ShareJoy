@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:Meme/theme_data.dart';
+import 'package:ShareJoy/theme_data.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -22,7 +22,7 @@ class SettingScreen extends StatelessWidget {
                   "ShareJoy",
                   style: Theme.of(context).textTheme.headline5,
                 ),
-                CustomTheme.h16,
+                CustomTheme.h24,
                 Container(
                     height: 120,
                     width: 120,
