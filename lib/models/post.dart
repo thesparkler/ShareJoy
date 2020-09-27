@@ -1,13 +1,11 @@
 import 'dart:convert';
 
-
 import 'package:ShareJoy/local_storage.dart';
 import 'package:ShareJoy/config.dart';
-import 'package:ShareJoy/local_storage.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as Math;
 
 class Post {
+  static var current = 0;
   int id;
   String image;
   String type;
@@ -40,8 +38,8 @@ class Post {
         .then((likesArray) => isLiked = likesArray?.contains(this.id) ?? false);
 
     if (this.renderType == "text") {
-      this.bg =
-          Config.bgColors[Math.Random().nextInt(Config.bgColors.length - 1)];
+      this.bg = Config.bgColors[Post.current];
+      Post.current = (Post.current + 1) % Config.bgColors.length;
     }
   }
 

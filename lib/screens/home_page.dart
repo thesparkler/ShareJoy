@@ -3,7 +3,6 @@ import 'package:ShareJoy/meme_icons.dart';
 import 'package:ShareJoy/screens/memes_screen.dart';
 import 'package:ShareJoy/screens/setting_screen.dart';
 import 'package:ShareJoy/theme_data.dart';
-import 'package:flat_icons_flutter/flat_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 

@@ -6,9 +6,11 @@ import 'package:ShareJoy/widgets/swiper_view/bg_change_button.dart';
 import 'package:ShareJoy/widgets/swiper_view/download_button.dart';
 import 'package:ShareJoy/widgets/swiper_view/like_button.dart';
 import 'package:ShareJoy/widgets/swiper_view/share_button.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class SingleSwiperView extends StatefulWidget {
   final PostProvider mp;
@@ -94,8 +96,25 @@ class SinglePostWidget extends StatelessWidget {
         Container(
           color: Colors.black,
           child: Center(
-            child: Image.network(item.image),
-          ),
+              child: CachedNetworkImage(
+            width: double.infinity,
+            imageUrl: item.image,
+            placeholder: (context, url) => Shimmer.fromColors(
+              baseColor: Colors.grey[300],
+              highlightColor: Colors.grey[400],
+              child: Container(
+                color: Colors.grey,
+                width: double.infinity,
+                // height: MediaQuery.of(context).size.height * 0.4,
+              ),
+            ),
+            errorWidget: (context, url, error) => Container(
+              height: MediaQuery.of(context).size.height * 0.4,
+              child: Center(
+                child: Icon(Icons.warning),
+              ),
+            ),
+          )),
         ),
         Positioned(
           left: 5,

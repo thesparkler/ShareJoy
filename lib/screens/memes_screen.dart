@@ -1,12 +1,9 @@
-import 'package:ShareJoy/NoGlowBehaviour.dart';
 import 'package:ShareJoy/config.dart';
 import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:ShareJoy/widgets/home/category_bar.dart';
 import 'package:ShareJoy/widgets/home/post_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../NoGlowBehaviour.dart';
 
 class MemesScreen extends StatelessWidget {
   final String type;
@@ -24,12 +21,11 @@ class MemesScreen extends StatelessWidget {
       value: memeProvider,
 
       child: NotificationListener<OverscrollIndicatorNotification>(
-          onNotification: (OverscrollIndicatorNotification overscroll) {
-            overscroll.disallowGlow();
-            return;
-          },
+        onNotification: (OverscrollIndicatorNotification overscroll) {
+          overscroll.disallowGlow();
+          return;
+        },
         child: SingleChildScrollView(
-
           controller: scroll,
           child: Column(
             children: [

@@ -6,6 +6,24 @@ ShareJoy - Share Memes, Shayari, Whatsapp Status
 Short Description:
 ShareJoy - Share memes, shayari, status to your friends.
 -------------------------------------------------------------
+Screenshot Captions
+1. Splash screeen.
+1. Memes Screen (Find Latest Memes)
+2. Shayari Screen (Find Amazing Shayari)
+3. Detail Page(Swipe Up & Down for navigation)
+4. Customizing with Background Color (Customize your status by with Background Color)
+5. Customizing with Background Images (Add Background Image if needed)
+6. share preview
+7. Like the content.
+
+
+
+
+
+
+
+
+
 Long Description:
 
 ShareJoy - Share memes, shayar & status.

@@ -18,7 +18,6 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "ShareJoy",
      home: HomePage(),
-     // home: HomePage(),
     );
   }
 }
