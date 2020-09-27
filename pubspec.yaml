@@ -90,6 +90,10 @@ flutter:
      - family: RobotoRegular
        fonts:
          - asset: assets/fonts/RobotoRegular.ttf
+
+     - family: NunitoBold
+       fonts:
+         - asset: assets/fonts/NunitoBold.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
