@@ -29,7 +29,7 @@ class SettingScreen extends StatelessWidget {
                     decoration: new BoxDecoration(
                         shape: BoxShape.circle,
                         image: new DecorationImage(
-                          image: new AssetImage("assets/images/app_icon.png"),
+                          image: new AssetImage("assets/images/icon.png"),
                           fit: BoxFit.fill,
                         ))),
                 CustomTheme.h12,
