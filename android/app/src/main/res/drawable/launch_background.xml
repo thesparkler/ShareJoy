@@ -9,11 +9,11 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/iconn" />
+            android:src="@drawable/sharejoy_logo" />
 
     </item>
 
-    <item android:drawable="@drawable/lovee"
+    <item android:drawable="@drawable/madeinindia"
         android:gravity="bottom"/>
 
 </layer-list>

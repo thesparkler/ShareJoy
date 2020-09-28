@@ -86,8 +86,9 @@ class PostWidget extends StatelessWidget {
       child: Stack(
         children: [
           Card(
-            elevation: 12.0,
-            margin: EdgeInsets.all(12.0),
+            elevation: 8.0,
+            margin: EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
+            //margin: EdgeInsets.all(12.0),
             child: item.renderType == "image"
                 ? CachedNetworkImage(
                     width: double.infinity,

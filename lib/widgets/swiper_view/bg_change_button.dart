@@ -67,7 +67,6 @@ class BGChangeButton extends StatelessWidget {
                 Expanded(
                   child: SingleChildScrollView(
                     child: BlockPicker(
-                      a,
                       pickerColor: Colors.black,
                       onColorChanged: (v) => onChange(v, null),
                     ),
