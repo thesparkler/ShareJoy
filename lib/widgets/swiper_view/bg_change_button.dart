@@ -1,6 +1,7 @@
 import 'package:ShareJoy/config.dart';
 import 'package:ShareJoy/models/post.dart';
 import 'package:ShareJoy/theme_data.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -24,7 +25,7 @@ class BGChangeButton extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(18.0),
                   child: Row(
-                //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
@@ -32,28 +33,27 @@ class BGChangeButton extends StatelessWidget {
                             onPressed: () => _customPicker(context),
                             textColor: Colors.black,
 
-                          //  color: Colors.black,
-                          //  color: Theme.of(context).primaryColor,
+                            //  color: Colors.black,
+                            //  color: Theme.of(context).primaryColor,
                             child: Container(
-                              padding: EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black),
-                                borderRadius: BorderRadius.circular(0.0),
-                              ),
-                                child: Text("Pick Custom Color")
-                            ),
+                                padding: EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black),
+                                  borderRadius: BorderRadius.circular(0.0),
+                                ),
+                                child: Text("Pick Custom Color")),
                           ),
-                       //   CustomTheme.w2,
+                          //   CustomTheme.w2,
                           MaterialButton(
                             onPressed: () => _customImagePicker(context),
                             textColor: Colors.white,
                             color: Theme.of(context).primaryColor,
                             child: Container(
-                               // padding: EdgeInsets.all(8.0),
+                                // padding: EdgeInsets.all(8.0),
                                 decoration: BoxDecoration(
-                                 // border: Border.all(color: Colors.black),
-                               //   borderRadius: BorderRadius.circular(5.0),
-                                ),
+                                    // border: Border.all(color: Colors.black),
+                                    //   borderRadius: BorderRadius.circular(5.0),
+                                    ),
                                 child: Text("Pick Image")),
                           ),
                         ],
@@ -67,7 +67,6 @@ class BGChangeButton extends StatelessWidget {
                 Expanded(
                   child: SingleChildScrollView(
                     child: BlockPicker(
-                      a,
                       pickerColor: Colors.black,
                       onColorChanged: (v) => onChange(v, null),
                     ),
@@ -104,7 +103,7 @@ class BGChangeButton extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text("Pick Image"),
+                      child: Text("Pick Color"),
                     ),
                     IconButton(
                       onPressed: () => Navigator.pop(context),
@@ -193,9 +192,16 @@ class BGChangeButton extends StatelessWidget {
                     child: Container(
                       width: 100.0,
                       height: 100.0,
-                      child: Image.network(
-                          Config.host + "/images/backgrounds/$index.jpg",
-                          fit: BoxFit.cover),
+                      child: CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        placeholder: (_, __) => Container(
+                          width: 100.0,
+                          height: 100.0,
+                          color: Colors.grey,
+                        ),
+                        imageUrl:
+                            Config.host + "/images/backgrounds/$index.jpg",
+                      ),
                     ),
                   );
                 },

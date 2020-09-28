@@ -49,9 +49,9 @@ class SettingScreen extends StatelessWidget {
                 onTap: () => Share.text(
                     "Share App",
                     '''ShareJoy
-                            Find the large collection of memes,shayari and status on the application.
-                            Download app using following link:https://play.google.com/store/apps/details?id=com.app.sharejoy
-                            ''',
+Find the large collection of memes,shayari and status.
+Download app using following link:https://play.google.com/store/apps/details?id=com.app.sharejoy
+''',
                     "text/plain"),
                 title: Text(
                   "Share App",

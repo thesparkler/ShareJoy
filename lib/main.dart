@@ -1,3 +1,4 @@
+import 'package:ShareJoy/firebase_messaging.dart';
 import 'package:ShareJoy/screens/home_page.dart';
 import 'package:ShareJoy/local_storage.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,9 @@ import 'package:flutter/widgets.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await LocalStorage.init();
+  PushNotificationHandler.init();
   runApp(App());
 }
 
@@ -17,7 +20,7 @@ class App extends StatelessWidget {
           primaryColor: new Color(0xFFD70404), accentColor: Colors.redAccent),
       debugShowCheckedModeBanner: false,
       title: "ShareJoy",
-     home: HomePage(),
+      home: HomePage(),
     );
   }
 }
