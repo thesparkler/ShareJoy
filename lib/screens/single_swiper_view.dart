@@ -7,6 +7,7 @@ import 'package:ShareJoy/widgets/swiper_view/download_button.dart';
 import 'package:ShareJoy/widgets/swiper_view/like_button.dart';
 import 'package:ShareJoy/widgets/swiper_view/share_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:facebook_audience_network/facebook_audience_network.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -70,6 +71,19 @@ class _SingleSwiperViewState extends State<SingleSwiperView> {
                 child: SafeArea(
                   child: BackButton(
                     color: Colors.white,
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 50.0,
+                right: 0,
+                child: SafeArea(
+                  child: FacebookBannerAd(
+                    placementId: "1265998170441655_1266012507106888",
+                    bannerSize: BannerSize.STANDARD,
+                    listener: (result, value) {
+                      print("Banner Ad $result --> $value");
+                    },
                   ),
                 ),
               ),

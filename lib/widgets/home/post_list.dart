@@ -4,6 +4,7 @@ import 'package:ShareJoy/screens/single_swiper_view.dart';
 import 'package:ShareJoy/theme_data.dart';
 import 'package:ShareJoy/widgets/home/list_shimmer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:facebook_audience_network/facebook_audience_network.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -60,7 +61,23 @@ class PostList extends StatelessWidget {
               return CustomTheme.placeHolder;
             }
             final item = mp.items[index];
-            return PostWidget(item: item, index: index);
+            return Column(
+              children: [
+                (index % 6 == 1)
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: FacebookBannerAd(
+                          placementId: "1265998170441655_1266012507106888",
+                          bannerSize: BannerSize.STANDARD,
+                          listener: (result, value) {
+                            print("Banner Ad $result --> $value");
+                          },
+                        ),
+                      )
+                    : CustomTheme.placeHolder,
+                PostWidget(item: item, index: index),
+              ],
+            );
           },
         );
       },

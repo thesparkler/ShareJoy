@@ -1,6 +1,7 @@
 import 'package:ShareJoy/firebase_messaging.dart';
 import 'package:ShareJoy/screens/home_page.dart';
 import 'package:ShareJoy/local_storage.dart';
+import 'package:facebook_audience_network/facebook_audience_network.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -9,6 +10,10 @@ void main() async {
 
   await LocalStorage.init();
   PushNotificationHandler.init();
+  FacebookAudienceNetwork.init(
+      // testingId: "b9f2908b-1a6b-4a5b-b862-ded7ce289e41",
+      );
+
   runApp(App());
 }
 

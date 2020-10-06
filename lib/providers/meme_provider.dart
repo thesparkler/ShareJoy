@@ -40,7 +40,7 @@ class PostProvider extends ChangeNotifier {
   void setScrollController(ScrollController scroll) {
     print("setting scroll container");
     scroll.addListener(() {
-      print("scrolling");
+      // print("scrolling");
       if (scroll.position.pixels == scroll.position.maxScrollExtent) {
         // print("fetch new page.");
         nextPage();
@@ -162,7 +162,7 @@ class PostProvider extends ChangeNotifier {
 
   Future<bool> like(Post post) async {
     post.isLiked = true;
-    await get(Cbonfig.baseUrl + "/posts/like/${post.id}");
+    await get(Config.baseUrl + "/posts/like/${post.id}");
     return true;
   }
 
