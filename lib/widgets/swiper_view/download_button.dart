@@ -17,10 +17,12 @@ class DownlaodButton extends StatefulWidget {
     Key key,
     @required this.item,
     this.rKey,
+    this.color,
   }) : super(key: key);
 
   final Post item;
   final rKey;
+  final color;
 
   @override
   _DownlaodButtonState createState() => _DownlaodButtonState();
@@ -43,7 +45,7 @@ class _DownlaodButtonState extends State<DownlaodButton> {
               ))
           : Icon(
               MdiIcons.downloadOutline,
-              color: Colors.white,
+              color: widget.color != null ? widget.color : Colors.white,
             ),
     );
   }

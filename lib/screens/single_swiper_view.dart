@@ -1,5 +1,6 @@
 import 'package:ShareJoy/models/post.dart';
 import 'package:ShareJoy/providers/meme_provider.dart';
+import 'package:ShareJoy/screens/editor.dart';
 import 'package:ShareJoy/theme_data.dart';
 import 'package:ShareJoy/widgets/swiper_view/CopyButton.dart';
 import 'package:ShareJoy/widgets/swiper_view/bg_change_button.dart';
@@ -10,6 +11,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:facebook_audience_network/facebook_audience_network.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -207,16 +209,26 @@ class _SingleTextPostWidgetState extends State<SingleTextPostWidget> {
             mainAxisSize: MainAxisSize.min,
             children: [
               widget.item.canChangeBackgroundColor()
-                  ? BGChangeButton(
-                      item: widget.item,
-                      onChange: (v, img) {
-                        print(v);
-                        setState(() {
-                          bg = v;
-                          bgImage = img;
-                        });
-                      })
+                  ? IconButton(
+                      onPressed: () {
+                        Editor.route(context, widget.item);
+                      },
+                      icon: Icon(
+                        MdiIcons.palette,
+                        color: Colors.white,
+                      ))
                   : CustomTheme.placeHolder,
+              // widget.item.canChangeBackgroundColor()
+              //     ? BGChangeButton(
+              //         item: widget.item,
+              //         onChange: (v, img) {
+              //           print(v);
+              //           setState(() {
+              //             bg = v;
+              //             bgImage = img;
+              //           });
+              //         })
+              //     : CustomTheme.placeHolder,
               widget.item.canCopyText()
                   ? CopyButton(item: widget.item)
                   : CustomTheme.placeHolder,

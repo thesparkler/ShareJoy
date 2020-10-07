@@ -16,10 +16,12 @@ class ShareButton extends StatefulWidget {
     Key key,
     @required this.item,
     this.rKey,
+    this.color,
   }) : super(key: key);
 
   final Post item;
   final rKey;
+  final color;
   @override
   _ShareButtonState createState() => _ShareButtonState();
 }
@@ -41,7 +43,7 @@ class _ShareButtonState extends State<ShareButton> {
               ))
           : Icon(
               MdiIcons.shareOutline,
-              color: Colors.white,
+              color: widget.color != null ? widget.color : Colors.white,
             ),
     );
   }
@@ -50,7 +52,7 @@ class _ShareButtonState extends State<ShareButton> {
     setState(() {
       processing = true;
     });
-    Provider.of<PostProvider>(context, listen: false).share(widget.item.id);
+    // Provider.of<PostProvider>(context, listen: false).share(widget.item.id);
     if (widget.rKey != null) {
       RenderRepaintBoundary boundary =
           widget.rKey.currentContext.findRenderObject();
