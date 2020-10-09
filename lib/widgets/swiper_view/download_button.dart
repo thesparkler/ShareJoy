@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/rendering.dart';
 import 'package:ShareJoy/models/post.dart';
 import 'package:flutter/foundation.dart';
@@ -51,6 +52,10 @@ class _DownlaodButtonState extends State<DownlaodButton> {
   void shareImage(context) async {
     setState(() {
       processing = true;
+    });
+    FirebaseAnalytics().logEvent(name: "content_save", parameters: {
+      "id": widget.item.id,
+      "type": widget.item.type,
     });
 
     var status = await Permission.storage.status;

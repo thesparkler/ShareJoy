@@ -95,6 +95,9 @@ class PostProvider extends ChangeNotifier {
     if (filters['category_id'] != null) {
       url += "&category_id=" + filters['category_id'];
     }
+    if (filters['lang'] != null) {
+      url += "&lang=" + filters['lang'];
+    }
 
     lastPostUrl = url;
     final res = await get(url);

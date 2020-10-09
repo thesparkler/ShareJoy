@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:ShareJoy/theme_data.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -46,13 +47,19 @@ class SettingScreen extends StatelessWidget {
             children: [
               Divider(),
               ListTile(
-                onTap: () => Share.text(
-                    "Share App",
-                    '''ShareJoy
+                onTap: () async {
+                  await FirebaseAnalytics().logEvent(
+                    name: "app_share_click",
+                  );
+
+                  Share.text(
+                      "Share App",
+                      '''ShareJoy
 Find the large collection of memes,shayari and status.
 Download app using following link:https://play.google.com/store/apps/details?id=com.app.sharejoy
 ''',
-                    "text/plain"),
+                      "text/plain");
+                },
                 title: Text(
                   "Share App",
                   style: TextStyle(fontFamily: 'RobotoMedium'),
@@ -65,8 +72,12 @@ Download app using following link:https://play.google.com/store/apps/details?id=
               ),
               Divider(),
               ListTile(
-                onTap: () => launch(
-                    "https://play.google.com/store/apps/details?id=com.app.sharejoy"),
+                onTap: () async {
+                  await FirebaseAnalytics().logEvent(name: "app_review_click");
+
+                  launch(
+                      "https://play.google.com/store/apps/details?id=com.app.sharejoy");
+                },
                 title: Text(
                   "Rate our App",
                   style: TextStyle(fontFamily: 'RobotoMedium'),

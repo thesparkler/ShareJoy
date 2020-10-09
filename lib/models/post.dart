@@ -14,12 +14,16 @@ class Post {
   Color bg;
   bool isLiked = false;
   String category;
+  String createdAt;
+  bool isNew;
+
   String toJSON() {
     return json.encode({
       "id": this.id,
       "image": this.image,
       "type": this.type,
       "render_type": this.renderType,
+      "created_at": this.createdAt
     });
   }
 
@@ -29,6 +33,7 @@ class Post {
     this.type = item['type'];
     this.caption = item['caption'];
     this.renderType = item['render_type'];
+    this.createdAt = item['created_at'];
     if (item['categories'].length > 0) {
       this.category = item['categories'][0]['name'];
     }
@@ -41,6 +46,10 @@ class Post {
       this.bg = Config.bgColors[Post.current];
       Post.current = (Post.current + 1) % Config.bgColors.length;
     }
+    final d = DateTime.parse(createdAt);
+    final diff = DateTime.now().difference(d);
+    this.isNew = diff.inDays == 0;
+    // print("difference" + diff.inDays.toString());
   }
 
   bool canCopyText() {

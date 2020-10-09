@@ -1,7 +1,7 @@
 import 'package:ShareJoy/config.dart';
 import 'package:ShareJoy/models/post.dart';
-import 'package:ShareJoy/theme_data.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -15,6 +15,11 @@ class BGChangeButton extends StatelessWidget {
     return IconButton(
       tooltip: "Change Background",
       onPressed: () {
+        FirebaseAnalytics().logEvent(name: "content_edit", parameters: {
+          "id": item.id,
+          "type": item.type,
+        });
+
         Scaffold.of(context).showBottomSheet(
           (context) => Container(
             height: MediaQuery.of(context).size.height * 0.5,

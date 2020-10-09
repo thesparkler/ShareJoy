@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:ShareJoy/models/post.dart';
 import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -50,6 +51,11 @@ class _ShareButtonState extends State<ShareButton> {
     setState(() {
       processing = true;
     });
+    FirebaseAnalytics().logEvent(name: "content_share", parameters: {
+      "id": widget.item.id,
+      "type": widget.item.type,
+    });
+
     Provider.of<PostProvider>(context, listen: false).share(widget.item.id);
     if (widget.rKey != null) {
       RenderRepaintBoundary boundary =

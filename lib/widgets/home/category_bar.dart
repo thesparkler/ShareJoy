@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:ShareJoy/models/category.dart';
 import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:ShareJoy/widgets/home/category_shimmer.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -40,9 +41,9 @@ class _CategoryBarState extends State<CategoryBar> {
 
         final child = mp.categories[widget.type]
             .map<Widget>((e) => CategoryWidget(
-          category: e,
-          mp: mp,
-        ))
+                  category: e,
+                  mp: mp,
+                ))
             .toList();
 
         //var shorts = childs.sublist(0, Math.min(8, childs.length));
@@ -58,15 +59,27 @@ class _CategoryBarState extends State<CategoryBar> {
             },
             child: Container(
               padding: const EdgeInsets.all(4.0),
-              margin: const EdgeInsets.only(left: 4.0, ),
-              decoration: BoxDecoration(
-            //    border: Border.all(color: Colors.grey),
-              //  borderRadius: BorderRadius.circular(20.0),
-              //  color: Colors.white,
+              margin: const EdgeInsets.only(
+                left: 4.0,
               ),
-              child: showMore ? Align(alignment: Alignment.bottomLeft,
-                  child: Text("less", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold,))) :
-              Text("more...", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
+              decoration: BoxDecoration(
+                  //    border: Border.all(color: Colors.grey),
+                  //  borderRadius: BorderRadius.circular(20.0),
+                  //  color: Colors.white,
+                  ),
+              child: showMore
+                  ? Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Text("less",
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          )))
+                  : Text(
+                      "more...",
+                      style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                    ),
             ),
           ));
         }
@@ -88,10 +101,18 @@ class CategoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
+      onTap: () async {
         if (mp.filters['category_id'] == category.id.toString()) {
           mp.filter("category_id", null);
         } else {
+          await FirebaseAnalytics().logEvent(
+              name: "category_clicked",
+              parameters: {
+                "name": category.name,
+                "id": category.id,
+                "type": category.type
+              });
+
           mp.filter("category_id", category.id.toString());
         }
       },

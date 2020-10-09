@@ -1,6 +1,7 @@
 import 'package:ShareJoy/local_storage.dart';
 import 'package:ShareJoy/models/post.dart';
 import 'package:ShareJoy/providers/meme_provider.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
@@ -45,6 +46,10 @@ class _LikeButtonState extends State<LikeButton> {
   void _like() async {
     setState(() {
       processing = true;
+    });
+    FirebaseAnalytics().logEvent(name: "content_like", parameters: {
+      "id": widget.item.id,
+      "type": widget.item.type,
     });
 
     print("pressed llike buttong");
