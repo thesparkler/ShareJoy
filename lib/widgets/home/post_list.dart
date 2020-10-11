@@ -4,6 +4,7 @@ import 'package:ShareJoy/screens/single_swiper_view.dart';
 import 'package:ShareJoy/theme_data.dart';
 import 'package:ShareJoy/widgets/home/list_shimmer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fb_audience_network_ad/ad/ad_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -60,7 +61,23 @@ class PostList extends StatelessWidget {
               return CustomTheme.placeHolder;
             }
             final item = mp.items[index];
-            return PostWidget(item: item, index: index);
+            return Column(
+              children: [
+                (index % 6 == 1)
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: FacebookBannerAd(
+                          placementId: "1265998170441655_1266012507106888",
+                          bannerSize: BannerSize.STANDARD,
+                          listener: (result, value) {
+                            print("Banner Ad $result --> $value");
+                          },
+                        ),
+                      )
+                    : CustomTheme.placeHolder,
+                PostWidget(item: item, index: index),
+              ],
+            );
           },
         );
       },
@@ -86,8 +103,9 @@ class PostWidget extends StatelessWidget {
       child: Stack(
         children: [
           Card(
-            elevation: 8.0,
-            margin: EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
+            elevation: 4.0,
+            margin: EdgeInsets.only(
+                left: 17.0, right: 17.0, top: 17.0, bottom: 17.0),
             //margin: EdgeInsets.all(12.0),
             child: item.renderType == "image"
                 ? CachedNetworkImage(
@@ -111,25 +129,30 @@ class PostWidget extends StatelessWidget {
                   )
                 : TextPost(item: item),
           ),
-          // Positioned(
-          //   bottom: 20.0,
-          //   right: 20.0,
-          //   child: Container(
-          //     padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 12.0),
-          //     decoration: BoxDecoration(
-          //       color: Theme.of(context).primaryColor,
-          //       borderRadius: BorderRadius.circular(14.0),
-          //     ),
-          //     child: Text(
-          //       item.category ?? '',
-          //       style: TextStyle(
-          //         color: Colors.white,
-          //         fontSize: 11.0,
-          //         fontWeight: FontWeight.bold,
-          //       ),
-          //     ),
-          //   ),
-          // )
+          item.isNew
+              ? Positioned(
+                  top: -0.0,
+                  right: -0.0,
+                  child: Container(
+                    margin: EdgeInsets.all(0.0),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 14.0, horizontal: 14.0),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      shape: BoxShape.circle,
+                      // borderRadius: BorderRadius.circular(132.0),
+                    ),
+                    child: Text(
+                      'New',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 11.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                )
+              : CustomTheme.placeHolder,
         ],
       ),
     );

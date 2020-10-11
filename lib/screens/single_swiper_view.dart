@@ -7,6 +7,8 @@ import 'package:ShareJoy/widgets/swiper_view/download_button.dart';
 import 'package:ShareJoy/widgets/swiper_view/like_button.dart';
 import 'package:ShareJoy/widgets/swiper_view/share_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fb_audience_network_ad/ad/ad_banner.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +20,8 @@ class SingleSwiperView extends StatefulWidget {
   const SingleSwiperView({Key key, this.mp, this.index}) : super(key: key);
 
   static route(context, int idx, PostProvider mp) {
+    FirebaseAnalytics().logEvent(name: "detail_view_open", parameters: {});
+
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => SingleSwiperView(
@@ -45,6 +49,7 @@ class _SingleSwiperViewState extends State<SingleSwiperView> {
         widget.mp.nextPage();
       }
     });
+
     super.initState();
   }
 
@@ -70,6 +75,19 @@ class _SingleSwiperViewState extends State<SingleSwiperView> {
                 child: SafeArea(
                   child: BackButton(
                     color: Colors.white,
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 50.0,
+                right: 0,
+                child: SafeArea(
+                  child: FacebookBannerAd(
+                    placementId: "1265998170441655_1266012507106888",
+                    bannerSize: BannerSize.STANDARD,
+                    listener: (result, value) {
+                      print("Banner Ad $result --> $value");
+                    },
                   ),
                 ),
               ),

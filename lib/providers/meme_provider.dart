@@ -40,7 +40,7 @@ class PostProvider extends ChangeNotifier {
   void setScrollController(ScrollController scroll) {
     print("setting scroll container");
     scroll.addListener(() {
-      print("scrolling");
+      // print("scrolling");
       if (scroll.position.pixels == scroll.position.maxScrollExtent) {
         // print("fetch new page.");
         nextPage();
@@ -94,6 +94,9 @@ class PostProvider extends ChangeNotifier {
     String url = Config.baseUrl + "/posts/$type?page=$currentPage";
     if (filters['category_id'] != null) {
       url += "&category_id=" + filters['category_id'];
+    }
+    if (filters['lang'] != null) {
+      url += "&lang=" + filters['lang'];
     }
 
     lastPostUrl = url;
