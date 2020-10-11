@@ -162,7 +162,7 @@ class PostProvider extends ChangeNotifier {
 
   Future<bool> like(Post post) async {
     post.isLiked = true;
-    await get(Cbonfig.baseUrl + "/posts/like/${post.id}");
+    await get(Config.baseUrl + "/posts/like/${post.id}");
     return true;
   }
 
