@@ -95,6 +95,7 @@ class PostProvider extends ChangeNotifier {
     if (filters['category_id'] != null) {
       url += "&category_id=" + filters['category_id'];
     }
+
     if (filters['lang'] != null) {
       url += "&lang=" + filters['lang'];
     }
@@ -105,7 +106,7 @@ class PostProvider extends ChangeNotifier {
       final json = res.json();
 
       if (currentPage == 1) this.items = [];
-
+      Post.showImage = true;
       for (var i in json['data']) {
         this.items.add(Post.fromJSON(i));
       }

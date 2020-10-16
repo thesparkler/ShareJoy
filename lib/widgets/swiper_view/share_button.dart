@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:ShareJoy/helpers/watermark_consent_helper.dart';
 import 'package:ShareJoy/models/post.dart';
 import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
@@ -17,10 +18,14 @@ class ShareButton extends StatefulWidget {
     Key key,
     @required this.item,
     this.rKey,
+    this.color,
+    this.watermarkCallback,
   }) : super(key: key);
 
   final Post item;
   final rKey;
+  final color;
+  final watermarkCallback;
   @override
   _ShareButtonState createState() => _ShareButtonState();
 }
@@ -42,7 +47,7 @@ class _ShareButtonState extends State<ShareButton> {
               ))
           : Icon(
               MdiIcons.shareOutline,
-              color: Colors.white,
+              color: widget.color != null ? widget.color : Colors.white,
             ),
     );
   }
@@ -51,12 +56,18 @@ class _ShareButtonState extends State<ShareButton> {
     setState(() {
       processing = true;
     });
-    FirebaseAnalytics().logEvent(name: "content_share", parameters: {
+    if (widget.watermarkCallback != null) {
+      final prefs = await getUserWatermarkPreferences(context);
+      widget.watermarkCallback(prefs);
+    }
+
+    FirebaseAnalytics()
+        .logEvent(name: "content_${widget.item.type}_share", parameters: {
       "id": widget.item.id,
       "type": widget.item.type,
     });
 
-    Provider.of<PostProvider>(context, listen: false).share(widget.item.id);
+    // Provider.of<PostProvider>(context, listen: false).share(widget.item.id);
     if (widget.rKey != null) {
       RenderRepaintBoundary boundary =
           widget.rKey.currentContext.findRenderObject();

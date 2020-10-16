@@ -3,15 +3,18 @@ import 'dart:convert';
 import 'package:ShareJoy/local_storage.dart';
 import 'package:ShareJoy/config.dart';
 import 'package:flutter/material.dart';
+import 'dart:math' as Math;
 
 class Post {
   static var current = 0;
+  static bool showImage = true;
   int id;
   String image;
   String type;
   String caption;
   String renderType;
   Color bg;
+  String bgImage;
   bool isLiked = false;
   String category;
   String createdAt;
@@ -44,6 +47,13 @@ class Post {
 
     if (this.renderType == "text") {
       this.bg = Config.bgColors[Post.current];
+      if (Post.showImage) {
+        int index = Math.Random().nextInt(26) + 1;
+        this.bgImage = Config.host + "/images/backgrounds/$index.jpg";
+        Post.showImage = false;
+      } else {
+        Post.showImage = true;
+      }
       Post.current = (Post.current + 1) % Config.bgColors.length;
     }
     final d = DateTime.parse(createdAt);
