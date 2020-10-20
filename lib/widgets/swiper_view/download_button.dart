@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:ShareJoy/helpers/watermark_consent_helper.dart';
+import 'package:ShareJoy/local_storage.dart';
+import 'package:ShareJoy/widgets/watermark_alert.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/rendering.dart';
 import 'package:ShareJoy/models/post.dart';
@@ -18,10 +21,14 @@ class DownlaodButton extends StatefulWidget {
     Key key,
     @required this.item,
     this.rKey,
+    this.color,
+    this.watermarkCallback,
   }) : super(key: key);
 
   final Post item;
   final rKey;
+  final color;
+  final watermarkCallback;
 
   @override
   _DownlaodButtonState createState() => _DownlaodButtonState();
@@ -44,7 +51,7 @@ class _DownlaodButtonState extends State<DownlaodButton> {
               ))
           : Icon(
               MdiIcons.downloadOutline,
-              color: Colors.white,
+              color: widget.color != null ? widget.color : Colors.white,
             ),
     );
   }
@@ -53,7 +60,12 @@ class _DownlaodButtonState extends State<DownlaodButton> {
     setState(() {
       processing = true;
     });
-    FirebaseAnalytics().logEvent(name: "content_save", parameters: {
+    if (widget.watermarkCallback != null) {
+      final prefs = await getUserWatermarkPreferences(context);
+      widget.watermarkCallback(prefs);
+    }
+    FirebaseAnalytics()
+        .logEvent(name: "content_${widget.item.type}_save", parameters: {
       "id": widget.item.id,
       "type": widget.item.type,
     });

@@ -181,11 +181,22 @@ class TextPost extends StatelessWidget {
       padding: EdgeInsets.all(30.0),
       height: MediaQuery.of(context).size.height * 0.5,
     //  color: item.bg,
+    //   decoration: BoxDecoration(
+    //     borderRadius: BorderRadius.circular(10.0),
+    //     color: item.bg
+
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        color: item.bg
-
+        color: item.bg,
+        image: item.bgImage != null
+            ? DecorationImage(
+                fit: BoxFit.cover,
+                image: NetworkImage(item.bgImage),
+              )
+            : null,
       ),
+
+
       child: Center(
           child: Text(
         item.caption,

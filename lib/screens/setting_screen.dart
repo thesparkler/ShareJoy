@@ -1,6 +1,9 @@
 import 'dart:ui';
 
+import 'package:ShareJoy/helpers/watermark_consent_helper.dart';
+import 'package:ShareJoy/local_storage.dart';
 import 'package:ShareJoy/theme_data.dart';
+import 'package:ShareJoy/widgets/watermark_alert.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +48,31 @@ class SettingScreen extends StatelessWidget {
           behavior: NoGlowBehaviour(),
           child: ListView(
             children: [
+              ListTile(
+                onTap: () async {
+                  await showDialog(
+                    context: context,
+                    child: WatermarkAlert(onSubmit:
+                        (String userWatermark, bool sharejoyWatermark) {
+                      var prefs = {
+                        "userWatermark": userWatermark,
+                        "sharejoyWatermark": sharejoyWatermark
+                      };
+                      LocalStorage.instance.put("watermark_prefs", prefs);
+                    }),
+                  );
+                },
+                title: Text(
+                  "Watermark Settings",
+                  style: TextStyle(fontFamily: 'RobotoMedium'),
+                ),
+                subtitle: Text(
+                  "Here you can change watermark settings",
+                  style: const TextStyle(
+                      fontFamily: 'RobotoRegular', fontSize: 14),
+                ),
+                trailing: Icon(MdiIcons.watermark),
+              ),
               Divider(),
               ListTile(
                 onTap: () async {

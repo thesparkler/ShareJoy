@@ -1,6 +1,8 @@
 import 'package:ShareJoy/models/post.dart';
 import 'package:ShareJoy/providers/meme_provider.dart';
+import 'package:ShareJoy/screens/editor.dart';
 import 'package:ShareJoy/theme_data.dart';
+import 'package:ShareJoy/widgets/sharejoy_watermark.dart';
 import 'package:ShareJoy/widgets/swiper_view/CopyButton.dart';
 import 'package:ShareJoy/widgets/swiper_view/bg_change_button.dart';
 import 'package:ShareJoy/widgets/swiper_view/download_button.dart';
@@ -11,6 +13,7 @@ import 'package:fb_audience_network_ad/ad/ad_banner.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -171,31 +174,64 @@ class _SingleTextPostWidgetState extends State<SingleTextPostWidget> {
   final GlobalKey _key = new GlobalKey();
   var bg;
   var bgImage;
+  var prefs;
   @override
   Widget build(BuildContext context) {
     if (bg == null) bg = widget.item.bg;
+    if (bgImage == null)
+      bgImage = widget.item.bgImage != null
+          ? DecorationImage(
+              image: NetworkImage(widget.item.bgImage),
+              fit: BoxFit.cover,
+            )
+          : null;
     return Stack(
       children: [
         RepaintBoundary(
           key: _key,
           child: Container(
             color: Colors.white,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 30.0),
-              decoration: BoxDecoration(
-                color: bg,
-                image: bgImage,
-              ),
-              child: Center(
-                child: Text(
-                  widget.item.caption,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline4.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
+            child: Stack(
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 30.0),
+                  decoration: BoxDecoration(
+                    color: bg,
+                    image: bgImage,
+                  ),
+                  child: Center(
+                    child: Text(
+                      widget.item.caption,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headline4.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                  ),
                 ),
-              ),
+                prefs != null && prefs['sharejoyWatermark'] == true
+                    ? Positioned(
+                        right: 10.0,
+                        bottom: 50.0,
+                        child: SharejoyWatermark(),
+                      )
+                    : CustomTheme.placeHolder,
+                prefs != null && prefs['userWatermark'] != ""
+                    ? Positioned(
+                        left: 10.0,
+                        bottom: 50.0,
+                        child: Opacity(
+                          opacity: 0.5,
+                          child: Text(
+                            prefs['userWatermark'],
+                            style:
+                                TextStyle(fontSize: 22.0, color: Colors.white),
+                          ),
+                        ),
+                      )
+                    : CustomTheme.placeHolder,
+              ],
             ),
           ),
         ),
@@ -211,21 +247,46 @@ class _SingleTextPostWidgetState extends State<SingleTextPostWidget> {
             mainAxisSize: MainAxisSize.min,
             children: [
               widget.item.canChangeBackgroundColor()
-                  ? BGChangeButton(
-                      item: widget.item,
-                      onChange: (v, img) {
-                        print(v);
-                        setState(() {
-                          bg = v;
-                          bgImage = img;
-                        });
-                      })
+                  ? IconButton(
+                      onPressed: () {
+                        FirebaseAnalytics().logEvent(
+                            name: "content_${widget.item.type}_edit",
+                            parameters: {
+                              "id": widget.item.id,
+                              "type": widget.item.type,
+                            });
+
+                        Editor.route(context, widget.item);
+                      },
+                      icon: Icon(
+                        MdiIcons.palette,
+                        color: Colors.white,
+                      ),
+                    )
                   : CustomTheme.placeHolder,
               widget.item.canCopyText()
                   ? CopyButton(item: widget.item)
                   : CustomTheme.placeHolder,
-              DownlaodButton(item: widget.item, rKey: _key),
-              ShareButton(item: widget.item, rKey: _key),
+              DownlaodButton(
+                item: widget.item,
+                rKey: _key,
+                watermarkCallback: (newPrefs) {
+                  setState(() {
+                    this.prefs = newPrefs;
+                  });
+                  print("watermark callback called");
+                },
+              ),
+              ShareButton(
+                item: widget.item,
+                rKey: _key,
+                watermarkCallback: (newPrefs) {
+                  setState(() {
+                    this.prefs = newPrefs;
+                  });
+                  print("watermark callback called");
+                },
+              ),
             ],
           ),
         )
