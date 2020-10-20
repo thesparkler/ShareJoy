@@ -69,6 +69,8 @@ flutter:
   assets:
     - assets/images/icon.png
     - assets/images/nothingfound.png
+    - assets/sharejoy_red.png
+    - assets/language.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -91,13 +93,9 @@ flutter:
        fonts:
          - asset: assets/fonts/RobotoMedium.ttf
 
-     - family: RobotoRegular
+     - family: FredokaOneRegular
        fonts:
-         - asset: assets/fonts/RobotoRegular.ttf
-
-     - family: NunitoBold
-       fonts:
-         - asset: assets/fonts/NunitoBold.ttf
+         - asset: assets/fonts/FredokaOneRegular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

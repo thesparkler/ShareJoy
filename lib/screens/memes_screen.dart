@@ -1,7 +1,9 @@
-import 'package:ShareJoy/config.dart';
+import 'dart:ui';
+
 import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:ShareJoy/widgets/home/category_bar.dart';
 import 'package:ShareJoy/widgets/home/post_list.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,25 +34,51 @@ class MemesScreen extends StatelessWidget {
               AppBar(
                 backgroundColor: Colors.transparent,
                 elevation: 0,
-                title: Text(
-                  Config.titles[type],
-                  style: TextStyle(
-                      fontFamily: 'NunitoBold',
-                      fontSize: 20.0,
-                      color: Colors.black),
-                  // style: Theme.of(context)
-                  //     .textTheme
-                  //     .headline6
-                  //     .copyWith(fontSize: 20.0)
+                title: Row(
+                  children: [
+                    Image.asset('assets/images/sharejoy_red.png', height: 28, width: 28,),
+
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: Text("ShareJoy", style: TextStyle(color: Colors.black, fontFamily: 'FredokaOneRegular'),),
+                    ),
+
+                  ],
                 ),
+
+
+                // Text(
+                //   Config.titles[type],
+                //   style: TextStyle(
+                //       fontFamily: 'NunitoBold',
+                //       fontSize: 20.0,
+                //       color: Colors.black),
+                //   // style: Theme.of(context)
+                //   //     .textTheme
+                //   //     .headline6
+                //   //     .copyWith(fontSize: 20.0)
+                // ),
+
+
+
                 actions: [
                   // DropdownButton(items: null, onChanged: null)
-                  LanguageButton(onChange: (v) {
-                    print("$v language selected");
-                    memeProvider.filter("lang", v);
-                  }),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: LanguageButton(onChange: (v) {
+                      print("$v language selected");
+                      memeProvider.filter("lang", v);
+                    }),
+                  ),
+                  
+                  // Padding(
+                  //   padding: const EdgeInsets.only(right: 8.0),
+                  //   child: Icon(Icons.search, color: Colors.black,),
+                  // )
                 ],
               ),
+
+
               CategoryBar(type: type),
               PostList(type: type)
             ],
@@ -137,11 +165,15 @@ class _LanguageButtonState extends State<LanguageButton> {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      focusNode: _focusNode,
-      color: Colors.black,
-      icon: Icon(Icons.language),
-      onPressed: () {
+    return InkWell(
+      child: Container(
+        child: Image.asset("assets/images/language.png", height: 35, width: 35,),
+      ),
+     // focusNode: _focusNode,
+     // color: Colors.black,
+      //icon: Icon()
+      //icon: Icon(Icons.language),
+      onTap: () {
         if (shown) {
           this._overlayEntry.remove();
           setState(() {

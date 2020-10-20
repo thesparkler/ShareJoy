@@ -102,57 +102,68 @@ class PostWidget extends StatelessWidget {
           context, index, Provider.of<PostProvider>(context, listen: false)),
       child: Stack(
         children: [
-          Card(
-            elevation: 4.0,
+          Container(
             margin: EdgeInsets.only(
-                left: 17.0, right: 17.0, top: 17.0, bottom: 17.0),
-            //margin: EdgeInsets.all(12.0),
-            child: item.renderType == "image"
-                ? CachedNetworkImage(
-                    width: double.infinity,
-                    imageUrl: item.image,
-                    placeholder: (context, url) => Shimmer.fromColors(
-                      baseColor: Colors.grey[300],
-                      highlightColor: Colors.grey[400],
-                      child: Container(
-                        color: Colors.grey,
+                left: 10.0, right: 10.0, bottom: 10.0, top: 5.0),
+            child: Card(
+              elevation: 5.0,
+              shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.transparent, width: 0.5),
+                  borderRadius: BorderRadius.circular(15)),
+              child: item.renderType == "image"
+                  ? Container(
+                      padding: EdgeInsets.all(10.0),
+                      child: CachedNetworkImage(
                         width: double.infinity,
-                        height: MediaQuery.of(context).size.height * 0.4,
+                        imageUrl: item.image,
+                        placeholder: (context, url) => Shimmer.fromColors(
+                          baseColor: Colors.grey[300],
+                          highlightColor: Colors.grey[400],
+                          child: Container(
+                            padding: EdgeInsets.all(10.0),
+                            color: Colors.grey,
+                            width: double.infinity,
+                            height: MediaQuery.of(context).size.height * 0.4,
+                          ),
+                        ),
+                        errorWidget: (context, url, error) => Container(
+                          height: MediaQuery.of(context).size.height * 0.4,
+                          child: Center(
+                            child: Icon(Icons.warning),
+                          ),
+                        ),
                       ),
-                    ),
-                    errorWidget: (context, url, error) => Container(
-                      height: MediaQuery.of(context).size.height * 0.4,
-                      child: Center(
-                        child: Icon(Icons.warning),
-                      ),
-                    ),
-                  )
-                : TextPost(item: item),
+                    )
+                  : TextPost(item: item),
+            ),
           ),
-          item.isNew
-              ? Positioned(
-                  top: -0.0,
-                  right: -0.0,
-                  child: Container(
-                    margin: EdgeInsets.all(0.0),
-                    padding:
-                        EdgeInsets.symmetric(vertical: 14.0, horizontal: 14.0),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      shape: BoxShape.circle,
-                      // borderRadius: BorderRadius.circular(132.0),
-                    ),
-                    child: Text(
-                      'New',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 11.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                )
-              : CustomTheme.placeHolder,
+
+          //  ),
+
+          // item.isNew
+          //     ? Positioned(
+          //         top: -0.0,
+          //         right: -0.0,
+          //         child: Container(
+          //           margin: EdgeInsets.all(0.0),
+          //           padding:
+          //               EdgeInsets.symmetric(vertical: 14.0, horizontal: 14.0),
+          //           decoration: BoxDecoration(
+          //             color: Theme.of(context).primaryColor,
+          //             shape: BoxShape.circle,
+          //             // borderRadius: BorderRadius.circular(132.0),
+          //           ),
+          //           child: Text(
+          //             'New',
+          //             style: TextStyle(
+          //               color: Colors.white,
+          //               fontSize: 11.0,
+          //               fontWeight: FontWeight.bold,
+          //             ),
+          //           ),
+          //         ),
+          //       )
+          CustomTheme.placeHolder,
         ],
       ),
     );
@@ -163,12 +174,18 @@ class TextPost extends StatelessWidget {
   final Post item;
 
   const TextPost({Key key, this.item}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(30.0),
       height: MediaQuery.of(context).size.height * 0.5,
-      color: item.bg,
+    //  color: item.bg,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        color: item.bg
+
+      ),
       child: Center(
           child: Text(
         item.caption,

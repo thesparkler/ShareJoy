@@ -131,7 +131,8 @@ class CategoryWidget extends StatelessWidget {
               : Colors.white,
         ),
         child: Text(
-          "#" + category.name,
+          category.name,
+      //    "#" + category.name,
           style: TextStyle(
             color: (mp.filters['category_id'] == category.id.toString())
                 ? Colors.white
