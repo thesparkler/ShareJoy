@@ -1,6 +1,9 @@
 import 'package:ShareJoy/local_storage.dart';
 import 'package:ShareJoy/widgets/watermark_alert.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:typed_data';
+import 'package:image/image.dart';
 
 Future<Map> getUserWatermarkPreferences(BuildContext context) async {
   var prefs = await LocalStorage.instance.get("watermark_prefs");
@@ -18,4 +21,50 @@ Future<Map> getUserWatermarkPreferences(BuildContext context) async {
     );
   }
   return prefs;
+}
+
+Future<List<int>> applyWatermark(bytes, context, {type: "png"}) async {
+  var sharedImage;
+  var prefs = await getUserWatermarkPreferences(context);
+  bool needUserLogo = prefs != null && prefs['userWatermark'] != "";
+  bool needShareJoyLogo = prefs != null && prefs['sharejoyWatermark'] == true;
+  if (!needUserLogo && !needShareJoyLogo) return bytes;
+  if (type == "jpg") {
+    sharedImage = decodeJpg(bytes);
+  } else if (type == "png") {
+    sharedImage = decodePng(bytes);
+  } else {
+    return bytes;
+  }
+  if (needShareJoyLogo) {
+    int watermarkWidth = (sharedImage.width * 0.25).round();
+
+    final bdata = await rootBundle.load("assets/images/share_image.png");
+    final imageData =
+        bdata.buffer.asUint8List(bdata.offsetInBytes, bdata.lengthInBytes);
+    var waterMarkImage = decodePng(imageData);
+    waterMarkImage = copyResize(
+      waterMarkImage,
+      width: watermarkWidth,
+    );
+    sharedImage = drawImage(
+      sharedImage,
+      waterMarkImage,
+      dstX: sharedImage.width -
+          (waterMarkImage.width + (sharedImage.width * 0.05).round()),
+      dstY: sharedImage.height -
+          (waterMarkImage.height + (sharedImage.height * 0.05).round()),
+      blend: true,
+    );
+  }
+  if (needUserLogo) {
+    sharedImage = drawString(
+        sharedImage,
+        arial_24,
+        20,
+        sharedImage.height - (30 + (sharedImage.height * 0.05).round()),
+        prefs['userWatermark']);
+  }
+
+  return encodePng(sharedImage);
 }

@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'dart:ui' as ui;
-
 import 'package:provider/provider.dart';
 
 class ShareButton extends StatefulWidget {
@@ -56,11 +55,6 @@ class _ShareButtonState extends State<ShareButton> {
     setState(() {
       processing = true;
     });
-    if (widget.watermarkCallback != null) {
-      final prefs = await getUserWatermarkPreferences(context);
-      widget.watermarkCallback(prefs);
-    }
-
     FirebaseAnalytics()
         .logEvent(name: "content_${widget.item.type}_share", parameters: {
       "id": widget.item.id,
@@ -72,18 +66,30 @@ class _ShareButtonState extends State<ShareButton> {
       RenderRepaintBoundary boundary =
           widget.rKey.currentContext.findRenderObject();
       ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+
       ByteData byteData =
           await image.toByteData(format: ui.ImageByteFormat.png);
       var pngBytes = byteData.buffer.asUint8List();
-      await Share.file('Memes Sharer', 'amlog.jpg', pngBytes, 'image/png');
-      // var bs64 = base64Encode(pngBytes);
-
+      var sharedImageInts =
+          await applyWatermark(pngBytes, context, type: "png");
+      // encodePng(image)
+      await Share.file('ShareJoy', 'amlog.png', sharedImageInts, 'image/png');
     } else {
       try {
         var request = await HttpClient().getUrl(Uri.parse(widget.item.image));
         var response = await request.close();
+        final mimetypes = {
+          "image/jpeg": "jpg",
+          "image/jpg": "jpg",
+          "image/gif": "gif",
+          "image/png": "png",
+        };
+
+        final ext = mimetypes[response.headers.contentType.value] ?? "unknown";
+
         Uint8List bytes = await consolidateHttpClientResponseBytes(response);
-        await Share.file('Memes Sharer', 'amlog.jpg', bytes, 'image/jpg');
+        var sharedImageInts = await applyWatermark(bytes, context, type: ext);
+        await Share.file('ShareJoy', 'amlog.png', sharedImageInts, 'image/png');
       } catch (e) {
         print('error: $e');
       }

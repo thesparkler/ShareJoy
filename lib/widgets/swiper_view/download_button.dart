@@ -60,10 +60,6 @@ class _DownlaodButtonState extends State<DownlaodButton> {
     setState(() {
       processing = true;
     });
-    if (widget.watermarkCallback != null) {
-      final prefs = await getUserWatermarkPreferences(context);
-      widget.watermarkCallback(prefs);
-    }
     FirebaseAnalytics()
         .logEvent(name: "content_${widget.item.type}_save", parameters: {
       "id": widget.item.id,
@@ -87,11 +83,12 @@ class _DownlaodButtonState extends State<DownlaodButton> {
           ByteData byteData =
               await image.toByteData(format: ui.ImageByteFormat.png);
           var pngBytes = byteData.buffer.asUint8List();
+          pngBytes = await applyWatermark(pngBytes, context, type: "png");
           var name1 = "/image" + DateTime.now().microsecond.toString() + ".png";
           await ImageSaver().saveImage(
             imageBytes: pngBytes,
             imageName: name1,
-            directoryName: "Memes",
+            directoryName: "ShareJoy",
           );
           Scaffold.of(context).showSnackBar(SnackBar(
             content: Text("File is saved in your gallery"),
@@ -110,10 +107,13 @@ class _DownlaodButtonState extends State<DownlaodButton> {
             "image/png": "png",
           };
           final ext = mimetypes[res.headers['content-type']] ?? "jpg";
+          final wext = mimetypes[res.headers['content-type']] ?? "unknown";
           name = "image" + DateTime.now().microsecond.toString() + "." + ext;
           var request = await HttpClient().getUrl(Uri.parse(widget.item.image));
           var response = await request.close();
           Uint8List bytes = await consolidateHttpClientResponseBytes(response);
+
+          bytes = await applyWatermark(bytes, context, type: wext);
 
           await ImageSaver().saveImage(
             imageBytes: bytes,
