@@ -32,8 +32,14 @@ class MemesScreen extends StatelessWidget {
           child: Column(
             children: [
               AppBar(
-                backgroundColor: Colors.transparent,
-                elevation: 0,
+
+                backgroundColor: Colors.white,
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(
+                    bottom: Radius.circular(20.0)
+                  )
+                ),
                 title: Row(
                   children: [
                     Image.asset('assets/images/sharejoy_red.png', height: 28, width: 28,),
@@ -78,6 +84,7 @@ class MemesScreen extends StatelessWidget {
                 ],
               ),
 
+              SizedBox(height: 8.0,),
 
               CategoryBar(type: type),
               PostList(type: type)
@@ -167,7 +174,8 @@ class _LanguageButtonState extends State<LanguageButton> {
   Widget build(BuildContext context) {
     return InkWell(
       child: Container(
-        child: Image.asset("assets/images/language.png", height: 35, width: 35,),
+        margin: EdgeInsets.only(right: 10),
+        child: Image.asset("assets/images/language.png", height: 25, width: 25),
       ),
      // focusNode: _focusNode,
      // color: Colors.black,
