@@ -176,6 +176,33 @@
 //   }
 // }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import 'dart:ui';
 import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:ShareJoy/widgets/home/category_bar.dart';
@@ -204,7 +231,7 @@ class MemesScreen extends StatelessWidget {
           overscroll.disallowGlow();
           return;
         },
-        child: CustomScrollView(slivers: <Widget>[
+        child: CustomScrollView(controller: scroll ,slivers: <Widget>[
           SliverAppBar(
             shadowColor: Colors.black,
             forceElevated: true,

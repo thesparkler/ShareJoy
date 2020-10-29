@@ -87,7 +87,7 @@ class BGChangeButton extends StatelessWidget {
         );
       },
       icon: Icon(
-        MdiIcons.palette,
+        MdiIcons.imageEdit,
         color: Colors.white,
       ),
     );
