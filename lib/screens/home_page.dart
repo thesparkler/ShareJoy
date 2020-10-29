@@ -18,75 +18,96 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       backgroundColor: Colors.grey[100],
       body: SafeArea(
         child: DetailView(
           currentTab: currentTab,
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (v) async {
-          setState(() {
-            currentTab = v;
-          });
-          var tabName = "";
-          switch (v) {
-            case 0:
-              tabName = "memes";
-              break;
-            case 1:
-              tabName = "shayari";
-              break;
-            case 2:
-              tabName = "status";
-              break;
-            case 3:
-              tabName = "setting";
-              break;
-          }
-          await FirebaseAnalytics().logEvent(name: "tab_clicked", parameters: {
-            "name": tabName,
-          });
-          print("$tabName tab clicked");
-        },
-        type: BottomNavigationBarType.fixed,
-        unselectedLabelStyle: TextStyle(color: Colors.black),
-        currentIndex: currentTab,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(MdiIcons.ghost),
-            title: Text(
-              "Memes",
-              style: TextStyle(fontFamily: 'RobotoMedium'),
-            ),
+      bottomNavigationBar: ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            boxShadow: <BoxShadow> [
+              BoxShadow(
+                color: Colors.black,
+                blurRadius: 2
+              )
+            ]
           ),
-          BottomNavigationBarItem(
-            icon: Center(
-              child: Icon(
-                MdiIcons.feather,
+          child: BottomNavigationBar(
+            elevation: 10.0,
+            backgroundColor: Colors.white,
+            onTap: (v) async {
+              setState(() {
+                currentTab = v;
+              });
+              var tabName = "";
+              switch (v) {
+                case 0:
+                  tabName = "memes";
+                  break;
+                case 1:
+                  tabName = "shayari";
+                  break;
+                case 2:
+                  tabName = "status";
+                  break;
+                case 3:
+                  tabName = "setting";
+                  break;
+              }
+              await FirebaseAnalytics().logEvent(name: "tab_clicked", parameters: {
+                "name": tabName,
+              });
+              print("$tabName tab clicked");
+            },
+
+            type: BottomNavigationBarType.fixed,
+            unselectedLabelStyle: TextStyle(color: Colors.black),
+            currentIndex: currentTab,
+
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(MdiIcons.ghost),
+                title: Text(
+                  "Memes",
+                  style: TextStyle(fontFamily: 'RobotoMedium'),
+                ),
               ),
-            ),
-            title: Center(
-                child: Text(
-              "Shayari",
-              style: TextStyle(fontFamily: 'RobotoMedium'),
-            )),
+              BottomNavigationBarItem(
+                icon: Center(
+                  child: Icon(
+                    MdiIcons.feather,
+                  ),
+                ),
+                title: Center(
+                    child: Text(
+                  "Shayari",
+                  style: TextStyle(fontFamily: 'RobotoMedium'),
+                )),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Meme.greetings),
+                title: Text(
+                  "Status",
+                  style: TextStyle(fontFamily: 'RobotoMedium'),
+                ),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(MdiIcons.cog),
+                title: Text(
+                  "Settings",
+                  style: TextStyle(fontFamily: 'RobotoMedium'),
+                ),
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Meme.greetings),
-            title: Text(
-              "Status",
-              style: TextStyle(fontFamily: 'RobotoMedium'),
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(MdiIcons.cog),
-            title: Text(
-              "Settings",
-              style: TextStyle(fontFamily: 'RobotoMedium'),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

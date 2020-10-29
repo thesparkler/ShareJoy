@@ -60,7 +60,7 @@ class _CategoryBarState extends State<CategoryBar> {
             child: Container(
               padding: const EdgeInsets.all(4.0),
               margin: const EdgeInsets.only(
-                left: 4.0,
+                top: 5.0
               ),
               decoration: BoxDecoration(
                   //    border: Border.all(color: Colors.grey),
@@ -76,7 +76,7 @@ class _CategoryBarState extends State<CategoryBar> {
                             fontWeight: FontWeight.bold,
                           )))
                   : Text(
-                      "more...",
+                      "more",
                       style:
                           TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                     ),
@@ -118,17 +118,19 @@ class CategoryWidget extends StatelessWidget {
       },
       child: Container(
         padding: const EdgeInsets.all(8.0),
-        margin: const EdgeInsets.all(4.0),
+        margin: const EdgeInsets.all(2.5),
         decoration: BoxDecoration(
-          border: Border.all(
-            color: (mp.filters['category_id'] == category.id.toString())
-                ? Theme.of(context).primaryColor
-                : Colors.grey,
-          ),
+          // border: Border.all(
+          //   color: (mp.filters['category_id'] == category.id.toString())
+          //     //  ? Theme.of(context).accentColor
+          //       ? Theme.of(context).accentColor
+          //       : new Color(0xFFC0C0C0),
+          // ),
           borderRadius: BorderRadius.circular(20.0),
           color: (mp.filters['category_id'] == category.id.toString())
-              ? Theme.of(context).primaryColor
-              : Colors.white,
+             // ? Theme.of(context).primaryColor
+              ? Theme.of(context).accentColor
+              : new Color(0xFFdcdcdc),
         ),
         child: Text(
           category.name,
@@ -136,9 +138,9 @@ class CategoryWidget extends StatelessWidget {
           style: TextStyle(
             color: (mp.filters['category_id'] == category.id.toString())
                 ? Colors.white
-                : Colors.black87,
+                : Colors.black,
             fontSize: 11.0,
-            fontStyle: FontStyle.italic,
+            fontStyle: FontStyle.normal,
           ),
         ),
       ),
