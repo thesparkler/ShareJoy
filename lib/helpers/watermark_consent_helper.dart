@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:ShareJoy/local_storage.dart';
 import 'package:ShareJoy/widgets/watermark_alert.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:typed_data';
@@ -23,9 +26,27 @@ Future<Map> getUserWatermarkPreferences(BuildContext context) async {
   return prefs;
 }
 
-Future<List<int>> applyWatermark(bytes, context, {type: "png"}) async {
-  var sharedImage;
+dynamic applyWatermark(bytes, context, {type: "png"}) async {
+  var data = new Map();
   var prefs = await getUserWatermarkPreferences(context);
+  data['bytes'] = bytes;
+  data['type'] = type;
+  data['prefs'] = prefs;
+  final bdata = await rootBundle.load("assets/images/share_image.png");
+  data['imageData'] =
+      bdata.buffer.asUint8List(bdata.offsetInBytes, bdata.lengthInBytes);
+
+  var res = await compute(applyWatermarkBg, data);
+
+  return res;
+}
+
+dynamic applyWatermarkBg(data) async {
+  var sharedImage;
+  var prefs = data['prefs'];
+  var type = data['type'];
+  var bytes = data['bytes'];
+  final imageData = data['imageData'];
   bool needUserLogo = prefs != null && prefs['userWatermark'] != "";
   bool needShareJoyLogo = prefs != null && prefs['sharejoyWatermark'] == true;
   if (!needUserLogo && !needShareJoyLogo) return bytes;
@@ -39,9 +60,6 @@ Future<List<int>> applyWatermark(bytes, context, {type: "png"}) async {
   if (needShareJoyLogo) {
     int watermarkWidth = (sharedImage.width * 0.25).round();
 
-    final bdata = await rootBundle.load("assets/images/share_image.png");
-    final imageData =
-        bdata.buffer.asUint8List(bdata.offsetInBytes, bdata.lengthInBytes);
     var waterMarkImage = decodePng(imageData);
     waterMarkImage = copyResize(
       waterMarkImage,

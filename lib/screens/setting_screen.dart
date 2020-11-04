@@ -38,7 +38,7 @@ class SettingScreen extends StatelessWidget {
                         ))),
                 CustomTheme.h12,
                 Text(
-                  "version 1.0.1",
+                  "version 1.1.0",
                   style: TextStyle(fontFamily: 'RobotoRegular'),
                 ),
               ],

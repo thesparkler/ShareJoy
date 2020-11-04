@@ -23,6 +23,7 @@ class EditorProvider extends ChangeNotifier {
   void changeBackgroundColor(Color c) {
     print("color changed");
     this.bgColor = c;
+    this.imageUrl = null;
     notify();
   }
 
