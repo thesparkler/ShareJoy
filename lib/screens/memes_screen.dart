@@ -176,33 +176,6 @@
 //   }
 // }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import 'dart:ui';
 import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:ShareJoy/widgets/home/category_bar.dart';
@@ -232,7 +205,7 @@ class MemesScreen extends StatelessWidget {
           overscroll.disallowGlow();
           return;
         },
-        child: CustomScrollView(controller: scroll ,slivers: <Widget>[
+        child: CustomScrollView(controller: scroll, slivers: <Widget>[
           SliverAppBar(
             shadowColor: Colors.black,
             forceElevated: true,
@@ -250,7 +223,6 @@ class MemesScreen extends StatelessWidget {
                   height: 28,
                   width: 28,
                 ),
-
                 Padding(
                   padding: const EdgeInsets.only(left: 10.0),
                   child: Text(
@@ -304,7 +276,7 @@ class _LanguageButtonState extends State<LanguageButton> {
   bool _isVisible = false;
 
   //final FocusNode _focusNode = FocusNode();
- // bool shown = false;
+  // bool shown = false;
 
   // @override
   // void initState() {
@@ -326,44 +298,46 @@ class _LanguageButtonState extends State<LanguageButton> {
     var offset = renderBox.localToGlobal(Offset.zero);
 
     return OverlayEntry(
-        builder: (context) => GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: () { hideHelp(); },
-          child: Stack(
-            children: [
-              Positioned(
-                    right: 5.0,
-                    top: offset.dy + size.height + 5.0,
-                    width: 150.0,
-                    child: Material(
-                      elevation: 4.0,
-                      child: ListView(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        children: <Widget>[
-                          ListTile(
-                            title: Text('All'),
-                            onTap: () => onChange(""),
-                          ),
-                          ListTile(
-                            title: Text('English'),
-                            onTap: () => onChange("english"),
-                          ),
-                          ListTile(
-                            title: Text('Hindi'),
-                            onTap: () => onChange("hindi"),
-                          ),
-                          ListTile(
-                            title: Text('Marathi'),
-                            onTap: () => onChange("marathi"),
-                          )
-                        ],
-                      ),
+      builder: (context) => GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () {
+          hideHelp();
+        },
+        child: Stack(
+          children: [
+            Positioned(
+              right: 5.0,
+              top: offset.dy + size.height + 5.0,
+              width: 150.0,
+              child: Material(
+                elevation: 4.0,
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  children: <Widget>[
+                    ListTile(
+                      title: Text('All'),
+                      onTap: () => onChange(""),
                     ),
-                  ),
-            ],
-          ),
+                    ListTile(
+                      title: Text('English'),
+                      onTap: () => onChange("english"),
+                    ),
+                    ListTile(
+                      title: Text('Hindi'),
+                      onTap: () => onChange("hindi"),
+                    ),
+                    ListTile(
+                      title: Text('Marathi'),
+                      onTap: () => onChange("marathi"),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
+      ),
     );
   }
 
@@ -378,7 +352,6 @@ class _LanguageButtonState extends State<LanguageButton> {
 
   @override
   Widget build(BuildContext context) {
-
     // return GestureDetector(
     //   child: Container(
     //     margin: EdgeInsets.only(right: 10),
@@ -406,18 +379,19 @@ class _LanguageButtonState extends State<LanguageButton> {
         GestureDetector(
           child: Container(
             margin: EdgeInsets.only(right: 10.0),
-            child: Image.asset("assets/images/language.png", height: 25, width: 25),
+            child: Image.asset("assets/images/language.png",
+                height: 25, width: 25),
           ),
-          onTap: () { showLang();  },
+          onTap: () {
+            showLang();
+          },
         )
       ],
     );
-
-
   }
 
   showLang() async {
-    if(!_isVisible) {
+    if (!_isVisible) {
       _overlayState = Overlay.of(context);
       _overlayEntry = _createOverlayEntry();
       _overlayState.insert(_overlayEntry);
@@ -429,6 +403,4 @@ class _LanguageButtonState extends State<LanguageButton> {
     _isVisible = false;
     _overlayEntry.remove();
   }
-
-
 }

@@ -7,6 +7,8 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
+import 'home_screen.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -18,7 +20,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       backgroundColor: Colors.grey[100],
       body: SafeArea(
         child: DetailView(
@@ -31,14 +32,9 @@ class _HomePageState extends State<HomePage> {
           topRight: Radius.circular(20.0),
         ),
         child: Container(
-          decoration: BoxDecoration(
-            boxShadow: <BoxShadow> [
-              BoxShadow(
-                color: Colors.black,
-                blurRadius: 2
-              )
-            ]
-          ),
+          decoration: BoxDecoration(boxShadow: <BoxShadow>[
+            BoxShadow(color: Colors.black, blurRadius: 2)
+          ]),
           child: BottomNavigationBar(
             elevation: 10.0,
             backgroundColor: Colors.white,
@@ -49,29 +45,38 @@ class _HomePageState extends State<HomePage> {
               var tabName = "";
               switch (v) {
                 case 0:
-                  tabName = "memes";
+                  tabName = "home";
                   break;
                 case 1:
-                  tabName = "shayari";
-                  break;
-                case 2:
-                  tabName = "status";
+                  tabName = "memes";
                   break;
                 case 3:
+                  tabName = "shayari";
+                  break;
+                case 3:
+                  tabName = "status";
+                  break;
+                case 4:
                   tabName = "setting";
                   break;
               }
-              await FirebaseAnalytics().logEvent(name: "tab_clicked", parameters: {
+              await FirebaseAnalytics()
+                  .logEvent(name: "tab_clicked", parameters: {
                 "name": tabName,
               });
               print("$tabName tab clicked");
             },
-
             type: BottomNavigationBarType.fixed,
             unselectedLabelStyle: TextStyle(color: Colors.black),
             currentIndex: currentTab,
-
             items: [
+              BottomNavigationBarItem(
+                icon: Icon(MdiIcons.home),
+                title: Text(
+                  "Home",
+                  style: TextStyle(fontFamily: 'RobotoMedium'),
+                ),
+              ),
               BottomNavigationBarItem(
                 icon: Icon(MdiIcons.ghost),
                 title: Text(
@@ -121,10 +126,12 @@ class DetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (currentTab) {
       case 0:
+        return HomeScreen();
       case 1:
       case 2:
-        return MemesScreen(type: Config.types[currentTab]);
       case 3:
+        return MemesScreen(type: Config.types[currentTab]);
+      case 4:
         return SettingScreen();
     }
     return CustomTheme.placeHolder;
