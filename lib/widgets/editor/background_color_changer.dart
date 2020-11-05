@@ -71,47 +71,42 @@ class BackgroundColorChanger extends StatelessWidget {
   }
 
   void _customPicker(context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          titlePadding: const EdgeInsets.all(0.0),
-          contentPadding: const EdgeInsets.all(0.0),
-          content: SingleChildScrollView(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text("Pick Color"),
-                    ),
-                    IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon: Icon(Icons.clear),
-                    ),
-                  ],
-                ),
-                ColorPicker(
-                  pickerColor: Colors.black,
-                  onColorChanged: onChanged,
-                  colorPickerWidth: 300.0,
-                  pickerAreaHeightPercent: 0.7,
-                  enableAlpha: true,
-                  displayThumbColor: true,
-                  showLabel: true,
-                  paletteType: PaletteType.hsv,
-                  pickerAreaBorderRadius: const BorderRadius.only(
-                    topLeft: const Radius.circular(2.0),
-                    topRight: const Radius.circular(2.0),
+    Scaffold.of(context).showBottomSheet((context) {
+      return Container(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Pick Color"),
                   ),
+                  IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: Icon(Icons.clear),
+                  ),
+                ],
+              ),
+              ColorPicker(
+                pickerColor: selectedValue,
+                onColorChanged: onChanged,
+                colorPickerWidth: 300.0,
+                pickerAreaHeightPercent: 0.4,
+                enableAlpha: true,
+                displayThumbColor: true,
+                showLabel: true,
+                paletteType: PaletteType.hsv,
+                pickerAreaBorderRadius: const BorderRadius.only(
+                  topLeft: const Radius.circular(2.0),
+                  topRight: const Radius.circular(2.0),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        );
-      },
-    );
+        ),
+      );
+    });
   }
 }

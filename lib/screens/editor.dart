@@ -181,9 +181,9 @@ class _ToolBarState extends State<ToolBar> with TickerProviderStateMixin {
           controller: ctrl,
           tabs: [
             Tab(child: Icon(MdiIcons.formatSize)),
+            Tab(child: Icon(MdiIcons.formatColorText)),
             Tab(child: Icon(MdiIcons.imageEdit)),
             Tab(child: Icon(MdiIcons.formatColorFill)),
-            Tab(child: Icon(MdiIcons.formatColorText)),
           ],
         ),
         Container(
@@ -193,6 +193,11 @@ class _ToolBarState extends State<ToolBar> with TickerProviderStateMixin {
               onChanged: ep.changeTextSize,
               selectedValue: ep.size,
             ),
+            BackgroundColorChanger(
+              selectedValue: ep.textColor,
+              onChanged: ep.changeTextColor,
+            ),
+
             BackgroundImageChanger(
               selectedValue: ep.imageUrl,
               onChanged: ep.changeBackgroundImage,
@@ -200,10 +205,6 @@ class _ToolBarState extends State<ToolBar> with TickerProviderStateMixin {
             BackgroundColorChanger(
               selectedValue: ep.bgColor,
               onChanged: ep.changeBackgroundColor,
-            ),
-            BackgroundColorChanger(
-              selectedValue: ep.textColor,
-              onChanged: ep.changeTextColor,
             ),
             // FontFamilyChanger(),
           ]),
