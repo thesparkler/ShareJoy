@@ -176,38 +176,10 @@
 //   }
 // }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import 'dart:ui';
 import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:ShareJoy/widgets/home/category_bar.dart';
 import 'package:ShareJoy/widgets/home/post_list.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -232,58 +204,72 @@ class MemesScreen extends StatelessWidget {
           overscroll.disallowGlow();
           return;
         },
-        child: CustomScrollView(controller: scroll ,slivers: <Widget>[
-          SliverAppBar(
-            shadowColor: Colors.black,
-            forceElevated: true,
-            floating: true,
-            backgroundColor: Colors.white,
-            elevation: 5,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(20.0),
-            )),
-            title: Row(
-              children: [
-                Image.asset(
-                  'assets/images/sharejoy_red.png',
-                  height: 28,
-                  width: 28,
+        child: RefreshIndicator(
+          onRefresh: () => memeProvider.refresh(),
+          child: CustomScrollView(controller: scroll, slivers: <Widget>[
+            SliverAppBar(
+              shadowColor: Colors.black,
+              forceElevated: true,
+              floating: true,
+              backgroundColor: Colors.white,
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(
+                bottom: Radius.circular(20.0),
+              )),
+              title: Row(
+                children: [
+                  Image.asset(
+                    'assets/images/sharejoy_red.png',
+                    height: 28,
+                    width: 28,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: Text(
+                      "ShareJoy",
+                      style: TextStyle(
+                          color: Colors.black, fontFamily: 'FredokaOneRegular'),
+                    ),
+                  ),
+                ],
+              ),
+              actions: [
+                // DropdownButton(items: null, onChanged: null)
+                IconButton(
+                  color: Colors.black,
+                  icon: Icon(Icons.filter_list),
+                  onPressed: () {
+                    showModalBottomSheet(
+                      isScrollControlled: true,
+                      context: context,
+                      builder: (context) => CategoryBar(provider: memeProvider),
+                    );
+                  },
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.only(left: 10.0),
-                  child: Text(
-                    "ShareJoy",
-                    style: TextStyle(
-                        color: Colors.black, fontFamily: 'FredokaOneRegular'),
-                  ),
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: LanguageButton(onChange: (v) {
+                    print("$v language selected");
+                    memeProvider.filter("lang", v);
+                  }),
                 ),
               ],
             ),
-            actions: [
-              // DropdownButton(items: null, onChanged: null)
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: LanguageButton(onChange: (v) {
-                  print("$v language selected");
-                  memeProvider.filter("lang", v);
-                }),
-              ),
-            ],
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate([
-              SizedBox(
-                height: 8.0,
-              ),
-              Container(
-                  margin: EdgeInsets.only(left: 12.0),
-                  child: CategoryBar(type: type)),
-              PostList(type: type)
-            ]),
-          )
-        ]),
+            SliverList(
+              delegate: SliverChildListDelegate([
+                SizedBox(
+                  height: 8.0,
+                ),
+                // Container(
+                //     margin: EdgeInsets.only(left: 12.0),
+                //     child: CategoryBar(type: type)),
+                PostList(type: type)
+              ]),
+            )
+          ]),
+        ),
       ),
     );
   }
@@ -304,7 +290,7 @@ class _LanguageButtonState extends State<LanguageButton> {
   bool _isVisible = false;
 
   //final FocusNode _focusNode = FocusNode();
- // bool shown = false;
+  // bool shown = false;
 
   // @override
   // void initState() {
@@ -326,44 +312,46 @@ class _LanguageButtonState extends State<LanguageButton> {
     var offset = renderBox.localToGlobal(Offset.zero);
 
     return OverlayEntry(
-        builder: (context) => GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: () { hideHelp(); },
-          child: Stack(
-            children: [
-              Positioned(
-                    right: 5.0,
-                    top: offset.dy + size.height + 5.0,
-                    width: 150.0,
-                    child: Material(
-                      elevation: 4.0,
-                      child: ListView(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        children: <Widget>[
-                          ListTile(
-                            title: Text('All'),
-                            onTap: () => onChange(""),
-                          ),
-                          ListTile(
-                            title: Text('English'),
-                            onTap: () => onChange("english"),
-                          ),
-                          ListTile(
-                            title: Text('Hindi'),
-                            onTap: () => onChange("hindi"),
-                          ),
-                          ListTile(
-                            title: Text('Marathi'),
-                            onTap: () => onChange("marathi"),
-                          )
-                        ],
-                      ),
+      builder: (context) => GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () {
+          hideHelp();
+        },
+        child: Stack(
+          children: [
+            Positioned(
+              right: 5.0,
+              top: offset.dy + size.height + 5.0,
+              width: 150.0,
+              child: Material(
+                elevation: 4.0,
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  children: <Widget>[
+                    ListTile(
+                      title: Text('All'),
+                      onTap: () => onChange(""),
                     ),
-                  ),
-            ],
-          ),
+                    ListTile(
+                      title: Text('English'),
+                      onTap: () => onChange("english"),
+                    ),
+                    ListTile(
+                      title: Text('Hindi'),
+                      onTap: () => onChange("hindi"),
+                    ),
+                    ListTile(
+                      title: Text('Marathi'),
+                      onTap: () => onChange("marathi"),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
+      ),
     );
   }
 
@@ -378,7 +366,6 @@ class _LanguageButtonState extends State<LanguageButton> {
 
   @override
   Widget build(BuildContext context) {
-
     // return GestureDetector(
     //   child: Container(
     //     margin: EdgeInsets.only(right: 10),
@@ -406,18 +393,19 @@ class _LanguageButtonState extends State<LanguageButton> {
         GestureDetector(
           child: Container(
             margin: EdgeInsets.only(right: 10.0),
-            child: Image.asset("assets/images/language.png", height: 25, width: 25),
+            child: Image.asset("assets/images/language.png",
+                height: 25, width: 25),
           ),
-          onTap: () { showLang();  },
+          onTap: () {
+            showLang();
+          },
         )
       ],
     );
-
-
   }
 
   showLang() async {
-    if(!_isVisible) {
+    if (!_isVisible) {
       _overlayState = Overlay.of(context);
       _overlayEntry = _createOverlayEntry();
       _overlayState.insert(_overlayEntry);
@@ -429,6 +417,4 @@ class _LanguageButtonState extends State<LanguageButton> {
     _isVisible = false;
     _overlayEntry.remove();
   }
-
-
 }

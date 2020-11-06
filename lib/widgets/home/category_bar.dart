@@ -2,20 +2,21 @@ import 'dart:ui';
 
 import 'package:ShareJoy/models/category.dart';
 import 'package:ShareJoy/providers/meme_provider.dart';
+import 'package:ShareJoy/theme_data.dart';
 import 'package:ShareJoy/widgets/home/category_shimmer.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'dart:math' as Math;
 
 class CategoryBar extends StatefulWidget {
-  const CategoryBar({
-    Key key,
-    @required this.type,
-  }) : super(key: key);
+  const CategoryBar(
+      {Key key,
+      // @required this.type,
+      this.provider})
+      : super(key: key);
 
-  final String type;
+  final PostProvider provider;
 
   @override
   _CategoryBarState createState() => _CategoryBarState();
@@ -23,72 +24,71 @@ class CategoryBar extends StatefulWidget {
 
 class _CategoryBarState extends State<CategoryBar> {
   bool showMore = false;
+  TextEditingController _ctrl = new TextEditingController();
+  List<Category> categories;
+  @override
+  void initState() {
+    categories = widget.provider.categories[widget.provider.type];
+
+    _ctrl.addListener(() {
+      setState(() {
+        categories = widget.provider.filterCategory(_ctrl.text);
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<PostProvider>(
-      builder: (context, mp, child) {
+    return ChangeNotifierProvider.value(
+      value: widget.provider,
+      child: Consumer<PostProvider>(builder: (context, mp, child) {
         print("Category state consumer ${mp.categoryState}");
         if (mp.categoryState == ViewState.loading) return CategoryShimmer();
-        // return CustomTpheme.placeHolder;
 
-        final childs = mp.categories[widget.type]
-            .map<Widget>((e) => CategoryWidget(
-                  category: e,
-                  mp: mp,
-                ))
-            .toList();
-
-        final child = mp.categories[widget.type]
-            .map<Widget>((e) => CategoryWidget(
-                  category: e,
-                  mp: mp,
-                ))
-            .toList();
-
-        //var shorts = childs.sublist(0, Math.min(8, childs.length));
-
-        var shortChilds = childs.sublist(
-            0, Math.min(showMore ? childs.length : 8, childs.length));
-        if (childs.length > 8) {
-          shortChilds.add(InkWell(
-            onTap: () {
-              setState(() {
-                showMore = !showMore;
-              });
-            },
-            child: Container(
-              padding: const EdgeInsets.all(4.0),
-              margin: const EdgeInsets.only(
-                top: 5.0
-              ),
-              decoration: BoxDecoration(
-                  //    border: Border.all(color: Colors.grey),
-                  //  borderRadius: BorderRadius.circular(20.0),
-                  //  color: Colors.white,
-                  ),
-              child: showMore
-                  ? Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Text("less",
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          )))
-                  : Text(
-                      "more",
-                      style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+        return SafeArea(
+          child: Scaffold(
+            appBar: AppBar(title: Text("Categories")),
+            body: Container(
+              padding: EdgeInsets.all(16.0),
+              height: MediaQuery.of(context).size.height * 1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 30.0,
+                    child: TextField(
+                      controller: _ctrl,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
                     ),
+                  ),
+                  CustomTheme.h8,
+                  Expanded(
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 2.0,
+                        mainAxisSpacing: 2.0,
+                        childAspectRatio: 3.5,
+                      ),
+                      itemCount: categories.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return CategoryWidget(
+                          mp: widget.provider,
+                          category: categories[index],
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ));
-        }
-        return Wrap(
-          spacing: 2.0,
-          alignment: WrapAlignment.start,
-          children: shortChilds,
+          ),
         );
-      },
+      }),
     );
   }
 }
@@ -115,9 +115,10 @@ class CategoryWidget extends StatelessWidget {
 
           mp.filter("category_id", category.id.toString());
         }
+        Navigator.pop(context);
       },
       child: Container(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
         margin: const EdgeInsets.all(2.5),
         decoration: BoxDecoration(
           // border: Border.all(
@@ -126,20 +127,19 @@ class CategoryWidget extends StatelessWidget {
           //       ? Theme.of(context).accentColor
           //       : new Color(0xFFC0C0C0),
           // ),
-          borderRadius: BorderRadius.circular(20.0),
+          borderRadius: BorderRadius.circular(5.0),
           color: (mp.filters['category_id'] == category.id.toString())
-             // ? Theme.of(context).primaryColor
+              // ? Theme.of(context).primaryColor
               ? Theme.of(context).accentColor
-              : new Color(0xFFdcdcdc),
+              : category.color,
         ),
         child: Text(
-          category.name,
-      //    "#" + category.name,
+          category.name[0].toUpperCase() + category.name.substring(1),
+          //    "#" + category.name,
           style: TextStyle(
-            color: (mp.filters['category_id'] == category.id.toString())
-                ? Colors.white
-                : Colors.black,
+            color: Colors.black,
             fontSize: 11.0,
+            fontWeight: FontWeight.w600,
             fontStyle: FontStyle.normal,
           ),
         ),

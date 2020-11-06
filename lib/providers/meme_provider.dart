@@ -179,4 +179,17 @@ class PostProvider extends ChangeNotifier {
     await get(Config.baseUrl + "/posts/share/$id");
     return true;
   }
+
+  List<Category> filterCategory(String text) {
+    if (text == "" || text == null) {
+      return this.categories[this.type];
+    }
+    List<Category> cats = [];
+    for (Category i in this.categories[this.type]) {
+      if (i.name.toLowerCase().contains(text.toLowerCase())) {
+        cats.add(i);
+      }
+    }
+    return cats;
+  }
 }
