@@ -37,9 +37,9 @@ class Post {
     this.caption = item['caption'];
     this.renderType = item['render_type'];
     this.createdAt = item['created_at'];
-    if (item['categories'].length > 0) {
-      this.category = item['categories'][0]['name'];
-    }
+    // if (item['categories'].length > 0) {
+    //   this.category = item['categories'][0]['name'];
+    // }
 
     LocalStorage.instance
         .get("likes_array")

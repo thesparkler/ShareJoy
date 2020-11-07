@@ -30,6 +30,15 @@ class PostProvider extends ChangeNotifier {
   String lastCategoryUrl;
   String lastPostUrl;
 
+  PostProvider({Map filters}) {
+    if (filters != null) {
+      type = filters['type'];
+      filters.remove("type");
+
+      this.filters = filters;
+      fetchPosts();
+    }
+  }
   static PostProvider instance() {
     if (self == null) {
       self = PostProvider();
@@ -95,7 +104,9 @@ class PostProvider extends ChangeNotifier {
     if (filters['category_id'] != null) {
       url += "&category_id=" + filters['category_id'];
     }
-
+    if (filters['category_ids'] != null) {
+      url += "&category_ids=" + filters['category_ids'];
+    }
     if (filters['lang'] != null) {
       url += "&lang=" + filters['lang'];
     }

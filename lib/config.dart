@@ -7,9 +7,9 @@ class Config {
   static const baseUrl = host + "api";
 
   static const types = {
-    0: "meme",
-    1: "shayari",
-    2: "greetings",
+    1: "meme",
+    2: "shayari",
+    3: "greetings",
   };
   static const titles = {
     "meme": "Memes",
