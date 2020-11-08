@@ -178,6 +178,7 @@
 
 import 'dart:ui';
 import 'package:ShareJoy/providers/meme_provider.dart';
+import 'package:ShareJoy/widgets/filter_bar.dart';
 import 'package:ShareJoy/widgets/home/category_bar.dart';
 import 'package:ShareJoy/widgets/home/post_list.dart';
 import 'package:flutter/material.dart';
@@ -261,9 +262,8 @@ class MemesScreen extends StatelessWidget {
                 SizedBox(
                   height: 8.0,
                 ),
-                // Container(
-                //     margin: EdgeInsets.only(left: 12.0),
-                //     child: CategoryBar(type: type)),
+                Container(
+                    margin: EdgeInsets.only(left: 12.0), child: FilterBar()),
                 PostList(type: type)
               ]),
             )

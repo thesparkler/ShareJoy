@@ -47,11 +47,11 @@ class _CategoryBarState extends State<CategoryBar> {
         if (mp.categoryState == ViewState.loading) return CategoryShimmer();
 
         return SafeArea(
-          child: Scaffold(
-            appBar: AppBar(title: Text("Categories")),
-            body: Container(
+          child: Container(
+            // appBar: AppBar(title: Text("Categories")),
+            child: Container(
               padding: EdgeInsets.all(16.0),
-              height: MediaQuery.of(context).size.height * 1,
+              height: 400.0,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -103,7 +103,7 @@ class CategoryWidget extends StatelessWidget {
     return InkWell(
       onTap: () async {
         if (mp.filters['category_id'] == category.id.toString()) {
-          mp.filter("category_id", null);
+          mp.removeCategoryIntoFilter(category.id.toString());
         } else {
           await FirebaseAnalytics().logEvent(
               name: "category_clicked",
@@ -112,8 +112,7 @@ class CategoryWidget extends StatelessWidget {
                 "id": category.id,
                 "type": category.type
               });
-
-          mp.filter("category_id", category.id.toString());
+          mp.addCategoryIntoFilter(category.id.toString());
         }
         Navigator.pop(context);
       },
@@ -128,8 +127,7 @@ class CategoryWidget extends StatelessWidget {
           //       : new Color(0xFFC0C0C0),
           // ),
           borderRadius: BorderRadius.circular(5.0),
-          color: (mp.filters['category_id'] == category.id.toString())
-              // ? Theme.of(context).primaryColor
+          color: (mp.getSelectedCategories().contains(category.id.toString()))
               ? Theme.of(context).accentColor
               : category.color,
         ),

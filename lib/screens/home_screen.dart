@@ -4,7 +4,7 @@ import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:ShareJoy/screens/single_swiper_view.dart';
 import 'package:ShareJoy/theme_data.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:fb_audience_network_ad/ad/ad_banner.dart';
+import 'package:fb_audience_network_ad/ad/ad_native.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -72,25 +72,22 @@ class FeedList extends StatelessWidget {
     return ListView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: flp.items.length * 2,
+      itemCount: flp.items.length,
       itemBuilder: (context, index) {
-        if (index % 2 != 0) {
-          return FacebookBannerAd(
-            placementId: "1265998170441655_1294758274232311",
-            bannerSize: BannerSize.MEDIUM_RECTANGLE,
-            listener: (result, value) {
-              print("Banner Ad $result --> $value");
-            },
-          );
-        }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              height: 250.0,
-              child: Feed(item: flp.items[(index / 2).floor()]),
-            ),
+            Feed(item: flp.items[(index)]),
+            index % 4 == 0
+                ? FacebookNativeAd(
+                    placementId: "1265998170441655_1294758274232311",
+                    adType: NativeAdType.NATIVE_AD_TEMPLATE,
+                    listener: (result, value) {
+                      print("Banner Ad $result --> $value");
+                    },
+                  )
+                : CustomTheme.placeHolder
           ],
         );
       },
@@ -106,44 +103,47 @@ class Feed extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => PostProvider(filters: item['condition']),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(18.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  item['name'],
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
+      child: Container(
+        height: 250.0,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    item['name'],
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-                // Text("more"),
-              ],
+                  // Text("more"),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: Consumer<PostProvider>(
-              builder: (context, fp, snapshot) {
-                return ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  // shrinkWrap: true,
-                  itemCount: fp.items.length,
-                  itemBuilder: (context, index) {
-                    final feedItem = fp.items[index];
-                    return PostWidget(
-                      item: feedItem,
-                      index: index,
-                    );
-                  },
-                );
-              },
+            Expanded(
+              child: Consumer<PostProvider>(
+                builder: (context, fp, snapshot) {
+                  return ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    // shrinkWrap: true,
+                    itemCount: fp.items.length,
+                    itemBuilder: (context, index) {
+                      final feedItem = fp.items[index];
+                      return PostWidget(
+                        item: feedItem,
+                        index: index,
+                      );
+                    },
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
