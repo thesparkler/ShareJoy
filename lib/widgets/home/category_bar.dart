@@ -55,11 +55,26 @@ class _CategoryBarState extends State<CategoryBar> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Select Categories",
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.clear),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ],
+                  ),
                   Container(
                     height: 30.0,
                     child: TextField(
                       controller: _ctrl,
                       decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
+                        hintText: "Search Categories...",
                         border: OutlineInputBorder(),
                       ),
                     ),
@@ -72,7 +87,7 @@ class _CategoryBarState extends State<CategoryBar> {
                         crossAxisCount: 2,
                         crossAxisSpacing: 2.0,
                         mainAxisSpacing: 2.0,
-                        childAspectRatio: 3.5,
+                        childAspectRatio: 3.1,
                       ),
                       itemCount: categories.length,
                       itemBuilder: (BuildContext context, int index) {
@@ -120,15 +135,17 @@ class CategoryWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
         margin: const EdgeInsets.all(2.5),
         decoration: BoxDecoration(
-          // border: Border.all(
-          //   color: (mp.filters['category_id'] == category.id.toString())
-          //     //  ? Theme.of(context).accentColor
-          //       ? Theme.of(context).accentColor
-          //       : new Color(0xFFC0C0C0),
-          // ),
+          border: Border.all(
+              width: 2.0,
+              color:
+                  (mp.getSelectedCategories().contains(category.id.toString()))
+                      //  ? Theme.of(context).accentColor
+                      ? Theme.of(context).accentColor.withAlpha(200)
+                      : Colors.transparent // new Color(0xFFC0C0C0),
+              ),
           borderRadius: BorderRadius.circular(5.0),
           color: (mp.getSelectedCategories().contains(category.id.toString()))
-              ? Theme.of(context).accentColor
+              ? category.color.withOpacity(1) //Theme.of(context).accentColor
               : category.color,
         ),
         child: Text(

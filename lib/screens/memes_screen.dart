@@ -3,6 +3,7 @@ import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:ShareJoy/widgets/filter_bar.dart';
 import 'package:ShareJoy/widgets/home/category_bar.dart';
 import 'package:ShareJoy/widgets/home/post_list.dart';
+import 'package:ShareJoy/widgets/sharejoy_header_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -40,23 +41,7 @@ class MemesScreen extends StatelessWidget {
                   borderRadius: BorderRadius.vertical(
                 bottom: Radius.circular(20.0),
               )),
-              title: Row(
-                children: [
-                  Image.asset(
-                    'assets/images/sharejoy_red.png',
-                    height: 28,
-                    width: 28,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: Text(
-                      "ShareJoy",
-                      style: TextStyle(
-                          color: Colors.black, fontFamily: 'FredokaOneRegular'),
-                    ),
-                  ),
-                ],
-              ),
+              title: const SharejoyHeaderLogo(),
               actions: [
                 // DropdownButton(items: null, onChanged: null)
                 IconButton(

@@ -3,11 +3,14 @@ import 'package:ShareJoy/providers/feed_list_provider.dart';
 import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:ShareJoy/screens/single_swiper_view.dart';
 import 'package:ShareJoy/theme_data.dart';
+import 'package:ShareJoy/widgets/sharejoy_header_logo.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fb_audience_network_ad/ad/ad_native.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:ShareJoy/http_service.dart' show reportImageError;
 
 class HomeScreen extends StatelessWidget {
   final scroll = ScrollController();
@@ -26,23 +29,7 @@ class HomeScreen extends StatelessWidget {
               borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(20.0),
           )),
-          title: Row(
-            children: [
-              Image.asset(
-                'assets/images/sharejoy_red.png',
-                height: 28,
-                width: 28,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: Text(
-                  "ShareJoy",
-                  style: TextStyle(
-                      color: Colors.black, fontFamily: 'FredokaOneRegular'),
-                ),
-              ),
-            ],
-          ),
+          title: const SharejoyHeaderLogo(),
           actions: [
             // DropdownButton(items: null, onChanged: null)
           ],
@@ -103,48 +90,48 @@ class Feed extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => PostProvider(filters: item['condition']),
-      child: Container(
-        height: 250.0,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    item['name'],
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
+      child: Consumer<PostProvider>(builder: (context, fp, child) {
+        return fp.items.length == 0
+            ? CustomTheme.placeHolder
+            : Container(
+                height: 250.0,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            item['name'],
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          // Text("more"),
+                        ],
+                      ),
                     ),
-                  ),
-                  // Text("more"),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Consumer<PostProvider>(
-                builder: (context, fp, snapshot) {
-                  return ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    // shrinkWrap: true,
-                    itemCount: fp.items.length,
-                    itemBuilder: (context, index) {
-                      final feedItem = fp.items[index];
-                      return PostWidget(
-                        item: feedItem,
-                        index: index,
-                      );
-                    },
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
+                    Expanded(
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        // shrinkWrap: true,
+                        itemCount: fp.items.length,
+                        itemBuilder: (context, index) {
+                          final feedItem = fp.items[index];
+                          return PostWidget(
+                            item: feedItem,
+                            index: index,
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              );
+      }),
     );
   }
 }
@@ -180,55 +167,32 @@ class PostWidget extends StatelessWidget {
                       height: MediaQuery.of(context).size.height * 0.4,
                       // padding: EdgeInsets.all(10.0),
                       child: CachedNetworkImage(
-                        width: double.infinity,
-                        imageUrl: item.image,
-                        placeholder: (context, url) => Shimmer.fromColors(
-                          baseColor: Colors.grey[300],
-                          highlightColor: Colors.grey[400],
-                          child: Container(
-                            padding: EdgeInsets.all(10.0),
-                            color: Colors.grey,
-                            width: double.infinity,
-                            height: MediaQuery.of(context).size.height * 0.4,
-                          ),
-                        ),
-                        errorWidget: (context, url, error) => Container(
-                          height: MediaQuery.of(context).size.height * 0.4,
-                          child: Center(
-                            child: Icon(Icons.warning),
-                          ),
-                        ),
-                      ),
+                          width: double.infinity,
+                          imageUrl: item.image,
+                          placeholder: (context, url) => Shimmer.fromColors(
+                                baseColor: Colors.grey[300],
+                                highlightColor: Colors.grey[400],
+                                child: Container(
+                                  padding: EdgeInsets.all(10.0),
+                                  color: Colors.grey,
+                                  width: double.infinity,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.4,
+                                ),
+                              ),
+                          errorWidget: (context, url, error) {
+                            reportImageError(item.id);
+                            return Container(
+                              height: MediaQuery.of(context).size.height * 0.4,
+                              child: Center(
+                                child: Icon(Icons.warning),
+                              ),
+                            );
+                          }),
                     )
                   : TextPost(item: item),
             ),
           ),
-
-          //  ),
-
-          // item.isNew
-          //     ? Positioned(
-          //         top: -0.0,
-          //         right: -0.0,
-          //         child: Container(
-          //           margin: EdgeInsets.all(0.0),
-          //           padding:
-          //               EdgeInsets.symmetric(vertical: 14.0, horizontal: 14.0),
-          //           decoration: BoxDecoration(
-          //             color: Theme.of(context).primaryColor,
-          //             shape: BoxShape.circle,
-          //             // borderRadius: BorderRadius.circular(132.0),
-          //           ),
-          //           child: Text(
-          //             'New',
-          //             style: TextStyle(
-          //               color: Colors.white,
-          //               fontSize: 11.0,
-          //               fontWeight: FontWeight.bold,
-          //             ),
-          //           ),
-          //         ),
-          //       )
           CustomTheme.placeHolder,
         ],
       ),
@@ -263,13 +227,16 @@ class TextPost extends StatelessWidget {
       ),
 
       child: Center(
-          child: Text(item.caption,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 14.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ))),
+        child: Text(
+          item.caption,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 12.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      ),
     );
   }
 }

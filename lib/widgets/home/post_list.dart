@@ -8,6 +8,7 @@ import 'package:fb_audience_network_ad/ad/ad_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:ShareJoy/http_service.dart' show reportImageError;
 
 class PostList extends StatelessWidget {
   const PostList({
@@ -114,25 +115,28 @@ class PostWidget extends StatelessWidget {
                   ? Container(
                       padding: EdgeInsets.all(10.0),
                       child: CachedNetworkImage(
-                        width: double.infinity,
-                        imageUrl: item.image,
-                        placeholder: (context, url) => Shimmer.fromColors(
-                          baseColor: Colors.grey[300],
-                          highlightColor: Colors.grey[400],
-                          child: Container(
-                            padding: EdgeInsets.all(10.0),
-                            color: Colors.grey,
-                            width: double.infinity,
-                            height: MediaQuery.of(context).size.height * 0.4,
-                          ),
-                        ),
-                        errorWidget: (context, url, error) => Container(
-                          height: MediaQuery.of(context).size.height * 0.4,
-                          child: Center(
-                            child: Icon(Icons.warning),
-                          ),
-                        ),
-                      ),
+                          width: double.infinity,
+                          imageUrl: item.image,
+                          placeholder: (context, url) => Shimmer.fromColors(
+                                baseColor: Colors.grey[300],
+                                highlightColor: Colors.grey[400],
+                                child: Container(
+                                  padding: EdgeInsets.all(10.0),
+                                  color: Colors.grey,
+                                  width: double.infinity,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.4,
+                                ),
+                              ),
+                          errorWidget: (context, url, error) {
+                            reportImageError(item.id);
+                            return Container(
+                              height: MediaQuery.of(context).size.height * 0.4,
+                              child: Center(
+                                child: Icon(Icons.warning),
+                              ),
+                            );
+                          }),
                     )
                   : TextPost(item: item),
             ),
@@ -180,10 +184,10 @@ class TextPost extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(30.0),
       height: MediaQuery.of(context).size.height * 0.5,
-    //  color: item.bg,
-    //   decoration: BoxDecoration(
-    //     borderRadius: BorderRadius.circular(10.0),
-    //     color: item.bg
+      //  color: item.bg,
+      //   decoration: BoxDecoration(
+      //     borderRadius: BorderRadius.circular(10.0),
+      //     color: item.bg
 
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
@@ -195,7 +199,6 @@ class TextPost extends StatelessWidget {
               )
             : null,
       ),
-
 
       child: Center(
           child: Text(

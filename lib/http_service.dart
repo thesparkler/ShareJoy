@@ -1,5 +1,6 @@
 import 'dart:convert' as converter;
 
+import 'package:ShareJoy/config.dart';
 import 'package:http/http.dart' as http;
 
 class Response {
@@ -58,4 +59,9 @@ Future<Response> post(url,
     print(e);
     return null;
   }
+}
+
+void reportImageError(int id) {
+  get(Config.baseUrl + "/report/$id")
+      .then((res) => print("Image error reported ${res.response.body}"));
 }

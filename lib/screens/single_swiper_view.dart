@@ -1,3 +1,4 @@
+import 'package:ShareJoy/http_service.dart' show reportImageError;
 import 'package:ShareJoy/models/post.dart';
 import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:ShareJoy/screens/editor.dart';
@@ -117,24 +118,26 @@ class SinglePostWidget extends StatelessWidget {
           color: Colors.black,
           child: Center(
               child: CachedNetworkImage(
-            width: double.infinity,
-            imageUrl: item.image,
-            placeholder: (context, url) => Shimmer.fromColors(
-              baseColor: Colors.grey[300],
-              highlightColor: Colors.grey[400],
-              child: Container(
-                color: Colors.grey,
-                width: double.infinity,
-                // height: MediaQuery.of(context).size.height * 0.4,
-              ),
-            ),
-            errorWidget: (context, url, error) => Container(
-              height: MediaQuery.of(context).size.height * 0.4,
-              child: Center(
-                child: Icon(Icons.warning),
-              ),
-            ),
-          )),
+                  width: double.infinity,
+                  imageUrl: item.image,
+                  placeholder: (context, url) => Shimmer.fromColors(
+                        baseColor: Colors.grey[300],
+                        highlightColor: Colors.grey[400],
+                        child: Container(
+                          color: Colors.grey,
+                          width: double.infinity,
+                          // height: MediaQuery.of(context).size.height * 0.4,
+                        ),
+                      ),
+                  errorWidget: (context, url, error) {
+                    reportImageError(item.id);
+                    return Container(
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      child: Center(
+                        child: Icon(Icons.warning),
+                      ),
+                    );
+                  })),
         ),
         Positioned(
           left: 5,
