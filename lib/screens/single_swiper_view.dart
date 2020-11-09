@@ -132,7 +132,7 @@ class SinglePostWidget extends StatelessWidget {
             errorWidget: (context, url, error) => Container(
               height: MediaQuery.of(context).size.height * 0.4,
               child: Center(
-                child: Icon(Icons.warning),
+                child: Icon(Icons.image, size: 50,),
               ),
             ),
           )),
