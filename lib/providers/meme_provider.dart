@@ -21,6 +21,7 @@ class PostProvider extends ChangeNotifier {
   int pages;
   int currentPage = 1;
   Map<String, dynamic> filters = {};
+  var filterLabels = {};
 
   // view states
   ViewState categoryState = ViewState.loading;
@@ -202,5 +203,25 @@ class PostProvider extends ChangeNotifier {
       }
     }
     return cats;
+  }
+
+  addCategoryIntoFilter(String id) {
+    var category_ids = this.filters['category_ids'] ?? "";
+    category_ids = category_ids.split(",");
+    category_ids.add(id);
+    this.filter("category_ids", category_ids.join(","));
+  }
+
+  removeCategoryIntoFilter(String id) {
+    var category_ids = this.filters['category_ids'] ?? "";
+    category_ids = category_ids.split(",");
+    category_ids.remove(id);
+    this.filter("category_ids", category_ids.join(","));
+  }
+
+  List getSelectedCategories() {
+    var category_ids = this.filters['category_ids'] ?? "";
+    category_ids = category_ids.split(",");
+    return category_ids;
   }
 }

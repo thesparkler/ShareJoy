@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:ShareJoy/helpers/watermark_consent_helper.dart';
 import 'package:ShareJoy/models/post.dart';
-import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
@@ -10,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'dart:ui' as ui;
-import 'package:provider/provider.dart';
 
 class ShareButton extends StatefulWidget {
   const ShareButton({
@@ -33,21 +31,29 @@ class _ShareButtonState extends State<ShareButton> {
   bool processing = false;
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      tooltip: "Share",
-      onPressed: processing ? null : shareImage,
-      icon: processing
-          ? Container(
-              width: 30.0,
-              height: 30.0,
-              child: CircularProgressIndicator(
-                strokeWidth: 2.0,
-                valueColor: AlwaysStoppedAnimation(Colors.white),
-              ))
-          : Icon(
-              MdiIcons.shareOutline,
-              color: widget.color != null ? widget.color : Colors.white,
-            ),
+    return Column(
+      children: [
+        IconButton(
+          tooltip: "Share",
+          onPressed: processing ? null : shareImage,
+          icon: processing
+              ? Container(
+                  width: 30.0,
+                  height: 30.0,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.0,
+                    valueColor: AlwaysStoppedAnimation(Colors.white),
+                  ))
+              : Icon(
+                  MdiIcons.shareOutline,
+                  color: widget.color != null ? widget.color : Colors.white,
+                ),
+        ),
+        Text(
+          "Share",
+          style: TextStyle(color: Colors.white, fontSize: 9.0),
+        ),
+      ],
     );
   }
 

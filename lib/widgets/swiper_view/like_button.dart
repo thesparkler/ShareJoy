@@ -20,26 +20,34 @@ class _LikeButtonState extends State<LikeButton> {
   @override
   Widget build(BuildContext context) {
     if (isLiked == null) isLiked = widget.item.isLiked;
-    return IconButton(
-      tooltip: "Like",
-      onPressed: _like,
-      icon: processing
-          ? Container(
-              width: 30.0,
-              height: 30.0,
-              child: CircularProgressIndicator(
-                strokeWidth: 2.0,
-                valueColor: AlwaysStoppedAnimation(Colors.white),
-              ))
-          : isLiked
-              ? Icon(
-                  MdiIcons.heart,
-                  color: Colors.red,
-                )
-              : Icon(
-                  MdiIcons.heartOutline,
-                  color: Colors.white,
-                ),
+    return Column(
+      children: [
+        IconButton(
+          tooltip: "Like",
+          onPressed: _like,
+          icon: processing
+              ? Container(
+                  width: 30.0,
+                  height: 30.0,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.0,
+                    valueColor: AlwaysStoppedAnimation(Colors.white),
+                  ))
+              : isLiked
+                  ? Icon(
+                      MdiIcons.heart,
+                      color: Colors.red,
+                    )
+                  : Icon(
+                      MdiIcons.heartOutline,
+                      color: Colors.white,
+                    ),
+        ),
+        Text(
+          "Like",
+          style: TextStyle(color: Colors.white, fontSize: 9.0),
+        )
+      ],
     );
   }
 

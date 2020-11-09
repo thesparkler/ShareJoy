@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:ShareJoy/helpers/watermark_consent_helper.dart';
 import 'package:ShareJoy/local_storage.dart';
 import 'package:ShareJoy/theme_data.dart';
 import 'package:ShareJoy/widgets/watermark_alert.dart';

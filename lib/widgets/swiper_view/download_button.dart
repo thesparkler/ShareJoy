@@ -2,8 +2,6 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:ShareJoy/helpers/watermark_consent_helper.dart';
-import 'package:ShareJoy/local_storage.dart';
-import 'package:ShareJoy/widgets/watermark_alert.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/rendering.dart';
 import 'package:ShareJoy/models/post.dart';
@@ -38,21 +36,29 @@ class _DownlaodButtonState extends State<DownlaodButton> {
   bool processing = false;
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      tooltip: "Download Image",
-      onPressed: processing ? null : () => shareImage(context),
-      icon: processing
-          ? Container(
-              width: 30.0,
-              height: 30.0,
-              child: CircularProgressIndicator(
-                strokeWidth: 2.0,
-                valueColor: AlwaysStoppedAnimation(Colors.white),
-              ))
-          : Icon(
-              MdiIcons.downloadOutline,
-              color: widget.color != null ? widget.color : Colors.white,
-            ),
+    return Column(
+      children: [
+        IconButton(
+          tooltip: "Download Image",
+          onPressed: processing ? null : () => shareImage(context),
+          icon: processing
+              ? Container(
+                  width: 30.0,
+                  height: 30.0,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.0,
+                    valueColor: AlwaysStoppedAnimation(Colors.white),
+                  ))
+              : Icon(
+                  MdiIcons.downloadOutline,
+                  color: widget.color != null ? widget.color : Colors.white,
+                ),
+        ),
+        Text(
+          "Save",
+          style: TextStyle(color: Colors.white, fontSize: 9.0),
+        ),
+      ],
     );
   }
 

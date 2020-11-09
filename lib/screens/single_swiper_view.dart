@@ -1,10 +1,10 @@
+import 'package:ShareJoy/http_service.dart' show reportImageError;
 import 'package:ShareJoy/models/post.dart';
 import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:ShareJoy/screens/editor.dart';
 import 'package:ShareJoy/theme_data.dart';
 import 'package:ShareJoy/widgets/sharejoy_watermark.dart';
 import 'package:ShareJoy/widgets/swiper_view/CopyButton.dart';
-import 'package:ShareJoy/widgets/swiper_view/bg_change_button.dart';
 import 'package:ShareJoy/widgets/swiper_view/download_button.dart';
 import 'package:ShareJoy/widgets/swiper_view/like_button.dart';
 import 'package:ShareJoy/widgets/swiper_view/share_button.dart';
@@ -136,6 +136,7 @@ class SinglePostWidget extends StatelessWidget {
               ),
             ),
           )),
+
         ),
         Positioned(
           left: 5,
@@ -247,21 +248,29 @@ class _SingleTextPostWidgetState extends State<SingleTextPostWidget> {
             mainAxisSize: MainAxisSize.min,
             children: [
               widget.item.canChangeBackgroundColor()
-                  ? IconButton(
-                      onPressed: () {
-                        FirebaseAnalytics().logEvent(
-                            name: "content_${widget.item.type}_edit",
-                            parameters: {
-                              "id": widget.item.id,
-                              "type": widget.item.type,
-                            });
+                  ? Column(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            FirebaseAnalytics().logEvent(
+                                name: "content_${widget.item.type}_edit",
+                                parameters: {
+                                  "id": widget.item.id,
+                                  "type": widget.item.type,
+                                });
 
-                        Editor.route(context, widget.item);
-                      },
-                      icon: Icon(
-                        MdiIcons.palette,
-                        color: Colors.white,
-                      ),
+                            Editor.route(context, widget.item);
+                          },
+                          icon: Icon(
+                            MdiIcons.palette,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Text(
+                          "Edit",
+                          style: TextStyle(color: Colors.white, fontSize: 9.0),
+                        )
+                      ],
                     )
                   : CustomTheme.placeHolder,
               widget.item.canCopyText()
