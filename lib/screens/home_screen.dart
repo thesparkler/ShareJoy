@@ -73,24 +73,23 @@ class FeedList extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Feed(item: flp.items[(index)], feedIndex: index),
-      //      index % 4 == 0
-            //     ?
-            // index % 8 ==0?
-            //
-            // FacebookNativeAd(
-            //         placementId: "1265998170441655_1294758274232311",
-            //         adType: NativeAdType.NATIVE_AD_TEMPLATE,
-            //         listener: (result, value) {
-            //           print("Banner Ad $result --> $value");
-            //         },
-            //       ):FacebookBannerAd(
-            //   placementId: "1265998170441655_1266012507106888",
-            //   bannerSize: BannerSize.MEDIUM_RECTANGLE,
-            //   listener: (result, value) {
-            //     print("Banner Ad $result --> $value");
-            //   },
-            // )
-            //     : CustomTheme.placeHolder
+            index % 4 == 0
+                ? index % 8 == 0 && index != 0
+                    ? FacebookNativeAd(
+                        placementId: "1265998170441655_1294758274232311",
+                        adType: NativeAdType.NATIVE_AD_TEMPLATE,
+                        listener: (result, value) {
+                          print("Banner Ad $result --> $value");
+                        },
+                      )
+                    : FacebookBannerAd(
+                        placementId: "1265998170441655_1266012507106888",
+                        bannerSize: BannerSize.STANDARD,
+                        listener: (result, value) {
+                          print("Banner Ad $result --> $value");
+                        },
+                      )
+                : CustomTheme.placeHolder
           ],
         );
       },
@@ -123,9 +122,8 @@ class Feed extends StatelessWidget {
                           Text(
                             item['name'],
                             style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontFamily: 'RobotoMedium'
-                            ),
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'RobotoMedium'),
                           ),
                           // Text("more"),
                         ],
@@ -139,10 +137,9 @@ class Feed extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final feedItem = fp.items[index];
                           return PostWidget(
-                            item: feedItem,
-                            index: index,
-                            feedIndex: feedIndex
-                          );
+                              item: feedItem,
+                              index: index,
+                              feedIndex: feedIndex);
                         },
                       ),
                     ),
@@ -155,12 +152,8 @@ class Feed extends StatelessWidget {
 }
 
 class PostWidget extends StatelessWidget {
-  const PostWidget({
-    Key key,
-    @required this.item,
-    this.index,
-    this.feedIndex
-  }) : super(key: key);
+  const PostWidget({Key key, @required this.item, this.index, this.feedIndex})
+      : super(key: key);
 
   final Post item;
   final int index;
@@ -168,7 +161,7 @@ class PostWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double percentage = (feedIndex==0)?0.8:0.4;
+    double percentage = (feedIndex == 0) ? 0.8 : 0.4;
     return GestureDetector(
       onTap: () => SingleSwiperView.route(
           context, index, Provider.of<PostProvider>(context, listen: false)),
@@ -176,8 +169,8 @@ class PostWidget extends StatelessWidget {
         children: [
           Container(
             width: MediaQuery.of(context).size.width * percentage,
-            margin: EdgeInsets.only(
-                left: 8.0, right: 8.0, bottom: 8.0, top: 0.0),
+            margin:
+                EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0, top: 0.0),
             child: Card(
               semanticContainer: true,
               clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -190,7 +183,7 @@ class PostWidget extends StatelessWidget {
                       height: MediaQuery.of(context).size.height * 0.4,
                       // padding: EdgeInsets.all(10.0),
                       child: CachedNetworkImage(
-                        fit: BoxFit.fill,
+                          fit: BoxFit.fill,
                           width: double.infinity,
                           imageUrl: item.image,
                           placeholder: (context, url) => Shimmer.fromColors(
@@ -244,7 +237,6 @@ class TextPost extends StatelessWidget {
         color: item.bg,
         image: item.bgImage != null
             ? DecorationImage(
-
                 fit: BoxFit.cover,
                 image: NetworkImage(item.bgImage),
               )
