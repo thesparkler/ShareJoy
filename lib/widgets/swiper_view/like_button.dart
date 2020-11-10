@@ -43,10 +43,10 @@ class _LikeButtonState extends State<LikeButton> {
                       color: Colors.white,
                     ),
         ),
-        Text(
-          "Like",
-          style: TextStyle(color: Colors.white, fontSize: 9.0),
-        )
+        // Text(
+        //   "Like",
+        //   style: TextStyle(color: Colors.white, fontSize: 9.0),
+        // )
       ],
     );
   }

@@ -66,7 +66,7 @@ class _SingleSwiperViewState extends State<SingleSwiperView> {
             children: [
               PageView.builder(
                   controller: _ctrl,
-                  scrollDirection: Axis.vertical,
+                  scrollDirection: Axis.horizontal,
                   itemCount: mp.items.length,
                   itemBuilder: (context, index) {
                     Post item = mp.items[index];

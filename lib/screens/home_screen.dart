@@ -6,6 +6,7 @@ import 'package:ShareJoy/theme_data.dart';
 import 'package:ShareJoy/widgets/sharejoy_header_logo.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fb_audience_network_ad/ad/ad_banner.dart';
 import 'package:fb_audience_network_ad/ad/ad_native.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,33 +19,39 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => FeedListProvider(scroll),
-      child: CustomScrollView(controller: scroll, slivers: <Widget>[
-        SliverAppBar(
-          shadowColor: Colors.black,
-          forceElevated: true,
-          floating: true,
-          backgroundColor: Colors.white,
-          elevation: 5,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(20.0),
-          )),
-          title: const SharejoyHeaderLogo(),
-          actions: [
-            // DropdownButton(items: null, onChanged: null)
-          ],
-        ),
-        SliverList(
-          delegate: SliverChildListDelegate([
-            const SizedBox(height: 8.0),
-            Consumer<FeedListProvider>(
-              builder: (context, flp, snapshot) {
-                return FeedList(flp: flp);
-              },
-            ),
-          ]),
-        )
-      ]),
+      child: NotificationListener<OverscrollIndicatorNotification>(
+        onNotification: (OverscrollIndicatorNotification overscroll) {
+          overscroll.disallowGlow();
+          return;
+        },
+        child: CustomScrollView(controller: scroll, slivers: <Widget>[
+          SliverAppBar(
+            shadowColor: Colors.black,
+            forceElevated: true,
+            floating: true,
+            backgroundColor: Colors.white,
+            elevation: 5,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(20.0),
+            )),
+            title: const SharejoyHeaderLogo(),
+            actions: [
+              // DropdownButton(items: null, onChanged: null)
+            ],
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate([
+              const SizedBox(height: 8.0),
+              Consumer<FeedListProvider>(
+                builder: (context, flp, snapshot) {
+                  return FeedList(flp: flp);
+                },
+              ),
+            ]),
+          )
+        ]),
+      ),
     );
   }
 }
@@ -65,16 +72,25 @@ class FeedList extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Feed(item: flp.items[(index)]),
-            index % 4 == 0
-                ? FacebookNativeAd(
-                    placementId: "1265998170441655_1294758274232311",
-                    adType: NativeAdType.NATIVE_AD_TEMPLATE,
-                    listener: (result, value) {
-                      print("Banner Ad $result --> $value");
-                    },
-                  )
-                : CustomTheme.placeHolder
+            Feed(item: flp.items[(index)], feedIndex: index),
+      //      index % 4 == 0
+            //     ?
+            // index % 8 ==0?
+            //
+            // FacebookNativeAd(
+            //         placementId: "1265998170441655_1294758274232311",
+            //         adType: NativeAdType.NATIVE_AD_TEMPLATE,
+            //         listener: (result, value) {
+            //           print("Banner Ad $result --> $value");
+            //         },
+            //       ):FacebookBannerAd(
+            //   placementId: "1265998170441655_1266012507106888",
+            //   bannerSize: BannerSize.MEDIUM_RECTANGLE,
+            //   listener: (result, value) {
+            //     print("Banner Ad $result --> $value");
+            //   },
+            // )
+            //     : CustomTheme.placeHolder
           ],
         );
       },
@@ -83,9 +99,9 @@ class FeedList extends StatelessWidget {
 }
 
 class Feed extends StatelessWidget {
-  final item;
+  final item, feedIndex;
 
-  const Feed({Key key, this.item}) : super(key: key);
+  const Feed({Key key, this.item, this.feedIndex}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -100,7 +116,7 @@ class Feed extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(18.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -108,6 +124,7 @@ class Feed extends StatelessWidget {
                             item['name'],
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
+                              fontFamily: 'RobotoMedium'
                             ),
                           ),
                           // Text("more"),
@@ -124,6 +141,7 @@ class Feed extends StatelessWidget {
                           return PostWidget(
                             item: feedItem,
                             index: index,
+                            feedIndex: feedIndex
                           );
                         },
                       ),
@@ -141,23 +159,28 @@ class PostWidget extends StatelessWidget {
     Key key,
     @required this.item,
     this.index,
+    this.feedIndex
   }) : super(key: key);
 
   final Post item;
   final int index;
+  final int feedIndex;
 
   @override
   Widget build(BuildContext context) {
+    double percentage = (feedIndex==0)?0.8:0.4;
     return GestureDetector(
       onTap: () => SingleSwiperView.route(
           context, index, Provider.of<PostProvider>(context, listen: false)),
       child: Stack(
         children: [
           Container(
-            width: MediaQuery.of(context).size.width * 0.4,
+            width: MediaQuery.of(context).size.width * percentage,
             margin: EdgeInsets.only(
-                left: 10.0, right: 10.0, bottom: 10.0, top: 0.0),
+                left: 8.0, right: 8.0, bottom: 8.0, top: 0.0),
             child: Card(
+              semanticContainer: true,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
               elevation: 5.0,
               shape: RoundedRectangleBorder(
                   side: BorderSide(color: Colors.transparent, width: 0.5),
@@ -167,6 +190,7 @@ class PostWidget extends StatelessWidget {
                       height: MediaQuery.of(context).size.height * 0.4,
                       // padding: EdgeInsets.all(10.0),
                       child: CachedNetworkImage(
+                        fit: BoxFit.fill,
                           width: double.infinity,
                           imageUrl: item.image,
                           placeholder: (context, url) => Shimmer.fromColors(
@@ -185,7 +209,7 @@ class PostWidget extends StatelessWidget {
                             return Container(
                               height: MediaQuery.of(context).size.height * 0.4,
                               child: Center(
-                                child: Icon(Icons.warning),
+                                child: Icon(Icons.image),
                               ),
                             );
                           }),
@@ -208,7 +232,7 @@ class TextPost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(30.0),
+      padding: EdgeInsets.all(20.0),
       height: MediaQuery.of(context).size.height * 0.5,
       //  color: item.bg,
       //   decoration: BoxDecoration(
@@ -216,10 +240,11 @@ class TextPost extends StatelessWidget {
       //     color: item.bg
 
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(7.0),
         color: item.bg,
         image: item.bgImage != null
             ? DecorationImage(
+
                 fit: BoxFit.cover,
                 image: NetworkImage(item.bgImage),
               )
@@ -231,7 +256,7 @@ class TextPost extends StatelessWidget {
           item.caption,
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 12.0,
+            fontSize: 10.0,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
