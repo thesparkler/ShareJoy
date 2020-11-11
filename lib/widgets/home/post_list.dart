@@ -66,8 +66,8 @@ class PostList extends StatelessWidget {
             return Column(
               children: [
                 PostWidget(item: item, index: index),
-                index % 4 == 0
-                    ? index % 8 == 0 && index != 0
+                index % 6 == 0
+                    ? index % 12 == 6
                         ? FacebookNativeAd(
                             placementId: "1265998170441655_1294758274232311",
                             adType: NativeAdType.NATIVE_AD_TEMPLATE,

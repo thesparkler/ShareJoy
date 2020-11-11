@@ -74,7 +74,7 @@ class FeedList extends StatelessWidget {
           children: [
             Feed(item: flp.items[(index)], feedIndex: index),
             index % 4 == 0
-                ? index % 8 == 0 && index != 0
+                ? index % 8 == 4
                     ? FacebookNativeAd(
                         placementId: "1265998170441655_1294758274232311",
                         adType: NativeAdType.NATIVE_AD_TEMPLATE,
