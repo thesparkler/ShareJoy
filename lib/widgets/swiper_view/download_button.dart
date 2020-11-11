@@ -105,24 +105,22 @@ class _DownlaodButtonState extends State<DownlaodButton> {
 
           return;
         } else {
-          final res = await http.head(widget.item.image);
+          var request = await HttpClient().getUrl(Uri.parse(widget.item.image));
+          var response = await request.close();
           final mimetypes = {
             "image/jpeg": "jpg",
             "image/jpg": "jpg",
             "image/gif": "gif",
             "image/png": "png",
           };
-          final ext = mimetypes[res.headers['content-type']] ?? "jpg";
-          final wext = mimetypes[res.headers['content-type']] ?? "unknown";
+          final ext = mimetypes[response.headers.contentType.value] ?? "jpg";
           name = "image" + DateTime.now().microsecond.toString() + "." + ext;
-          var request = await HttpClient().getUrl(Uri.parse(widget.item.image));
-          var response = await request.close();
           Uint8List bytes = await consolidateHttpClientResponseBytes(response);
 
-          bytes = await applyWatermark(bytes, context, type: wext);
+          var watermarkImage = await applyWatermark(bytes, context, type: ext);
 
           await ImageSaver().saveImage(
-            imageBytes: bytes,
+            imageBytes: watermarkImage,
             imageName: name,
             directoryName: "ShareJoy",
           );
