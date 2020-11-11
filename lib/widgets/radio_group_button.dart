@@ -37,8 +37,11 @@ class _RadioGroupButtonState extends State<RadioGroupButton> {
               });
             },
             child: Container(
+              decoration: new BoxDecoration(
+                  borderRadius: new BorderRadius.circular(10.0),
+                color: selected == i ? Colors.red[100] : Colors.transparent,
+              ),
               padding: EdgeInsets.symmetric(vertical: 12.0),
-              color: selected == i ? Colors.red[100] : Colors.transparent,
               child: Center(
                 child: widget.children[i],
               ),

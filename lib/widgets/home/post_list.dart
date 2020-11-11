@@ -75,13 +75,16 @@ class PostList extends StatelessWidget {
                               print("Banner Ad $result --> $value");
                             },
                           )
-                        : FacebookBannerAd(
-                            placementId: "1265998170441655_1266012507106888",
-                            bannerSize: BannerSize.STANDARD,
-                            listener: (result, value) {
-                              print("Banner Ad $result --> $value");
-                            },
-                          )
+                        : Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: FacebookBannerAd(
+                              placementId: "1265998170441655_1266012507106888",
+                              bannerSize: BannerSize.STANDARD,
+                              listener: (result, value) {
+                                print("Banner Ad $result --> $value");
+                              },
+                            ),
+                        )
                     : CustomTheme.placeHolder,
               ],
             );

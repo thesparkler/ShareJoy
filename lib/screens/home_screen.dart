@@ -4,7 +4,6 @@ import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:ShareJoy/screens/single_swiper_view.dart';
 import 'package:ShareJoy/theme_data.dart';
 import 'package:ShareJoy/widgets/sharejoy_header_logo.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fb_audience_network_ad/ad/ad_banner.dart';
 import 'package:fb_audience_network_ad/ad/ad_native.dart';
@@ -37,6 +36,7 @@ class HomeScreen extends StatelessWidget {
             )),
             title: const SharejoyHeaderLogo(),
             actions: [
+              
               // DropdownButton(items: null, onChanged: null)
             ],
           ),
@@ -82,13 +82,16 @@ class FeedList extends StatelessWidget {
                           print("Banner Ad $result --> $value");
                         },
                       )
-                    : FacebookBannerAd(
-                        placementId: "1265998170441655_1266012507106888",
-                        bannerSize: BannerSize.STANDARD,
-                        listener: (result, value) {
-                          print("Banner Ad $result --> $value");
-                        },
-                      )
+                    : Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: FacebookBannerAd(
+                          placementId: "1265998170441655_1266012507106888",
+                          bannerSize: BannerSize.STANDARD,
+                          listener: (result, value) {
+                            print("Banner Ad $result --> $value");
+                          },
+                        ),
+                    )
                 : CustomTheme.placeHolder
           ],
         );

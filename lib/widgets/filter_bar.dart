@@ -52,8 +52,8 @@ class CustomChip extends StatelessWidget {
         label,
         style: TextStyle(fontSize: 11.0),
       ),
-      deleteIcon: Icon(Icons.clear),
-      deleteIconColor: Colors.black54,
+    //  deleteIcon: Icon(Icons.clear),
+   //   deleteIconColor: Colors.black54,
       onDeleted: onDeleted,
     );
   }

@@ -37,7 +37,7 @@ class SettingScreen extends StatelessWidget {
                         ))),
                 CustomTheme.h12,
                 Text(
-                  "version 1.1.0",
+                  "version 1.2.0",
                   style: TextStyle(fontFamily: 'RobotoRegular'),
                 ),
               ],
@@ -81,9 +81,10 @@ class SettingScreen extends StatelessWidget {
 
                   Share.text(
                       "Share App",
-                      '''ShareJoy
-Find the large collection of memes,shayari and status.
-Download app using following link:https://play.google.com/store/apps/details?id=com.app.sharejoy
+                      '''Want to enjoy & share latest memes, shayari and status?
+   
+Download ShareJoy App Now!
+https://play.google.com/store/apps/details?id=com.app.sharejoy
 ''',
                       "text/plain");
                 },

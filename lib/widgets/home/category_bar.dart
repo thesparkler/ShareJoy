@@ -54,7 +54,8 @@ class _CategoryBarState extends State<CategoryBar> {
               bottom: MediaQuery.of(context).viewInsets.bottom,
             ),
             child: Container(
-              padding: EdgeInsets.all(16.0),
+              padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
+            //  padding: EdgeInsets.all(16.0),
               height: 400.0,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,16 +65,18 @@ class _CategoryBarState extends State<CategoryBar> {
                     children: [
                       Text(
                         "Select Content Language",
-                        style: Theme.of(context).textTheme.headline6,
+                       style: TextStyle(fontSize: 16.0, fontFamily: "RobotoMedium" ),
+                       // style: Theme.of(context).textTheme.headline6,
                       ),
                       IconButton(
-                        icon: Icon(Icons.clear),
+                        icon: Icon(Icons.clear, size: 20, color: new Color(0xFFA9A9A9),),
                         onPressed: () => Navigator.pop(context),
                       ),
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+                   // padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: RadioGroupButton(
                       children: [
                         Text("All"),
@@ -90,20 +93,25 @@ class _CategoryBarState extends State<CategoryBar> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Select Categories",
-                        style: Theme.of(context).textTheme.headline6,
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0, top: 8.0),
+                        child: Text(
+                          "All Categories",
+                          style: TextStyle(fontSize: 16.0, fontFamily: "RobotoMedium"),
+                          //style: Theme.of(context).textTheme.headline6,
+                        ),
                       ),
                     ],
                   ),
                   Container(
-                    height: 30.0,
+                    height: 40.0,
                     child: TextField(
                       controller: _ctrl,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
-                        hintText: "Search Categories...",
-                        border: OutlineInputBorder(),
+                        hintText: "What are you looking for?",
+                        border: OutlineInputBorder(
+                        ),
                       ),
                     ),
                   ),
@@ -160,7 +168,7 @@ class CategoryWidget extends StatelessWidget {
         Navigator.pop(context);
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
         margin: const EdgeInsets.all(2.5),
         decoration: BoxDecoration(
           border: Border.all(
@@ -181,7 +189,7 @@ class CategoryWidget extends StatelessWidget {
           //    "#" + category.name,
           style: TextStyle(
             color: Colors.black,
-            fontSize: 11.0,
+            fontSize: 12.0,
             fontWeight: FontWeight.w600,
             fontStyle: FontStyle.normal,
           ),

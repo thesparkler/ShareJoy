@@ -46,9 +46,14 @@ class MemesScreen extends StatelessWidget {
                 // DropdownButton(items: null, onChanged: null)
                 IconButton(
                   color: Colors.black,
-                  icon: Icon(Icons.filter_list),
+                  icon: Icon(Icons.filter_list_rounded),
                   onPressed: () {
                     showModalBottomSheet(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(20.0)
+                        )
+                      ),
                       isScrollControlled: true,
                       context: context,
                       builder: (context) => CategoryBar(provider: memeProvider),

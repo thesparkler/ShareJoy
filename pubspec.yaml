@@ -46,7 +46,6 @@ dependencies:
   # facebook_audience_network: ^0.7.1
   fb_audience_network_ad: ^0.0.7
   image: 2.1.18
-  auto_size_text: 2.1.0
   in_app_update: ^1.1.14
 
 
@@ -101,6 +100,7 @@ flutter:
      - family: FredokaOneRegular
        fonts:
          - asset: assets/fonts/FredokaOneRegular.ttf
+
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
