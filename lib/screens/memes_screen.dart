@@ -55,13 +55,13 @@ class MemesScreen extends StatelessWidget {
                     );
                   },
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: LanguageButton(onChange: (v) {
-                    print("$v language selected");
-                    memeProvider.filter("lang", v);
-                  }),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(right: 8.0),
+                //   child: LanguageButton(onChange: (v) {
+                //     print("$v language selected");
+                //     memeProvider.filter("lang", v);
+                //   }),
+                // ),
               ],
             ),
             SliverList(

@@ -224,4 +224,34 @@ class PostProvider extends ChangeNotifier {
     category_ids = category_ids.split(",");
     return category_ids;
   }
+
+  void changeLanguage(v) {
+    switch (v) {
+      case 0:
+        this.filter("lang", null);
+        return;
+      case 1:
+        this.filter("lang", "english");
+        return;
+      case 2:
+        this.filter("lang", "hindi");
+        return;
+      case 3:
+        this.filter("lang", "marathi");
+        return;
+    }
+  }
+
+  int getSelectedLanguage() {
+    switch (this.filters["lang"] ?? null) {
+      case "english":
+        return 1;
+      case "hindi":
+        return 2;
+      case "marathi":
+        return 3;
+      default:
+        return 0;
+    }
+  }
 }

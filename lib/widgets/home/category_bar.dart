@@ -4,6 +4,7 @@ import 'package:ShareJoy/models/category.dart';
 import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:ShareJoy/theme_data.dart';
 import 'package:ShareJoy/widgets/home/category_shimmer.dart';
+import 'package:ShareJoy/widgets/radio_group_button.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +50,9 @@ class _CategoryBarState extends State<CategoryBar> {
         return SafeArea(
           child: Container(
             // appBar: AppBar(title: Text("Categories")),
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
             child: Container(
               padding: EdgeInsets.all(16.0),
               height: 400.0,
@@ -59,12 +63,36 @@ class _CategoryBarState extends State<CategoryBar> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Select Categories",
+                        "Select Content Language",
                         style: Theme.of(context).textTheme.headline6,
                       ),
                       IconButton(
                         icon: Icon(Icons.clear),
                         onPressed: () => Navigator.pop(context),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: RadioGroupButton(
+                      children: [
+                        Text("All"),
+                        Text("English"),
+                        Text("Hindi"),
+                        Text("Marathi"),
+                      ],
+                      onSelected: (v) {
+                        widget.provider.changeLanguage(v);
+                      },
+                      selected: widget.provider.getSelectedLanguage(),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Select Categories",
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                     ],
                   ),

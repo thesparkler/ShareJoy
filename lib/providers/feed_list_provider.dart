@@ -2,6 +2,7 @@ import 'package:ShareJoy/config.dart';
 import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ShareJoy/http_service.dart' show get;
+import 'package:in_app_update/in_app_update.dart';
 
 class FeedListProvider extends ChangeNotifier {
   bool isDisposed = false;
@@ -20,6 +21,11 @@ class FeedListProvider extends ChangeNotifier {
   FeedListProvider(ScrollController scroll) {
     this.setScrollController(scroll);
     fetch();
+    InAppUpdate.checkForUpdate().then((AppUpdateInfo value) {
+      if (value.updateAvailable == true) {
+        InAppUpdate.performImmediateUpdate();
+      }
+    });
   }
 
   void setScrollController(ScrollController scroll) {

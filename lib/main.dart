@@ -14,11 +14,7 @@ void main() async {
   FirebaseAnalytics().logAppOpen();
   await LocalStorage.init();
   PushNotificationHandler.init();
-  InAppUpdate.checkForUpdate().then((AppUpdateInfo value) {
-    if (value.updateAvailable == true) {
-      InAppUpdate.performImmediateUpdate();
-    }
-  });
+
   // FacebookAudienceNetwork.init(
   //     // testingId: "b9f2908b-1a6b-4a5b-b862-ded7ce289e41",
   //     );
