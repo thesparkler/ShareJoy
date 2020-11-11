@@ -68,13 +68,16 @@ class PostList extends StatelessWidget {
                 PostWidget(item: item, index: index),
                 index % 6 == 0
                     ? index % 12 == 6
-                        ? FacebookNativeAd(
-                            placementId: "1265998170441655_1294758274232311",
-                            adType: NativeAdType.NATIVE_AD_TEMPLATE,
-                            listener: (result, value) {
-                              print("Banner Ad $result --> $value");
-                            },
-                          )
+                        ? Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: FacebookNativeAd(
+                              placementId: "1265998170441655_1294758274232311",
+                              adType: NativeAdType.NATIVE_AD_TEMPLATE,
+                              listener: (result, value) {
+                                print("Banner Ad $result --> $value");
+                              },
+                            ),
+                        )
                         : Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: FacebookBannerAd(

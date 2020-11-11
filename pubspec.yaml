@@ -75,6 +75,7 @@ flutter:
     - assets/sharejoy_red.png
     - assets/language.png
     - assets/images/share_image.png
+    - assets/setting.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

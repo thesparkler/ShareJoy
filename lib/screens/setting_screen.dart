@@ -14,113 +14,120 @@ import '../NoGlowBehaviour.dart';
 class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-            height: MediaQuery.of(context).size.height * 0.4,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "ShareJoy",
-                  style: Theme.of(context).textTheme.headline5,
-                ),
-                CustomTheme.h24,
-                Container(
-                    height: 120,
-                    width: 120,
-                    decoration: new BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: new DecorationImage(
-                          image: new AssetImage("assets/images/icon.png"),
-                          fit: BoxFit.fill,
-                        ))),
-                CustomTheme.h12,
-                Text(
-                  "version 1.2.0",
-                  style: TextStyle(fontFamily: 'RobotoRegular'),
-                ),
-              ],
-            )),
-        Expanded(
-            child: ScrollConfiguration(
-          behavior: NoGlowBehaviour(),
-          child: ListView(
-            children: [
-              ListTile(
-                onTap: () async {
-                  await showDialog(
-                    context: context,
-                    child: WatermarkAlert(onSubmit:
-                        (String userWatermark, bool sharejoyWatermark) {
-                      var prefs = {
-                        "userWatermark": userWatermark,
-                        "sharejoyWatermark": sharejoyWatermark
-                      };
-                      LocalStorage.instance.put("watermark_prefs", prefs);
-                    }),
-                  );
-                },
-                title: Text(
-                  "Watermark Settings",
-                  style: TextStyle(fontFamily: 'RobotoMedium'),
-                ),
-                subtitle: Text(
-                  "Here you can change watermark settings",
-                  style: const TextStyle(
-                      fontFamily: 'RobotoRegular', fontSize: 14),
-                ),
-                trailing: Icon(MdiIcons.watermark),
-              ),
-              Divider(),
-              ListTile(
-                onTap: () async {
-                  await FirebaseAnalytics().logEvent(
-                    name: "app_share_click",
-                  );
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+      ),
+      body: Column(
+        children: [
+          Container(
+              height: MediaQuery.of(context).size.height * 0.4,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
 
-                  Share.text(
-                      "Share App",
-                      '''Want to enjoy & share latest memes, shayari and status?
+                  Text(
+                    "ShareJoy",
+                    style: TextStyle(fontFamily: "FredokaOneRegular", fontSize: 25.0),
+                    //style: Theme.of(context).textTheme.headline5,
+                  ),
+                  CustomTheme.h24,
+                  Container(
+                      height: 120,
+                      width: 120,
+                      decoration: new BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: new DecorationImage(
+                            image: new AssetImage("assets/images/icon.png"),
+                            fit: BoxFit.fill,
+                          ))),
+                  CustomTheme.h12,
+                  Text(
+                    "version 1.2.0",
+                    style: TextStyle(fontFamily: 'RobotoRegular'),
+                  ),
+                ],
+              )),
+          Expanded(
+              child: ScrollConfiguration(
+            behavior: NoGlowBehaviour(),
+            child: ListView(
+              children: [
+                ListTile(
+                  onTap: () async {
+                    await showDialog(
+                      context: context,
+                      child: WatermarkAlert(onSubmit:
+                          (String userWatermark, bool sharejoyWatermark) {
+                        var prefs = {
+                          "userWatermark": userWatermark,
+                          "sharejoyWatermark": sharejoyWatermark
+                        };
+                        LocalStorage.instance.put("watermark_prefs", prefs);
+                      }),
+                    );
+                  },
+                  title: Text(
+                    "Watermark Settings",
+                    style: TextStyle(fontFamily: 'RobotoMedium'),
+                  ),
+                  subtitle: Text(
+                    "Here you can change watermark settings",
+                    style: const TextStyle(
+                        fontFamily: 'RobotoRegular', fontSize: 14),
+                  ),
+                  trailing: Icon(MdiIcons.watermark),
+                ),
+                Divider(),
+                ListTile(
+                  onTap: () async {
+                    await FirebaseAnalytics().logEvent(
+                      name: "app_share_click",
+                    );
+
+                    Share.text(
+                        "Share App",
+                        '''Want to enjoy & share latest memes, shayari and status?
    
 Download ShareJoy App Now!
 https://play.google.com/store/apps/details?id=com.app.sharejoy
 ''',
-                      "text/plain");
-                },
-                title: Text(
-                  "Share App",
-                  style: TextStyle(fontFamily: 'RobotoMedium'),
+                        "text/plain");
+                  },
+                  title: Text(
+                    "Share App",
+                    style: TextStyle(fontFamily: 'RobotoMedium'),
+                  ),
+                  subtitle: Text(
+                    "Share your love by sharing the application to your friends",
+                    style: TextStyle(fontFamily: 'RobotoRegular', fontSize: 14),
+                  ),
+                  trailing: Icon(MdiIcons.shareOutline),
                 ),
-                subtitle: Text(
-                  "Share your love by sharing the application to your friends",
-                  style: TextStyle(fontFamily: 'RobotoRegular', fontSize: 14),
-                ),
-                trailing: Icon(MdiIcons.shareOutline),
-              ),
-              Divider(),
-              ListTile(
-                onTap: () async {
-                  await FirebaseAnalytics().logEvent(name: "app_review_click");
+                Divider(),
+                ListTile(
+                  onTap: () async {
+                    await FirebaseAnalytics().logEvent(name: "app_review_click");
 
-                  launch(
-                      "https://play.google.com/store/apps/details?id=com.app.sharejoy");
-                },
-                title: Text(
-                  "Rate our App",
-                  style: TextStyle(fontFamily: 'RobotoMedium'),
+                    launch(
+                        "https://play.google.com/store/apps/details?id=com.app.sharejoy");
+                  },
+                  title: Text(
+                    "Rate our App",
+                    style: TextStyle(fontFamily: 'RobotoMedium'),
+                  ),
+                  subtitle: Text(
+                    "Please let us know your experience.",
+                    style: TextStyle(fontFamily: 'RobotoRegular', fontSize: 14),
+                  ),
+                  trailing: Icon(MdiIcons.starOutline),
                 ),
-                subtitle: Text(
-                  "Please let us know your experience.",
-                  style: TextStyle(fontFamily: 'RobotoRegular', fontSize: 14),
-                ),
-                trailing: Icon(MdiIcons.starOutline),
-              ),
-              Divider(),
-            ],
-          ),
-        ))
-      ],
+                Divider(),
+              ],
+            ),
+          ))
+        ],
+      ),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:ShareJoy/models/post.dart';
 import 'package:ShareJoy/providers/feed_list_provider.dart';
 import 'package:ShareJoy/providers/meme_provider.dart';
+import 'package:ShareJoy/screens/setting_screen.dart';
 import 'package:ShareJoy/screens/single_swiper_view.dart';
 import 'package:ShareJoy/theme_data.dart';
 import 'package:ShareJoy/widgets/sharejoy_header_logo.dart';
@@ -36,7 +37,15 @@ class HomeScreen extends StatelessWidget {
             )),
             title: const SharejoyHeaderLogo(),
             actions: [
-              
+                InkWell(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => SettingScreen()));
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 15.0),
+                    child: Image.asset("assets/images/setting.png", height: 22, width: 22, color: new Color(0xFF696969),),
+                  ),
+                ),
               // DropdownButton(items: null, onChanged: null)
             ],
           ),
@@ -75,13 +84,16 @@ class FeedList extends StatelessWidget {
             Feed(item: flp.items[(index)], feedIndex: index),
             index % 4 == 0
                 ? index % 8 == 4
-                    ? FacebookNativeAd(
-                        placementId: "1265998170441655_1294758274232311",
-                        adType: NativeAdType.NATIVE_AD_TEMPLATE,
-                        listener: (result, value) {
-                          print("Banner Ad $result --> $value");
-                        },
-                      )
+                    ? Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: FacebookNativeAd(
+                          placementId: "1265998170441655_1294758274232311",
+                          adType: NativeAdType.NATIVE_AD_TEMPLATE,
+                          listener: (result, value) {
+                            print("Banner Ad $result --> $value");
+                          },
+                        ),
+                    )
                     : Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: FacebookBannerAd(

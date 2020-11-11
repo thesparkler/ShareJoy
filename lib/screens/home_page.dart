@@ -57,9 +57,6 @@ class _HomePageState extends State<HomePage> {
                 case 3:
                   tabName = "status";
                   break;
-                case 4:
-                  tabName = "setting";
-                  break;
               }
               await FirebaseAnalytics()
                   .logEvent(name: "tab_clicked", parameters: {
@@ -104,13 +101,6 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(fontFamily: 'RobotoMedium'),
                 ),
               ),
-              BottomNavigationBarItem(
-                icon: Icon(MdiIcons.cog),
-                title: Text(
-                  "Settings",
-                  style: TextStyle(fontFamily: 'RobotoMedium'),
-                ),
-              ),
             ],
           ),
         ),
@@ -132,8 +122,8 @@ class DetailView extends StatelessWidget {
       case 2:
       case 3:
         return MemesScreen(type: Config.types[currentTab]);
-      case 4:
-        return SettingScreen();
+      // case 4:
+      //   return SettingScreen();
     }
     return CustomTheme.placeHolder;
   }
