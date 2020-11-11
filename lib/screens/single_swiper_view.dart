@@ -10,6 +10,8 @@ import 'package:ShareJoy/widgets/swiper_view/like_button.dart';
 import 'package:ShareJoy/widgets/swiper_view/share_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fb_audience_network_ad/ad/ad_banner.dart';
+import 'package:fb_audience_network_ad/ad/ad_interstitial.dart';
+import 'package:fb_audience_network_ad/ad/ad_native.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -41,19 +43,42 @@ class SingleSwiperView extends StatefulWidget {
 
 class _SingleSwiperViewState extends State<SingleSwiperView> {
   PageController _ctrl;
+  int swiped = 1;
+  int lastPage;
 
   @override
   void initState() {
     _ctrl = PageController(initialPage: this.widget.index);
+    lastPage = this.widget.index;
     _ctrl.addListener(() {
       int page = _ctrl.page.round();
+      if (swiped % 15 == 2) {
+        _loadAd();
+      }
+      if (lastPage != page) {
+        swiped++;
+        lastPage = page;
+      }
       int total = widget.mp.items.length;
       if ((total - page) == 2) {
         widget.mp.nextPage();
       }
     });
+    print("calling interestial ad");
 
     super.initState();
+  }
+
+  _loadAd() {
+    FacebookInterstitialAd.loadInterstitialAd(
+        placementId: "1265998170441655_1298112503896888",
+        listener: (InterstitialAdResult res, value) {
+          print("interestial $value $res");
+          if (res == InterstitialAdResult.LOADED) {
+            print("show interstital ad");
+            FacebookInterstitialAd.showInterstitialAd();
+          }
+        });
   }
 
   @override
@@ -70,9 +95,13 @@ class _SingleSwiperViewState extends State<SingleSwiperView> {
                   itemCount: mp.items.length,
                   itemBuilder: (context, index) {
                     Post item = mp.items[index];
-                    return item.renderType == "image"
-                        ? SinglePostWidget(item: item)
-                        : SingleTextPostWidget(item: item);
+                    return Stack(
+                      children: [
+                        item.renderType == "image"
+                            ? SinglePostWidget(item: item)
+                            : SingleTextPostWidget(item: item),
+                      ],
+                    );
                   }),
               Positioned(
                 child: SafeArea(
@@ -132,11 +161,13 @@ class SinglePostWidget extends StatelessWidget {
             errorWidget: (context, url, error) => Container(
               height: MediaQuery.of(context).size.height * 0.4,
               child: Center(
-                child: Icon(Icons.image, size: 50,),
+                child: Icon(
+                  Icons.image,
+                  size: 50,
+                ),
               ),
             ),
           )),
-
         ),
         Positioned(
           left: 5,

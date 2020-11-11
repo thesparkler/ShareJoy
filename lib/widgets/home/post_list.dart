@@ -5,6 +5,7 @@ import 'package:ShareJoy/theme_data.dart';
 import 'package:ShareJoy/widgets/home/list_shimmer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fb_audience_network_ad/ad/ad_banner.dart';
+import 'package:fb_audience_network_ad/ad/ad_native.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -64,19 +65,24 @@ class PostList extends StatelessWidget {
             final item = mp.items[index];
             return Column(
               children: [
-                (index % 6 == 1)
-                    ? Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: FacebookBannerAd(
-                          placementId: "1265998170441655_1266012507106888",
-                          bannerSize: BannerSize.STANDARD,
-                          listener: (result, value) {
-                            print("Banner Ad $result --> $value");
-                          },
-                        ),
-                      )
-                    : CustomTheme.placeHolder,
                 PostWidget(item: item, index: index),
+                index % 6 == 0
+                    ? index % 12 == 6
+                        ? FacebookNativeAd(
+                            placementId: "1265998170441655_1294758274232311",
+                            adType: NativeAdType.NATIVE_AD_TEMPLATE,
+                            listener: (result, value) {
+                              print("Banner Ad $result --> $value");
+                            },
+                          )
+                        : FacebookBannerAd(
+                            placementId: "1265998170441655_1266012507106888",
+                            bannerSize: BannerSize.STANDARD,
+                            listener: (result, value) {
+                              print("Banner Ad $result --> $value");
+                            },
+                          )
+                    : CustomTheme.placeHolder,
               ],
             );
           },
