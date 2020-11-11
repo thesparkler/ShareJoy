@@ -20,6 +20,27 @@ void main() async {
   runApp(App());
 }
 
+class Appp extends StatefulWidget {
+  @override
+  _ApppState createState() => _ApppState();
+}
+
+class _ApppState extends State<Appp> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData.light().copyWith(
+          primaryColor: new Color(0xFFD70404), accentColor: Colors.redAccent),
+      debugShowCheckedModeBanner: false,
+      title: "ShareJoy",
+      home: HomePage(),
+
+
+    );
+  }
+}
+
+
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
