@@ -55,12 +55,12 @@ class _SingleSwiperViewState extends State<SingleSwiperView> {
       if ((total - page) == 2) {
         widget.mp.nextPage();
       }
+      // print(lastPage.toString());
+      if (lastPage % 2 == 1) {
+        print("calling interestial ad $lastPage");
+        AdsManager.instance.fetchInterestialAd();
+      }
     });
-
-    print("calling interestial ad");
-    if (lastPage % 2 == 0) {
-      AdsManager.instance.fetchInterestialAd();
-    }
 
     super.initState();
   }
