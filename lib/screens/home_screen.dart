@@ -38,8 +38,7 @@ class HomeScreen extends StatelessWidget {
             actions: [
               InkWell(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SettingScreen()));
+                  SettingScreen.route(context);
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(right: 15.0),

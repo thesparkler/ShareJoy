@@ -12,6 +12,11 @@ import 'package:url_launcher/url_launcher.dart';
 import '../NoGlowBehaviour.dart';
 
 class SettingScreen extends StatelessWidget {
+  static route(BuildContext context) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => SettingScreen()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
