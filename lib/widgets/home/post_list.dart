@@ -4,6 +4,7 @@ import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:ShareJoy/screens/single_swiper_view.dart';
 import 'package:ShareJoy/theme_data.dart';
 import 'package:ShareJoy/widgets/home/list_shimmer.dart';
+import 'package:ShareJoy/widgets/nothing_found.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,24 +35,27 @@ class PostList extends StatelessWidget {
         }
         // return Container(child: Text("$type loaded"));
         return SliverList(
-          delegate: SliverChildBuilderDelegate((context, index) {
-            if (mp.items.length == index) {
-              mp.nextPage();
-              if (mp.memeState == ViewState.showMore) {
-                return Container(
-                    height: 30.0,
-                    child: Center(child: CircularProgressIndicator()));
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              if (mp.items.length == index) {
+                // mp.nextPage();
+                if (mp.memeState == ViewState.showMore) {
+                  return Container(
+                      height: 30.0,
+                      child: Center(child: CircularProgressIndicator()));
+                }
+                return CustomTheme.placeHolder;
               }
-              return CustomTheme.placeHolder;
-            }
-            final item = mp.items[index];
-            return Column(
-              children: [
-                PostWidget(item: item, index: index),
-                AdsManager.instance.fetchBannerOrNativeAd(index, 6),
-              ],
-            );
-          }),
+              final item = mp.items[index];
+              return Column(
+                children: [
+                  PostWidget(item: item, index: index),
+                  AdsManager.instance.fetchBannerOrNativeAd(index, 6),
+                ],
+              );
+            },
+            childCount: mp.items.length + 1,
+          ),
         );
 
         // return ListView.builder(
@@ -77,34 +81,6 @@ class PostList extends StatelessWidget {
         //   },
         // );
       },
-    );
-  }
-}
-
-class NothingFound extends StatelessWidget {
-  const NothingFound({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.7,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            "assets/images/nothingfound.png",
-            width: 150.0,
-          ),
-          Text(
-            "No data found",
-            style: TextStyle(fontFamily: 'RobotoMedium'),
-            //      style: Theme.of(context).textTheme.headline6,
-            textAlign: TextAlign.center,
-          )
-        ],
-      ),
     );
   }
 }
