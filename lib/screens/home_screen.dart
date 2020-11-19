@@ -1,3 +1,4 @@
+import 'package:ShareJoy/ads_manager.dart';
 import 'package:ShareJoy/models/post.dart';
 import 'package:ShareJoy/providers/feed_list_provider.dart';
 import 'package:ShareJoy/providers/meme_provider.dart';
@@ -6,8 +7,6 @@ import 'package:ShareJoy/screens/single_swiper_view.dart';
 import 'package:ShareJoy/theme_data.dart';
 import 'package:ShareJoy/widgets/sharejoy_header_logo.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:fb_audience_network_ad/ad/ad_banner.dart';
-import 'package:fb_audience_network_ad/ad/ad_native.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -37,15 +36,21 @@ class HomeScreen extends StatelessWidget {
             )),
             title: const SharejoyHeaderLogo(),
             actions: [
-                InkWell(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => SettingScreen()));
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 15.0),
-                    child: Image.asset("assets/images/setting.png", height: 22, width: 22, color: new Color(0xFF696969),),
+              InkWell(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SettingScreen()));
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 15.0),
+                  child: Image.asset(
+                    "assets/images/setting.png",
+                    height: 22,
+                    width: 22,
+                    color: new Color(0xFF696969),
                   ),
                 ),
+              ),
               // DropdownButton(items: null, onChanged: null)
             ],
           ),
@@ -82,29 +87,7 @@ class FeedList extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Feed(item: flp.items[(index)], feedIndex: index),
-            index % 4 == 0
-                ? index % 8 == 4
-                    ? Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: FacebookNativeAd(
-                          placementId: "1265998170441655_1294758274232311",
-                          adType: NativeAdType.NATIVE_AD_TEMPLATE,
-                          listener: (result, value) {
-                            print("Banner Ad $result --> $value");
-                          },
-                        ),
-                    )
-                    : Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: FacebookBannerAd(
-                          placementId: "1265998170441655_1266012507106888",
-                          bannerSize: BannerSize.STANDARD,
-                          listener: (result, value) {
-                            print("Banner Ad $result --> $value");
-                          },
-                        ),
-                    )
-                : CustomTheme.placeHolder
+            AdsManager.instance.fetchBannerOrNativeAd(index, 4),
           ],
         );
       },

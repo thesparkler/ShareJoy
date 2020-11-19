@@ -5,6 +5,7 @@ import 'package:ShareJoy/widgets/home/category_bar.dart';
 import 'package:ShareJoy/widgets/home/post_list.dart';
 import 'package:ShareJoy/widgets/sharejoy_header_logo.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
 class MemesScreen extends StatelessWidget {
@@ -46,14 +47,12 @@ class MemesScreen extends StatelessWidget {
                 // DropdownButton(items: null, onChanged: null)
                 IconButton(
                   color: Colors.black,
-                  icon: Icon(Icons.filter_list_rounded),
+                  icon: Icon(MdiIcons.filterVariant),
                   onPressed: () {
                     showModalBottomSheet(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(20.0)
-                        )
-                      ),
+                          borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(20.0))),
                       isScrollControlled: true,
                       context: context,
                       builder: (context) => CategoryBar(provider: memeProvider),
@@ -69,16 +68,14 @@ class MemesScreen extends StatelessWidget {
                 // ),
               ],
             ),
-            SliverList(
-              delegate: SliverChildListDelegate([
-                SizedBox(
-                  height: 8.0,
-                ),
-                Container(
-                    margin: EdgeInsets.only(left: 12.0), child: FilterBar()),
-                PostList(type: type)
-              ]),
-            )
+            const SliverToBoxAdapter(child: const SizedBox(height: 8.0)),
+            SliverToBoxAdapter(
+              child: Container(
+                margin: EdgeInsets.only(left: 12.0),
+                child: FilterBar(),
+              ),
+            ),
+            PostList(type: type),
           ]),
         ),
       ),

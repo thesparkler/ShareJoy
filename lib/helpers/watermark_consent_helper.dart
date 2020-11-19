@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:ShareJoy/local_storage.dart';
 import 'package:ShareJoy/widgets/watermark_alert.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'dart:typed_data';
 import 'package:image/image.dart';
 
 Future<Map> getUserWatermarkPreferences(BuildContext context) async {

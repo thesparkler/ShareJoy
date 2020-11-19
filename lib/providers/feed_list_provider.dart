@@ -58,7 +58,7 @@ class FeedListProvider extends ChangeNotifier {
     }
   }
 
-  void fetch() async {
+  Future<void> fetch() async {
     // load the memes using http request.
     String slot = this.greetingMessage();
     String url = Config.baseUrl + "/feeds/?page=$currentPage&slot=$slot";
