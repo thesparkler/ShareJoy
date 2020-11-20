@@ -82,29 +82,29 @@ class FeedList extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Feed(item: flp.items[(index)], feedIndex: index),
-            index % 4 == 0
-                ? index % 8 == 4
-                    ? Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: FacebookNativeAd(
-                          placementId: "1265998170441655_1294758274232311",
-                          adType: NativeAdType.NATIVE_AD_TEMPLATE,
-                          listener: (result, value) {
-                            print("Banner Ad $result --> $value");
-                          },
-                        ),
-                    )
-                    : Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: FacebookBannerAd(
-                          placementId: "1265998170441655_1266012507106888",
-                          bannerSize: BannerSize.STANDARD,
-                          listener: (result, value) {
-                            print("Banner Ad $result --> $value");
-                          },
-                        ),
-                    )
-                : CustomTheme.placeHolder
+            // index % 4 == 0
+            //     ? index % 8 == 4
+            //         ? Padding(
+            //           padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            //           child: FacebookNativeAd(
+            //               placementId: "1265998170441655_1294758274232311",
+            //               adType: NativeAdType.NATIVE_AD_TEMPLATE,
+            //               listener: (result, value) {
+            //                 print("Banner Ad $result --> $value");
+            //               },
+            //             ),
+            //         )
+            //         : Padding(
+            //           padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            //           child: FacebookBannerAd(
+            //               placementId: "1265998170441655_1266012507106888",
+            //               bannerSize: BannerSize.STANDARD,
+            //               listener: (result, value) {
+            //                 print("Banner Ad $result --> $value");
+            //               },
+            //             ),
+            //         )
+            //    : CustomTheme.placeHolder
           ],
         );
       },

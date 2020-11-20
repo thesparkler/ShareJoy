@@ -110,19 +110,19 @@ class _SingleSwiperViewState extends State<SingleSwiperView> {
                   ),
                 ),
               ),
-              Positioned(
-                left: 50.0,
-                right: 0,
-                child: SafeArea(
-                  child: FacebookBannerAd(
-                    placementId: "1265998170441655_1266012507106888",
-                    bannerSize: BannerSize.STANDARD,
-                    listener: (result, value) {
-                      print("Banner Ad $result --> $value");
-                    },
-                  ),
-                ),
-              ),
+              // Positioned(
+              //   left: 50.0,
+              //   right: 0,
+              //   child: SafeArea(
+              //     child: FacebookBannerAd(
+              //       placementId: "1265998170441655_1266012507106888",
+              //       bannerSize: BannerSize.STANDARD,
+              //       listener: (result, value) {
+              //         print("Banner Ad $result --> $value");
+              //       },
+              //     ),
+              //   ),
+              // ),
             ],
           );
         }),
