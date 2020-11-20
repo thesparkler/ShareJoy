@@ -117,21 +117,27 @@ class _CategoryBarState extends State<CategoryBar> {
                   ),
                   CustomTheme.h8,
                   Expanded(
-                    child: GridView.builder(
-                      shrinkWrap: true,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 2.0,
-                        mainAxisSpacing: 2.0,
-                        childAspectRatio: 3.1,
-                      ),
-                      itemCount: categories.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return CategoryWidget(
-                          mp: widget.provider,
-                          category: categories[index],
-                        );
+                    child: NotificationListener<OverscrollIndicatorNotification>(
+                      onNotification: (OverscrollIndicatorNotification overscroll) {
+                        overscroll.disallowGlow();
+                        return;
                       },
+                      child: GridView.builder(
+                        shrinkWrap: true,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 2.0,
+                          mainAxisSpacing: 2.0,
+                          childAspectRatio: 3.1,
+                        ),
+                        itemCount: categories.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return CategoryWidget(
+                            mp: widget.provider,
+                            category: categories[index],
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ],
