@@ -4,6 +4,7 @@ import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ShareJoy/http_service.dart' show get;
 
+//@not in use
 class FeedProvider extends ChangeNotifier {
   bool isDisposed = false;
   int id;
@@ -28,7 +29,7 @@ class FeedProvider extends ChangeNotifier {
     fetch();
   }
 
-  void fetch() async {
+  Future<void> fetch() async {
     // load the memes using http request.
     String url = Config.baseUrl + "/feeds/${this.id}?page=$currentPage";
 

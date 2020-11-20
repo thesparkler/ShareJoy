@@ -1,7 +1,6 @@
 import 'package:ShareJoy/config.dart';
 import 'package:ShareJoy/meme_icons.dart';
 import 'package:ShareJoy/screens/memes_screen.dart';
-import 'package:ShareJoy/screens/setting_screen.dart';
 import 'package:ShareJoy/theme_data.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';

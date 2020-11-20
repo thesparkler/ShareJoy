@@ -5,6 +5,7 @@ import 'package:ShareJoy/widgets/home/category_bar.dart';
 import 'package:ShareJoy/widgets/home/post_list.dart';
 import 'package:ShareJoy/widgets/sharejoy_header_logo.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
 class MemesScreen extends StatelessWidget {
@@ -46,14 +47,12 @@ class MemesScreen extends StatelessWidget {
                 // DropdownButton(items: null, onChanged: null)
                 IconButton(
                   color: Colors.black,
-                  icon: Icon(Icons.filter_list_rounded),
+                  icon: Icon(MdiIcons.filterVariant),
                   onPressed: () {
                     showModalBottomSheet(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(20.0)
-                        )
-                      ),
+                          borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(20.0))),
                       isScrollControlled: true,
                       context: context,
                       builder: (context) => CategoryBar(provider: memeProvider),
@@ -69,163 +68,17 @@ class MemesScreen extends StatelessWidget {
                 // ),
               ],
             ),
-            SliverList(
-              delegate: SliverChildListDelegate([
-                SizedBox(
-                  height: 8.0,
-                ),
-                Container(
-                    margin: EdgeInsets.only(left: 12.0), child: FilterBar()),
-                PostList(type: type)
-              ]),
-            )
+            const SliverToBoxAdapter(child: const SizedBox(height: 8.0)),
+            SliverToBoxAdapter(
+              child: Container(
+                margin: EdgeInsets.only(left: 12.0),
+                child: FilterBar(),
+              ),
+            ),
+            PostList(type: type),
           ]),
         ),
       ),
     );
-  }
-}
-
-class LanguageButton extends StatefulWidget {
-  final onChange;
-
-  const LanguageButton({Key key, this.onChange}) : super(key: key);
-
-  @override
-  _LanguageButtonState createState() => _LanguageButtonState();
-}
-
-class _LanguageButtonState extends State<LanguageButton> {
-  OverlayEntry _overlayEntry;
-  OverlayState _overlayState;
-  bool _isVisible = false;
-
-  //final FocusNode _focusNode = FocusNode();
-  // bool shown = false;
-
-  // @override
-  // void initState() {
-  //   _focusNode.addListener(() {
-  //     if (_focusNode.hasFocus) {
-  //       this._overlayEntry = this._createOverlayEntry();
-  //       Overlay.of(context).insert(this._overlayEntry);
-  //     } else {
-  //       this._overlayEntry.remove();
-  //       shown = false;
-  //     }
-  //   });
-  //   super.initState();
-  // }
-
-  OverlayEntry _createOverlayEntry() {
-    RenderBox renderBox = context.findRenderObject();
-    var size = renderBox.size;
-    var offset = renderBox.localToGlobal(Offset.zero);
-
-    return OverlayEntry(
-      builder: (context) => GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onTap: () {
-          hideHelp();
-        },
-        child: Stack(
-          children: [
-            Positioned(
-              right: 5.0,
-              top: offset.dy + size.height + 5.0,
-              width: 150.0,
-              child: Material(
-                elevation: 4.0,
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  children: <Widget>[
-                    ListTile(
-                      title: Text('All'),
-                      onTap: () => onChange(""),
-                    ),
-                    ListTile(
-                      title: Text('English'),
-                      onTap: () => onChange("english"),
-                    ),
-                    ListTile(
-                      title: Text('Hindi'),
-                      onTap: () => onChange("hindi"),
-                    ),
-                    ListTile(
-                      title: Text('Marathi'),
-                      onTap: () => onChange("marathi"),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void onChange(String lang) {
-    widget.onChange(lang);
-    setState(() {
-      //shown = false;
-      _isVisible = false;
-    });
-    this._overlayEntry.remove();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // return GestureDetector(
-    //   child: Container(
-    //     margin: EdgeInsets.only(right: 10),
-    //     child: Image.asset("assets/images/language.png", height: 25, width: 25),
-    //   ),
-    //   onTap: () {
-    //     if (shown) {
-    //       this._overlayEntry.remove();
-    //       setState(() {
-    //         shown = false;
-    //       });
-    //     } else {
-    //       this._overlayEntry = this._createOverlayEntry();
-    //       Overlay.of(context).insert(this._overlayEntry);
-    //       setState(() {
-    //         shown = true;
-    //       });
-    //     }
-    //   },
-    // );
-    //
-
-    return Row(
-      children: [
-        GestureDetector(
-          child: Container(
-            margin: EdgeInsets.only(right: 10.0),
-            child: Image.asset("assets/images/language.png",
-                height: 25, width: 25),
-          ),
-          onTap: () {
-            showLang();
-          },
-        )
-      ],
-    );
-  }
-
-  showLang() async {
-    if (!_isVisible) {
-      _overlayState = Overlay.of(context);
-      _overlayEntry = _createOverlayEntry();
-      _overlayState.insert(_overlayEntry);
-      _isVisible = true;
-    }
-  }
-
-  void hideHelp() {
-    _isVisible = false;
-    _overlayEntry.remove();
   }
 }

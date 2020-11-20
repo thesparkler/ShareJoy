@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:ShareJoy/local_storage.dart';
 import 'package:ShareJoy/widgets/watermark_alert.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'dart:typed_data';
 import 'package:image/image.dart';
 
 Future<Map> getUserWatermarkPreferences(BuildContext context) async {
@@ -50,11 +47,15 @@ dynamic applyWatermarkBg(data) async {
   bool needUserLogo = prefs != null && prefs['userWatermark'] != "";
   bool needShareJoyLogo = prefs != null && prefs['sharejoyWatermark'] == true;
   if (!needUserLogo && !needShareJoyLogo) return bytes;
-  if (type == "jpg") {
-    sharedImage = decodeJpg(bytes);
-  } else if (type == "png") {
-    sharedImage = decodePng(bytes);
-  } else {
+  try {
+    if (type == "jpg") {
+      sharedImage = decodeJpg(bytes);
+    } else if (type == "png") {
+      sharedImage = decodePng(bytes);
+    } else {
+      return bytes;
+    }
+  } catch (e) {
     return bytes;
   }
   if (needShareJoyLogo) {

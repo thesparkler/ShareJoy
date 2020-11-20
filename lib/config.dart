@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 class Config {
-  static const host =
-      "http://ec2-13-233-228-241.ap-south-1.compute.amazonaws.com/";
+  static String host = "";
 
-  static const baseUrl = host + "api";
+  static String baseUrl = host + "api";
 
   static const types = {
     1: "meme",
@@ -30,4 +29,9 @@ class Config {
     Colors.green,
     Colors.blue,
   ];
+
+  static setHost(String inputHost) {
+    host = inputHost;
+    print(host);
+  }
 }

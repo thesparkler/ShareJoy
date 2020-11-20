@@ -1,13 +1,14 @@
+import 'package:ShareJoy/ads_manager.dart';
 import 'package:ShareJoy/models/post.dart';
 import 'package:ShareJoy/providers/feed_list_provider.dart';
 import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:ShareJoy/screens/setting_screen.dart';
 import 'package:ShareJoy/screens/single_swiper_view.dart';
 import 'package:ShareJoy/theme_data.dart';
+import 'package:ShareJoy/widgets/feed_shimmer.dart';
+import 'package:ShareJoy/widgets/nothing_found.dart';
 import 'package:ShareJoy/widgets/sharejoy_header_logo.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:fb_audience_network_ad/ad/ad_banner.dart';
-import 'package:fb_audience_network_ad/ad/ad_native.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -18,50 +19,60 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => FeedListProvider(scroll),
-      child: NotificationListener<OverscrollIndicatorNotification>(
-        onNotification: (OverscrollIndicatorNotification overscroll) {
-          overscroll.disallowGlow();
-          return;
-        },
-        child: CustomScrollView(controller: scroll, slivers: <Widget>[
-          SliverAppBar(
-            shadowColor: Colors.black,
-            forceElevated: true,
-            floating: true,
-            backgroundColor: Colors.white,
-            elevation: 5,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(20.0),
-            )),
-            title: const SharejoyHeaderLogo(),
-            actions: [
-                InkWell(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => SettingScreen()));
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 15.0),
-                    child: Image.asset("assets/images/setting.png", height: 22, width: 22, color: new Color(0xFF696969),),
-                  ),
+        create: (_) => FeedListProvider(scroll),
+        builder: (context, child) {
+          return RefreshIndicator(
+            onRefresh: () =>
+                Provider.of<FeedListProvider>(context, listen: false).refresh(),
+            child: NotificationListener<OverscrollIndicatorNotification>(
+              onNotification: (OverscrollIndicatorNotification overscroll) {
+                overscroll.disallowGlow();
+                return;
+              },
+              child: CustomScrollView(controller: scroll, slivers: <Widget>[
+                SliverAppBar(
+                  shadowColor: Colors.black,
+                  forceElevated: true,
+                  floating: true,
+                  backgroundColor: Colors.white,
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(
+                    bottom: Radius.circular(20.0),
+                  )),
+                  title: const SharejoyHeaderLogo(),
+                  actions: [
+                    InkWell(
+                      onTap: () {
+                        SettingScreen.route(context);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 15.0),
+                        child: Image.asset(
+                          "assets/images/setting.png",
+                          height: 22,
+                          width: 22,
+                          color: new Color(0xFF696969),
+                        ),
+                      ),
+                    ),
+                    // DropdownButton(items: null, onChanged: null)
+                  ],
                 ),
-              // DropdownButton(items: null, onChanged: null)
-            ],
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate([
-              const SizedBox(height: 8.0),
-              Consumer<FeedListProvider>(
-                builder: (context, flp, snapshot) {
-                  return FeedList(flp: flp);
-                },
-              ),
-            ]),
-          )
-        ]),
-      ),
-    );
+                SliverList(
+                  delegate: SliverChildListDelegate([
+                    const SizedBox(height: 8.0),
+                    Consumer<FeedListProvider>(
+                      builder: (context, flp, snapshot) {
+                        return FeedList(flp: flp);
+                      },
+                    ),
+                  ]),
+                )
+              ]),
+            ),
+          );
+        });
   }
 }
 
@@ -72,6 +83,12 @@ class FeedList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (flp.feedListState == ViewState.loading) {
+      return FeedShimmer();
+    }
+    if (flp.items.length == 0) {
+      return NothingFound();
+    }
     return ListView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -105,6 +122,8 @@ class FeedList extends StatelessWidget {
             //             ),
             //         )
             //    : CustomTheme.placeHolder
+            AdsManager.instance.fetchBannerOrNativeAd(index, 4),
+
           ],
         );
       },

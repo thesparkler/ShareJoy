@@ -12,6 +12,11 @@ import 'package:url_launcher/url_launcher.dart';
 import '../NoGlowBehaviour.dart';
 
 class SettingScreen extends StatelessWidget {
+  static route(BuildContext context) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => SettingScreen()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,10 +30,10 @@ class SettingScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
                   Text(
                     "ShareJoy",
-                    style: TextStyle(fontFamily: "FredokaOneRegular", fontSize: 25.0),
+                    style: TextStyle(
+                        fontFamily: "FredokaOneRegular", fontSize: 25.0),
                     //style: Theme.of(context).textTheme.headline5,
                   ),
                   CustomTheme.h24,
@@ -43,7 +48,7 @@ class SettingScreen extends StatelessWidget {
                           ))),
                   CustomTheme.h12,
                   Text(
-                    "version 1.2.0",
+                    "version 1.2.1",
                     style: TextStyle(fontFamily: 'RobotoRegular'),
                   ),
                 ],
@@ -107,7 +112,8 @@ https://play.google.com/store/apps/details?id=com.app.sharejoy
                 Divider(),
                 ListTile(
                   onTap: () async {
-                    await FirebaseAnalytics().logEvent(name: "app_review_click");
+                    await FirebaseAnalytics()
+                        .logEvent(name: "app_review_click");
 
                     launch(
                         "https://play.google.com/store/apps/details?id=com.app.sharejoy");

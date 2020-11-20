@@ -42,7 +42,9 @@ class _ShareButtonState extends State<ShareButton> {
                   height: 30.0,
                   child: CircularProgressIndicator(
                     strokeWidth: 2.0,
-                    valueColor: AlwaysStoppedAnimation(Colors.white),
+                    valueColor: AlwaysStoppedAnimation(
+                      widget.color != null ? widget.color : Colors.white,
+                    ),
                   ))
               : Icon(
                   MdiIcons.shareOutline,

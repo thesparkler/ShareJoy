@@ -1,4 +1,4 @@
-import 'package:ShareJoy/http_service.dart' show reportImageError;
+import 'package:ShareJoy/ads_manager.dart';
 import 'package:ShareJoy/models/post.dart';
 import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:ShareJoy/screens/editor.dart';
@@ -10,8 +10,6 @@ import 'package:ShareJoy/widgets/swiper_view/like_button.dart';
 import 'package:ShareJoy/widgets/swiper_view/share_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fb_audience_network_ad/ad/ad_banner.dart';
-import 'package:fb_audience_network_ad/ad/ad_interstitial.dart';
-import 'package:fb_audience_network_ad/ad/ad_native.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -43,42 +41,28 @@ class SingleSwiperView extends StatefulWidget {
 
 class _SingleSwiperViewState extends State<SingleSwiperView> {
   PageController _ctrl;
-  int swiped = 1;
-  int lastPage;
+  int lastPage = 0;
 
   @override
   void initState() {
     _ctrl = PageController(initialPage: this.widget.index);
-    lastPage = this.widget.index;
     _ctrl.addListener(() {
       int page = _ctrl.page.round();
-      if (swiped % 15 == 2) {
-        _loadAd();
-      }
       if (lastPage != page) {
-        swiped++;
         lastPage = page;
       }
       int total = widget.mp.items.length;
       if ((total - page) == 2) {
         widget.mp.nextPage();
       }
+      // print(lastPage.toString());
+      if (lastPage % 2 == 1) {
+        print("calling interestial ad $lastPage");
+        AdsManager.instance.fetchInterestialAd();
+      }
     });
-    print("calling interestial ad");
 
     super.initState();
-  }
-
-  _loadAd() {
-    FacebookInterstitialAd.loadInterstitialAd(
-        placementId: "1265998170441655_1298112503896888",
-        listener: (InterstitialAdResult res, value) {
-          print("interestial $value $res");
-          if (res == InterstitialAdResult.LOADED) {
-            print("show interstital ad");
-            FacebookInterstitialAd.showInterstitialAd();
-          }
-        });
   }
 
   @override

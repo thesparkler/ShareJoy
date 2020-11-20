@@ -99,7 +99,7 @@ class PostProvider extends ChangeNotifier {
     }
   }
 
-  void fetchPosts() async {
+  Future<void> fetchPosts() async {
     // load the memes using http request.
     String url = Config.baseUrl + "/posts/$type?page=$currentPage";
     if (filters['category_id'] != null) {
@@ -206,23 +206,23 @@ class PostProvider extends ChangeNotifier {
   }
 
   addCategoryIntoFilter(String id) {
-    var category_ids = this.filters['category_ids'] ?? "";
-    category_ids = category_ids.split(",");
-    category_ids.add(id);
-    this.filter("category_ids", category_ids.join(","));
+    var categoryIds = this.filters['category_ids'] ?? "";
+    categoryIds = categoryIds.split(",");
+    categoryIds.add(id);
+    this.filter("category_ids", categoryIds.join(","));
   }
 
   removeCategoryIntoFilter(String id) {
-    var category_ids = this.filters['category_ids'] ?? "";
-    category_ids = category_ids.split(",");
-    category_ids.remove(id);
-    this.filter("category_ids", category_ids.join(","));
+    var categoryIds = this.filters['category_ids'] ?? "";
+    categoryIds = categoryIds.split(",");
+    categoryIds.remove(id);
+    this.filter("category_ids", categoryIds.join(","));
   }
 
   List getSelectedCategories() {
-    var category_ids = this.filters['category_ids'] ?? "";
-    category_ids = category_ids.split(",");
-    return category_ids;
+    var categoryIds = this.filters['category_ids'] ?? "";
+    categoryIds = categoryIds.split(",");
+    return categoryIds;
   }
 
   void changeLanguage(v) {

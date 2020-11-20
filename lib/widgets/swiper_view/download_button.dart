@@ -9,7 +9,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:http/http.dart' as http;
 import 'dart:ui' as ui;
 
 import 'package:save_in_gallery/save_in_gallery.dart';
@@ -47,7 +46,9 @@ class _DownlaodButtonState extends State<DownlaodButton> {
                   height: 30.0,
                   child: CircularProgressIndicator(
                     strokeWidth: 2.0,
-                    valueColor: AlwaysStoppedAnimation(Colors.white),
+                    valueColor: AlwaysStoppedAnimation(
+                      widget.color != null ? widget.color : Colors.white,
+                    ),
                   ))
               : Icon(
                   MdiIcons.downloadOutline,
@@ -105,24 +106,22 @@ class _DownlaodButtonState extends State<DownlaodButton> {
 
           return;
         } else {
-          final res = await http.head(widget.item.image);
+          var request = await HttpClient().getUrl(Uri.parse(widget.item.image));
+          var response = await request.close();
           final mimetypes = {
             "image/jpeg": "jpg",
             "image/jpg": "jpg",
             "image/gif": "gif",
             "image/png": "png",
           };
-          final ext = mimetypes[res.headers['content-type']] ?? "jpg";
-          final wext = mimetypes[res.headers['content-type']] ?? "unknown";
+          final ext = mimetypes[response.headers.contentType.value] ?? "jpg";
           name = "image" + DateTime.now().microsecond.toString() + "." + ext;
-          var request = await HttpClient().getUrl(Uri.parse(widget.item.image));
-          var response = await request.close();
           Uint8List bytes = await consolidateHttpClientResponseBytes(response);
 
-          bytes = await applyWatermark(bytes, context, type: wext);
+          var watermarkImage = await applyWatermark(bytes, context, type: ext);
 
           await ImageSaver().saveImage(
-            imageBytes: bytes,
+            imageBytes: watermarkImage,
             imageName: name,
             directoryName: "ShareJoy",
           );
