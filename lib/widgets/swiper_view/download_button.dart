@@ -7,11 +7,10 @@ import 'package:flutter/rendering.dart';
 import 'package:ShareJoy/models/post.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_save/image_save.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:ui' as ui;
-
-import 'package:save_in_gallery/save_in_gallery.dart';
 
 class DownlaodButton extends StatefulWidget {
   const DownlaodButton({
@@ -92,10 +91,10 @@ class _DownlaodButtonState extends State<DownlaodButton> {
           var pngBytes = byteData.buffer.asUint8List();
           pngBytes = await applyWatermark(pngBytes, context, type: "png");
           var name1 = "/image" + DateTime.now().microsecond.toString() + ".png";
-          await ImageSaver().saveImage(
-            imageBytes: pngBytes,
-            imageName: name1,
-            directoryName: "ShareJoy",
+          await ImageSave.saveImage(
+            pngBytes,
+            name1,
+            albumName: "ShareJoy",
           );
           Scaffold.of(context).showSnackBar(SnackBar(
             content: Text("File is saved in your gallery"),
@@ -120,10 +119,10 @@ class _DownlaodButtonState extends State<DownlaodButton> {
 
           var watermarkImage = await applyWatermark(bytes, context, type: ext);
 
-          await ImageSaver().saveImage(
-            imageBytes: watermarkImage,
-            imageName: name,
-            directoryName: "ShareJoy",
+          await ImageSave.saveImage(
+            watermarkImage,
+            name,
+            albumName: "ShareJoy",
           );
           Scaffold.of(context).showSnackBar(SnackBar(
             content: Text("File is saved in your gallery"),

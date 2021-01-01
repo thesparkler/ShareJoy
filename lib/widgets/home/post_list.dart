@@ -98,8 +98,10 @@ class PostWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => SingleSwiperView.route(
-          context, index, Provider.of<PostProvider>(context, listen: false)),
+      onTap: () {
+        SingleSwiperView.route(
+            context, index, Provider.of<PostProvider>(context, listen: false));
+      },
       child: Stack(
         children: [
           Container(

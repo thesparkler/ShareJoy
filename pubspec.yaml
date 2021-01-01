@@ -31,10 +31,7 @@ dependencies:
   flat_icons_flutter: any
   esys_flutter_share: ^1.0.2
   permission_handler: ^5.0.1+1
-  save_in_gallery:
-    git:
-      url: git@github.com:FiveDotTwelve/save_in_gallery.git
-      ref: 6150be43e0e5d5984f88a4be85b9fe850b090f5b
+  image_save: ^4.0.1
   flutter_colorpicker: ^0.3.4
   path_provider: ^1.6.18
   hive: ^1.4.4

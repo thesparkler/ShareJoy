@@ -97,7 +97,8 @@ class _ShareButtonState extends State<ShareButton> {
 
         Uint8List bytes = await consolidateHttpClientResponseBytes(response);
         var sharedImageInts = await applyWatermark(bytes, context, type: ext);
-        await Share.file('ShareJoy', 'amlog.png', sharedImageInts, 'image/png');
+        await Share.file('ShareJoy', 'amlog.' + ext, sharedImageInts,
+            response.headers.contentType.value);
       } catch (e) {
         print('error: $e');
       }

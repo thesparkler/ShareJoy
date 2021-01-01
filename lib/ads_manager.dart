@@ -9,7 +9,7 @@ enum AdStatus { loading, success, error }
 
 class AdsManager {
   DateTime lastAdRequested;
-  int adLoadedThresholdInSeconds = MINITUE_IN_SECONDS * 5;
+  int adLoadedThresholdInSeconds = MINITUE_IN_SECONDS * 2;
   int adErrorThresholdInSeconds = MINITUE_IN_SECONDS * 1;
   AdStatus status;
 
