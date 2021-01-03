@@ -65,7 +65,7 @@ class _CategoryBarState extends State<CategoryBar> {
                     children: [
                       Text(
                         "Select Content Language",
-                       style: TextStyle(fontSize: 16.0, fontFamily: "RobotoMedium" ),
+                       style: TextStyle(fontSize: 16.0, fontFamily: "RobotoMedium"),
                        // style: Theme.of(context).textTheme.headline6,
                       ),
                       IconButton(

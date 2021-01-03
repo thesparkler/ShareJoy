@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:ShareJoy/ads_manager.dart';
 import 'package:ShareJoy/config.dart';
 import 'package:ShareJoy/firebase_messaging.dart';
@@ -7,7 +9,6 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -82,9 +83,31 @@ class InitialLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: CircularProgressIndicator(),
-    ));
+      body: Center(
+        child: Column(
+          children: [
+
+         Image.asset("assets/images/loading_data.png"),
+
+          Text("Loading Joy...",
+              style: TextStyle(fontFamily: 'FredokaOneRegular', color: Colors.black, fontSize: 28), textAlign: TextAlign.center,)
+
+
+          ],
+        ),
+      ),
+    //     body: Center(
+    // //  child: CircularProgressIndicator(),
+    //       child: Column(
+    //         children: [
+    //         //  Image.asset("assets/images/loading_data.png"),
+    //
+    //           Text("Loading Joy...",
+    //           style: TextStyle(fontFamily: 'FredokaOneRegular', color: Colors.black, fontSize: 28), textAlign: TextAlign.center,)
+    //         ],
+    //       )
+    // )
+    );
   }
 }
 
