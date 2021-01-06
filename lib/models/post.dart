@@ -26,7 +26,8 @@ class Post {
       "image": this.image,
       "type": this.type,
       "render_type": this.renderType,
-      "created_at": this.createdAt
+      "created_at": this.createdAt,
+      "caption": this.caption,
     });
   }
 
@@ -68,5 +69,9 @@ class Post {
 
   bool canChangeBackgroundColor() {
     return this.renderType == "text" ? true : false;
+  }
+
+  void setLike(bool b) {
+    this.isLiked = b;
   }
 }

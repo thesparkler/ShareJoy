@@ -4,9 +4,11 @@ import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:ShareJoy/screens/single_swiper_view.dart';
 import 'package:ShareJoy/theme_data.dart';
 import 'package:ShareJoy/widgets/home/list_shimmer.dart';
+import 'package:ShareJoy/widgets/like_with_transition.dart';
 import 'package:ShareJoy/widgets/nothing_found.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:ShareJoy/http_service.dart' show reportImageError;
@@ -33,12 +35,10 @@ class PostList extends StatelessWidget {
             child: NothingFound(),
           );
         }
-        // return Container(child: Text("$type loaded"));
         return SliverList(
           delegate: SliverChildBuilderDelegate(
             (context, index) {
               if (mp.items.length == index) {
-                // mp.nextPage();
                 if (mp.memeState == ViewState.showMore) {
                   return Container(
                       height: 30.0,
@@ -57,120 +57,72 @@ class PostList extends StatelessWidget {
             childCount: mp.items.length + 1,
           ),
         );
-
-        // return ListView.builder(
-        //   shrinkWrap: true,
-        //   physics: NeverScrollableScrollPhysics(),
-        //   itemCount: mp.items.length + 1,
-        //   itemBuilder: (context, index) {
-        //     if (mp.items.length == index) {
-        //       if (mp.memeState == ViewState.showMore) {
-        //         return Container(
-        //             height: 30.0,
-        //             child: Center(child: CircularProgressIndicator()));
-        //       }
-        //       return CustomTheme.placeHolder;
-        //     }
-        //     final item = mp.items[index];
-        //     return Column(
-        //       children: [
-        //         PostWidget(item: item, index: index),
-        //         AdsManager.instance.fetchBannerOrNativeAd(index, 6),
-        //       ],
-        //     );
-        //   },
-        // );
       },
     );
   }
 }
 
 class PostWidget extends StatelessWidget {
-  const PostWidget({
-    Key key,
-    @required this.item,
-    this.index,
-  }) : super(key: key);
-
   final Post item;
   final int index;
 
+  const PostWidget({Key key, this.item, this.index}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        SingleSwiperView.route(
-            context, index, Provider.of<PostProvider>(context, listen: false));
-      },
-      child: Stack(
-        children: [
-          Container(
-            margin: EdgeInsets.only(
-                left: 10.0, right: 10.0, bottom: 10.0, top: 5.0),
-            child: Card(
-              elevation: 5.0,
-              shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.transparent, width: 0.5),
-                  borderRadius: BorderRadius.circular(15)),
-              child: item.renderType == "image"
-                  ? Container(
-                      padding: EdgeInsets.all(10.0),
-                      child: CachedNetworkImage(
-                          width: double.infinity,
-                          imageUrl: item.image,
-                          placeholder: (context, url) => Shimmer.fromColors(
-                                baseColor: Colors.grey[300],
-                                highlightColor: Colors.grey[400],
-                                child: Container(
-                                  padding: EdgeInsets.all(10.0),
-                                  color: Colors.grey,
-                                  width: double.infinity,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.4,
-                                ),
-                              ),
-                          errorWidget: (context, url, error) {
-                            reportImageError(item.id);
-                            return Container(
-                              height: MediaQuery.of(context).size.height * 0.4,
-                              child: Center(
-                                child: Icon(Icons.warning),
-                              ),
-                            );
-                          }),
-                    )
-                  : TextPost(item: item),
-            ),
-          ),
-
-          //  ),
-
-          // item.isNew
-          //     ? Positioned(
-          //         top: -0.0,
-          //         right: -0.0,
-          //         child: Container(
-          //           margin: EdgeInsets.all(0.0),
-          //           padding:
-          //               EdgeInsets.symmetric(vertical: 14.0, horizontal: 14.0),
-          //           decoration: BoxDecoration(
-          //             color: Theme.of(context).primaryColor,
-          //             shape: BoxShape.circle,
-          //             // borderRadius: BorderRadius.circular(132.0),
-          //           ),
-          //           child: Text(
-          //             'New',
-          //             style: TextStyle(
-          //               color: Colors.white,
-          //               fontSize: 11.0,
-          //               fontWeight: FontWeight.bold,
-          //             ),
-          //           ),
-          //         ),
-          //       )
-          CustomTheme.placeHolder,
-        ],
+    return Container(
+      margin: EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0, top: 5.0),
+      child: LikeWithTransition(
+        onTap: () => SingleSwiperView.route(
+            context, index, Provider.of<PostProvider>(context, listen: false)),
+        item: item,
+        child: Card(
+          elevation: 5.0,
+          shape: RoundedRectangleBorder(
+              side: BorderSide(color: Colors.transparent, width: 0.5),
+              borderRadius: BorderRadius.circular(15)),
+          child: item.renderType == "image"
+              ? ImagePost(item: item)
+              : TextPost(item: item),
+        ),
       ),
+    );
+  }
+}
+
+class ImagePost extends StatelessWidget {
+  const ImagePost({
+    Key key,
+    @required this.item,
+  }) : super(key: key);
+
+  final Post item;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(10.0),
+      child: CachedNetworkImage(
+          width: double.infinity,
+          imageUrl: item.image,
+          placeholder: (context, url) => Shimmer.fromColors(
+                baseColor: Colors.grey[300],
+                highlightColor: Colors.grey[400],
+                child: Container(
+                  padding: EdgeInsets.all(10.0),
+                  color: Colors.grey,
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height * 0.4,
+                ),
+              ),
+          errorWidget: (context, url, error) {
+            reportImageError(item.id);
+            return Container(
+              height: MediaQuery.of(context).size.height * 0.4,
+              child: Center(
+                child: Icon(Icons.warning),
+              ),
+            );
+          }),
     );
   }
 }

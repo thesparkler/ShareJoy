@@ -9,7 +9,7 @@ enum ViewState { loading, loaded, showMore, error }
 class PostProvider extends ChangeNotifier {
   static var self;
   bool isDisposed = false;
-
+  bool paginationEnabled = true;
   // post types = meme | shayari | greetings
   String type;
 

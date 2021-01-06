@@ -19,7 +19,8 @@ class _LikeButtonState extends State<LikeButton> {
   bool isLiked;
   @override
   Widget build(BuildContext context) {
-    if (isLiked == null) isLiked = widget.item.isLiked;
+    if (isLiked == null || isLiked != widget.item.isLiked)
+      isLiked = widget.item.isLiked;
     return Column(
       children: [
         IconButton(
@@ -62,35 +63,31 @@ class _LikeButtonState extends State<LikeButton> {
 
     print("pressed llike buttong");
     var likesArray = await LocalStorage.instance.get("likes_array");
+    var likes = await LocalStorage.instance.get("likes");
     if (likesArray == null) {
       likesArray = [];
     }
-    if (likesArray.contains(widget.item.id)) {
-      Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text("Content is already liked"),
-      ));
-      setState(() {
-        processing = false;
-      });
-      return;
-    }
-    print("pressed like action taking place");
-    await Provider.of<PostProvider>(context, listen: false).like(widget.item);
-    print("server response came");
-
-    var likes = await LocalStorage.instance.get("likes");
     if (likes == null) {
       likes = {};
     }
+    if (likesArray.contains(widget.item.id)) {
+      likesArray.remove(widget.item.id);
+      likes.remove(widget.item.id);
+      isLiked = false;
+    } else {
+      await Provider.of<PostProvider>(context, listen: false)
+          ?.like(widget.item);
+      isLiked = true;
+      likes[widget.item.id] = widget.item.toJSON();
+      likesArray.add(widget.item.id);
+    }
 
-    likes[widget.item.id] = widget.item.toJSON();
-
-    likesArray.add(widget.item.id);
     LocalStorage.instance.put("likes", (likes));
     LocalStorage.instance.put("likes_array", (likesArray));
+    widget.item.setLike(isLiked);
     setState(() {
       processing = false;
-      isLiked = true;
+      isLiked = isLiked;
     });
   }
 }

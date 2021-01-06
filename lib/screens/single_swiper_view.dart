@@ -1,7 +1,9 @@
 import 'package:ShareJoy/ads_manager.dart';
 import 'package:ShareJoy/models/post.dart';
+import 'package:ShareJoy/providers/like_provider.dart';
 import 'package:ShareJoy/providers/meme_provider.dart';
 import 'package:ShareJoy/theme_data.dart';
+import 'package:ShareJoy/widgets/like_with_transition.dart';
 import 'package:ShareJoy/widgets/sharejoy_watermark.dart';
 import 'package:ShareJoy/widgets/swiper_view/CopyButton.dart';
 import 'package:ShareJoy/widgets/swiper_view/download_button.dart';
@@ -75,13 +77,7 @@ class _SingleSwiperViewState extends State<SingleSwiperView> {
                   itemCount: mp.items.length,
                   itemBuilder: (context, index) {
                     Post item = mp.items[index];
-                    return Stack(
-                      children: [
-                        item.renderType == "image"
-                            ? SinglePostWidget(item: item)
-                            : SingleTextPostWidget(item: item),
-                      ],
-                    );
+                    return DetailView(item: item);
                   }),
               Positioned(
                 child: SafeArea(
@@ -106,6 +102,28 @@ class _SingleSwiperViewState extends State<SingleSwiperView> {
             ],
           );
         }),
+      ),
+    );
+  }
+}
+
+class DetailView extends StatelessWidget {
+  const DetailView({
+    Key key,
+    @required this.item,
+  }) : super(key: key);
+
+  final Post item;
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => LikeProvider(item),
+      child: LikeWithTransition(
+        item: item,
+        child: item.renderType == "image"
+            ? SinglePostWidget(item: item)
+            : SingleTextPostWidget(item: item),
       ),
     );
   }
@@ -154,7 +172,12 @@ class SinglePostWidget extends StatelessWidget {
         Positioned(
           left: 5,
           bottom: 10,
-          child: LikeButton(item: item),
+          child: Consumer<LikeProvider>(
+            builder: (_, lp, ___) {
+              print("like changed ${lp.item.isLiked}");
+              return LikeButton(item: lp.item);
+            },
+          ),
         ),
         Positioned(
           right: 5,
@@ -254,7 +277,11 @@ class _SingleTextPostWidgetState extends State<SingleTextPostWidget> {
         Positioned(
           left: 5,
           bottom: 10,
-          child: LikeButton(item: widget.item),
+          child: Consumer<LikeProvider>(builder: (_, __, ___) {
+            print("like changed");
+            widget.item.isLiked = !widget.item.isLiked;
+            return LikeButton(item: widget.item);
+          }),
         ),
         Positioned(
           right: 5,

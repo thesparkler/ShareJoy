@@ -3,8 +3,9 @@ import 'dart:ui';
 import 'package:ShareJoy/ads_manager.dart';
 import 'package:ShareJoy/config.dart';
 import 'package:ShareJoy/firebase_messaging.dart';
-import 'package:ShareJoy/screens/home_page.dart';
 import 'package:ShareJoy/local_storage.dart';
+import 'package:ShareJoy/screens/favs_screen.dart';
+import 'package:ShareJoy/screens/home_page.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
@@ -21,9 +22,6 @@ void main() async {
   PushNotificationHandler.init();
   AdsManager.init();
 
-  // FacebookAudienceNetwork.init(
-  //     // testingId: "b9f2908b-1a6b-4a5b-b862-ded7ce289e41",
-  //     );
   runApp(App());
 }
 
@@ -70,43 +68,60 @@ class _AppState extends State<App> {
       title: "ShareJoy",
       home: ok == 1
           ? HomePage()
-          : ok == 0 ? InitialLoader() : NoHostFound(onRefresh: initialize),
+          : ok == 0
+              ? InitialLoader()
+              : NoHostFound(onRefresh: initialize),
     );
   }
 }
 
-class InitialLoader extends StatelessWidget {
+class InitialLoader extends StatefulWidget {
   const InitialLoader({
     Key key,
   }) : super(key: key);
 
   @override
+  _InitialLoaderState createState() => _InitialLoaderState();
+}
+
+class _InitialLoaderState extends State<InitialLoader> {
+  final theImage = Image.asset(
+    "assets/images/loading_data.png",
+    width: 650.0,
+    height: 400.0,
+  );
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    precacheImage(theImage.image, context);
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-
-         Image.asset("assets/images/loading_data.png"),
-
-          Text("Loading Joy...",
-              style: TextStyle(fontFamily: 'FredokaOneRegular', color: Colors.black, fontSize: 28), textAlign: TextAlign.center,)
-
-
-          ],
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            child: theImage,
+            height: 400.0,
+          ),
+          Text(
+            "Loading Joy...",
+            style: TextStyle(
+                fontFamily: 'FredokaOneRegular',
+                color: Colors.black,
+                fontSize: 28),
+            textAlign: TextAlign.center,
+          )
+        ],
       ),
-    //     body: Center(
-    // //  child: CircularProgressIndicator(),
-    //       child: Column(
-    //         children: [
-    //         //  Image.asset("assets/images/loading_data.png"),
-    //
-    //           Text("Loading Joy...",
-    //           style: TextStyle(fontFamily: 'FredokaOneRegular', color: Colors.black, fontSize: 28), textAlign: TextAlign.center,)
-    //         ],
-    //       )
-    // )
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:ShareJoy/local_storage.dart';
+import 'package:ShareJoy/screens/favs_screen.dart';
 import 'package:ShareJoy/theme_data.dart';
 import 'package:ShareJoy/widgets/watermark_alert.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
@@ -58,6 +59,21 @@ class SettingScreen extends StatelessWidget {
             behavior: NoGlowBehaviour(),
             child: ListView(
               children: [
+                ListTile(
+                  onTap: () {
+                    FavsScreen.route(context);
+                  },
+                  title: Text(
+                    "My favourites",
+                    style: TextStyle(fontFamily: 'RobotoMedium'),
+                  ),
+                  subtitle: Text(
+                    "Here you can find your all liked posts",
+                    style: TextStyle(fontFamily: 'RobotoRegular', fontSize: 14),
+                  ),
+                  trailing: Icon(MdiIcons.heartOutline),
+                ),
+                Divider(),
                 ListTile(
                   onTap: () async {
                     await showDialog(
