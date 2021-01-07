@@ -91,10 +91,10 @@ class _LikeWithTransitionState extends State<LikeWithTransition>
                 child: Center(
                   child: Icon(
                     widget.item.isLiked
-                        ? MdiIcons.heartOutline
+                        ? MdiIcons.heart
                         : MdiIcons.heart,
                     size: 100.0,
-                    color: Colors.red.withAlpha(150),
+                    color: widget.item.isLiked ? Colors.white.withAlpha(250) : Colors.red.withAlpha(250),
                   ),
                 ),
               ),

@@ -22,6 +22,12 @@ class SettingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text(
+          "Settings",
+          style: TextStyle(color: Colors.black),
+        ),
+        iconTheme: IconThemeData(color: Colors.black),
         automaticallyImplyLeading: true,
       ),
       body: Column(
@@ -49,7 +55,7 @@ class SettingScreen extends StatelessWidget {
                           ))),
                   CustomTheme.h12,
                   Text(
-                    "version 1.2.1",
+                    "version 1.2.2",
                     style: TextStyle(fontFamily: 'RobotoRegular'),
                   ),
                 ],
@@ -64,11 +70,11 @@ class SettingScreen extends StatelessWidget {
                     FavsScreen.route(context);
                   },
                   title: Text(
-                    "My favourites",
+                    "Favorites",
                     style: TextStyle(fontFamily: 'RobotoMedium'),
                   ),
                   subtitle: Text(
-                    "Here you can find your all liked posts",
+                    "Find all your liked items",
                     style: TextStyle(fontFamily: 'RobotoRegular', fontSize: 14),
                   ),
                   trailing: Icon(MdiIcons.heartOutline),
@@ -89,11 +95,11 @@ class SettingScreen extends StatelessWidget {
                     );
                   },
                   title: Text(
-                    "Watermark Settings",
+                    "Watermark",
                     style: TextStyle(fontFamily: 'RobotoMedium'),
                   ),
                   subtitle: Text(
-                    "Here you can change watermark settings",
+                    "Change watermark settings",
                     style: const TextStyle(
                         fontFamily: 'RobotoRegular', fontSize: 14),
                   ),
@@ -120,7 +126,7 @@ https://play.google.com/store/apps/details?id=com.app.sharejoy
                     style: TextStyle(fontFamily: 'RobotoMedium'),
                   ),
                   subtitle: Text(
-                    "Share your love by sharing the application to your friends",
+                    "Show your love by sharing the application to your friends",
                     style: TextStyle(fontFamily: 'RobotoRegular', fontSize: 14),
                   ),
                   trailing: Icon(MdiIcons.shareOutline),

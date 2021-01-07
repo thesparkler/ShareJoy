@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:ShareJoy/local_storage.dart';
 import 'package:ShareJoy/models/post.dart';
 import 'package:ShareJoy/screens/single_swiper_view.dart';
 import 'package:ShareJoy/widgets/home/post_list.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FavsScreen extends StatefulWidget {
@@ -47,7 +49,11 @@ class _FavsScreenState extends State<FavsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("My Favourites"),
+        iconTheme: IconThemeData(
+          color: Colors.black
+        ),
+        backgroundColor: Colors.white,
+        title: Text("Favorites", style: TextStyle(color: Colors.black),),
       ),
       body: likedPosts == null
           ? Center(
@@ -55,7 +61,24 @@ class _FavsScreenState extends State<FavsScreen> {
             )
           : likedPosts.length == 0
               ? Center(
-                  child: Text("No Favourites."),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset("assets/images/likes_folder.png", height: 150, width: 150,),
+
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Text("No Favorites", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),),
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Text("Items you mark as favorite \n  are shown here", style: TextStyle(fontSize: 14, color: Colors.grey),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
                 )
               : ListView.builder(
                   itemCount: likedPosts.length,
@@ -93,6 +116,8 @@ class _FavsScreenState extends State<FavsScreen> {
                       ),
                     );
                   }),
+
+
     );
   }
 }

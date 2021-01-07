@@ -87,8 +87,8 @@ class InitialLoader extends StatefulWidget {
 class _InitialLoaderState extends State<InitialLoader> {
   final theImage = Image.asset(
     "assets/images/loading_data.png",
-    width: 650.0,
-    height: 400.0,
+    width: 550.0,
+    height: 300.0,
   );
 
   @override
@@ -113,11 +113,11 @@ class _InitialLoaderState extends State<InitialLoader> {
             height: 400.0,
           ),
           Text(
-            "Loading Joy...",
+            "Fetching Joy...",
             style: TextStyle(
                 fontFamily: 'FredokaOneRegular',
                 color: Colors.black,
-                fontSize: 28),
+                fontSize: 24),
             textAlign: TextAlign.center,
           )
         ],
