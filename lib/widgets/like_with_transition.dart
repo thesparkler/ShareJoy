@@ -69,7 +69,7 @@ class _LikeWithTransitionState extends State<LikeWithTransition>
           final p = await Provider.of<LikeProvider>(context, listen: false)
               ?.notify(widget.item);
         } catch (e) {
-          print(e);
+          // print(e);
         }
         LocalStorage.instance.put("likes", (likes));
         LocalStorage.instance.put("likes_array", (likesArray));

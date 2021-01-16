@@ -34,13 +34,15 @@ class _FavsScreenState extends State<FavsScreen> {
     Map likes = await LocalStorage.instance.get("likes");
     likes_array = await LocalStorage.instance.get("likes_array");
     likedPosts = [];
-    likes.forEach((key, value) {
-      print(value);
-      value = json.decode(value);
-      print("decoded");
-      print(value);
-      likedPosts.add(Post.fromJSON(value));
-    });
+    if (likes != null) {
+      likes.forEach((key, value) {
+        print(value);
+        value = json.decode(value);
+        print("decoded");
+        print(value);
+        likedPosts.add(Post.fromJSON(value));
+      });
+    }
 
     setState(() {});
   }
@@ -49,11 +51,12 @@ class _FavsScreenState extends State<FavsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Colors.black
-        ),
+        iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
-        title: Text("Favorites", style: TextStyle(color: Colors.black),),
+        title: Text(
+          "Favorites",
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: likedPosts == null
           ? Center(
@@ -64,16 +67,24 @@ class _FavsScreenState extends State<FavsScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset("assets/images/likes_folder.png", height: 150, width: 150,),
-
+                      Image.asset(
+                        "assets/images/likes_folder.png",
+                        height: 150,
+                        width: 150,
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(top: 20),
-                        child: Text("No Favorites", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),),
+                        child: Text(
+                          "No Favorites",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 17),
+                        ),
                       ),
-
                       Padding(
                         padding: const EdgeInsets.all(15),
-                        child: Text("Items you mark as favorite \n  are shown here", style: TextStyle(fontSize: 14, color: Colors.grey),
+                        child: Text(
+                          "Items you mark as favorite \n  are shown here",
+                          style: TextStyle(fontSize: 14, color: Colors.grey),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -87,10 +98,26 @@ class _FavsScreenState extends State<FavsScreen> {
                     return GestureDetector(
                       onTap: () async {
                         await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    Scaffold(body: DetailView(item: item))));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Scaffold(
+                              body: Stack(
+                                children: [
+                                  DetailView(item: item),
+                                  Positioned(
+                                    top: 0,
+                                    left: 0,
+                                    right: 0,
+                                    child: AppBar(
+                                      elevation: 0,
+                                      backgroundColor: Colors.transparent,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
                         initialize();
                       },
                       child: Stack(
@@ -116,8 +143,6 @@ class _FavsScreenState extends State<FavsScreen> {
                       ),
                     );
                   }),
-
-
     );
   }
 }
