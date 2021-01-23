@@ -2,6 +2,7 @@ import 'package:ShareJoy/ads_manager.dart';
 import 'package:ShareJoy/models/post.dart';
 import 'package:ShareJoy/providers/feed_list_provider.dart';
 import 'package:ShareJoy/providers/meme_provider.dart';
+import 'package:ShareJoy/screens/home_page.dart';
 import 'package:ShareJoy/screens/search.dart';
 import 'package:ShareJoy/screens/setting_screen.dart';
 import 'package:ShareJoy/screens/single_swiper_view.dart';
@@ -143,7 +144,14 @@ class Feed extends StatelessWidget {
                                 fontWeight: FontWeight.w600,
                                 fontFamily: 'RobotoMedium'),
                           ),
-                          // Text("more"),
+                          GestureDetector(
+                            onTap: () {
+                              print(item['condition']);
+                              HomePage.route(
+                                  context, fp.type, item['condition']);
+                            },
+                            child: Text("more"),
+                          ),
                         ],
                       ),
                     ),
