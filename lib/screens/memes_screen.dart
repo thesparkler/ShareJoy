@@ -11,13 +11,15 @@ import 'package:provider/provider.dart';
 class MemesScreen extends StatelessWidget {
   final String type;
   final scroll = new ScrollController();
+  final Map filter;
   final PostProvider memeProvider = PostProvider.instance();
 
-  MemesScreen({Key key, this.type}) : super(key: key);
-
+  MemesScreen({Key key, this.type, this.filter}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    memeProvider.applyMapFilter(filter);
     memeProvider.setType(this.type);
+
     memeProvider.setScrollController(scroll);
     print("building meme screen $type");
     return ChangeNotifierProvider.value(
@@ -59,13 +61,6 @@ class MemesScreen extends StatelessWidget {
                     );
                   },
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.only(right: 8.0),
-                //   child: LanguageButton(onChange: (v) {
-                //     print("$v language selected");
-                //     memeProvider.filter("lang", v);
-                //   }),
-                // ),
               ],
             ),
             const SliverToBoxAdapter(child: const SizedBox(height: 8.0)),

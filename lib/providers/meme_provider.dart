@@ -60,21 +60,15 @@ class PostProvider extends ChangeNotifier {
 
   // whenever bottom bar tab changes.
   void setType(String newType) {
-    if (this.type == newType) {
-      return;
+    if (this.type != newType) {
+      print("setting new type $newType");
+      this.type = newType;
+      this.filters = {};
+      this.currentPage = 1;
     }
-    print("setting new type $newType");
-    this.type = newType;
-    this.filters = {};
-    this.currentPage = 1;
 
     if (categories[type] == null) {
       categoryState = ViewState.loading;
-    }
-
-    memeState = ViewState.loading;
-    notifyListeners();
-    if (categories[type] == null) {
       fetchCategories();
     }
 
@@ -111,6 +105,11 @@ class PostProvider extends ChangeNotifier {
     if (filters['lang'] != null) {
       url += "&lang=" + filters['lang'];
     }
+    if (url == lastPostUrl) {
+      return;
+    }
+    memeState = ViewState.loading;
+    notifyListeners();
 
     lastPostUrl = url;
     final res = await get(url);
@@ -217,6 +216,11 @@ class PostProvider extends ChangeNotifier {
     categoryIds = categoryIds.split(",");
     categoryIds.remove(id);
     this.filter("category_ids", categoryIds.join(","));
+  }
+
+  void applyMapFilter(Map filter) {
+    if (filter == null) return;
+    this.filters = filter;
   }
 
   List getSelectedCategories() {

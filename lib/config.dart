@@ -12,8 +12,8 @@ class Config {
   };
   static const titles = {
     "meme": "Memes",
-    "shayari": "Sher-O-Shayari",
-    "greetings": "Statuses"
+    "shayari": "Shayari",
+    "greetings": "Status"
   };
 
   static const bgColors = [

@@ -4,7 +4,6 @@ import 'package:ShareJoy/ads_manager.dart';
 import 'package:ShareJoy/config.dart';
 import 'package:ShareJoy/firebase_messaging.dart';
 import 'package:ShareJoy/local_storage.dart';
-import 'package:ShareJoy/screens/favs_screen.dart';
 import 'package:ShareJoy/screens/home_page.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,7 +15,6 @@ void main() async {
   await Firebase.initializeApp();
 
   FirebaseAnalytics().logAppOpen();
-  WidgetsFlutterBinding.ensureInitialized();
 
   await LocalStorage.init();
   PushNotificationHandler.init();

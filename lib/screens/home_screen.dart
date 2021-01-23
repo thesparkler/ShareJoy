@@ -2,6 +2,7 @@ import 'package:ShareJoy/ads_manager.dart';
 import 'package:ShareJoy/models/post.dart';
 import 'package:ShareJoy/providers/feed_list_provider.dart';
 import 'package:ShareJoy/providers/meme_provider.dart';
+import 'package:ShareJoy/screens/search.dart';
 import 'package:ShareJoy/screens/setting_screen.dart';
 import 'package:ShareJoy/screens/single_swiper_view.dart';
 import 'package:ShareJoy/theme_data.dart';
@@ -42,6 +43,14 @@ class HomeScreen extends StatelessWidget {
                   )),
                   title: const SharejoyHeaderLogo(),
                   actions: [
+                    IconButton(
+                      color: Colors.black,
+                      icon: Icon(Icons.search),
+                      onPressed: () {
+                        showSearch(
+                            context: context, delegate: CustomSearchDelegate());
+                      },
+                    ),
                     InkWell(
                       onTap: () {
                         SettingScreen.route(context);
@@ -56,7 +65,6 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // DropdownButton(items: null, onChanged: null)
                   ],
                 ),
                 SliverList(
@@ -99,31 +107,7 @@ class FeedList extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Feed(item: flp.items[(index)], feedIndex: index),
-            // index % 4 == 0
-            //     ? index % 8 == 4
-            //         ? Padding(
-            //           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            //           child: FacebookNativeAd(
-            //               placementId: "1265998170441655_1294758274232311",
-            //               adType: NativeAdType.NATIVE_AD_TEMPLATE,
-            //               listener: (result, value) {
-            //                 print("Banner Ad $result --> $value");
-            //               },
-            //             ),
-            //         )
-            //         : Padding(
-            //           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            //           child: FacebookBannerAd(
-            //               placementId: "1265998170441655_1266012507106888",
-            //               bannerSize: BannerSize.STANDARD,
-            //               listener: (result, value) {
-            //                 print("Banner Ad $result --> $value");
-            //               },
-            //             ),
-            //         )
-            //    : CustomTheme.placeHolder
             AdsManager.instance.fetchBannerOrNativeAd(index, 4),
-
           ],
         );
       },
