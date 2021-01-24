@@ -10,6 +10,7 @@ class PostProvider extends ChangeNotifier {
   static var self;
   bool isDisposed = false;
   bool paginationEnabled = true;
+  bool isGridView = false;
   // post types = meme | shayari | greetings
   String type;
 
@@ -174,6 +175,12 @@ class PostProvider extends ChangeNotifier {
       notify();
       fetchPosts();
     }
+  }
+
+  void toggle() {
+    print("toggle");
+    this.isGridView = !this.isGridView;
+    notify();
   }
 
   Future<bool> like(Post post) async {

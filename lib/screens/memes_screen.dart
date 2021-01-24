@@ -45,6 +45,17 @@ class MemesScreen extends StatelessWidget {
               title: const SharejoyHeaderLogo(),
               actions: [
                 // DropdownButton(items: null, onChanged: null)
+                Consumer<PostProvider>(builder: (context, pp, child) {
+                  return IconButton(
+                    color: Colors.black,
+                    icon: pp.isGridView
+                        ? Icon(Icons.list_alt)
+                        : Icon(Icons.grid_view),
+                    onPressed: () {
+                      pp.toggle();
+                    },
+                  );
+                }),
                 IconButton(
                   color: Colors.black,
                   icon: Icon(MdiIcons.filterVariant),
@@ -59,13 +70,6 @@ class MemesScreen extends StatelessWidget {
                     );
                   },
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.only(right: 8.0),
-                //   child: LanguageButton(onChange: (v) {
-                //     print("$v language selected");
-                //     memeProvider.filter("lang", v);
-                //   }),
-                // ),
               ],
             ),
             const SliverToBoxAdapter(child: const SizedBox(height: 8.0)),

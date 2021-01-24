@@ -8,7 +8,7 @@ import 'package:ShareJoy/widgets/like_with_transition.dart';
 import 'package:ShareJoy/widgets/nothing_found.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:ShareJoy/http_service.dart' show reportImageError;
@@ -33,6 +33,25 @@ class PostList extends StatelessWidget {
         if (mp.items.length == 0) {
           return SliverToBoxAdapter(
             child: NothingFound(),
+          );
+        }
+        if (mp.isGridView) {
+          return SliverStaggeredGrid.countBuilder(
+            crossAxisCount: 4,
+            itemCount: mp.items.length,
+            itemBuilder: (BuildContext context, int index) {
+              final item = mp.items[index];
+
+              return PostWidget(
+                item: item,
+                index: index,
+                inGridView: true,
+              );
+            },
+            staggeredTileBuilder: (int index) =>
+                new StaggeredTile.count(2, index.isEven ? 3 : 2),
+            mainAxisSpacing: 4.0,
+            crossAxisSpacing: 4.0,
           );
         }
         return SliverList(
@@ -65,12 +84,18 @@ class PostList extends StatelessWidget {
 class PostWidget extends StatelessWidget {
   final Post item;
   final int index;
+  final bool inGridView;
 
-  const PostWidget({Key key, this.item, this.index}) : super(key: key);
+  const PostWidget({Key key, this.item, this.index, this.inGridView = false})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0, top: 5.0),
+      margin: EdgeInsets.only(
+          left: inGridView ? 0 : 10.0,
+          right: inGridView ? 0 : 10.0,
+          bottom: inGridView ? 0 : 10.0,
+          top: inGridView ? 0 : 5.0),
       child: LikeWithTransition(
         onTap: () => SingleSwiperView.route(
             context, index, Provider.of<PostProvider>(context, listen: false)),
@@ -81,8 +106,14 @@ class PostWidget extends StatelessWidget {
               side: BorderSide(color: Colors.transparent, width: 0.5),
               borderRadius: BorderRadius.circular(15)),
           child: item.renderType == "image"
-              ? ImagePost(item: item)
-              : TextPost(item: item),
+              ? ImagePost(
+                  item: item,
+                  inGridView: inGridView,
+                )
+              : TextPost(
+                  item: item,
+                  inGridView: inGridView,
+                ),
         ),
       ),
     );
@@ -90,9 +121,11 @@ class PostWidget extends StatelessWidget {
 }
 
 class ImagePost extends StatelessWidget {
+  final bool inGridView;
   const ImagePost({
     Key key,
     @required this.item,
+    this.inGridView = false,
   }) : super(key: key);
 
   final Post item;
@@ -100,7 +133,7 @@ class ImagePost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10.0),
+      padding: EdgeInsets.all(inGridView ? 0.0 : 10.0),
       child: CachedNetworkImage(
           width: double.infinity,
           imageUrl: item.image,
@@ -129,19 +162,20 @@ class ImagePost extends StatelessWidget {
 
 class TextPost extends StatelessWidget {
   final Post item;
-
-  const TextPost({Key key, this.item}) : super(key: key);
+  final bool inGridView;
+  const TextPost({
+    Key key,
+    this.item,
+    this.inGridView = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(30.0),
+      padding: inGridView
+          ? EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0)
+          : EdgeInsets.all(30.0),
       height: MediaQuery.of(context).size.height * 0.5,
-      //  color: item.bg,
-      //   decoration: BoxDecoration(
-      //     borderRadius: BorderRadius.circular(10.0),
-      //     color: item.bg
-
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
         color: item.bg,
@@ -152,15 +186,15 @@ class TextPost extends StatelessWidget {
               )
             : null,
       ),
-
       child: Center(
           child: Text(
         item.caption,
         textAlign: TextAlign.center,
-        style: Theme.of(context)
-            .textTheme
-            .headline5
-            .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+        style: Theme.of(context).textTheme.headline5.copyWith(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: inGridView ? 16.0 : 30.0,
+            ),
       )),
     );
   }
