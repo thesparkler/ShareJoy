@@ -1,13 +1,35 @@
+import 'dart:async';
+
 import 'package:ShareJoy/config.dart';
 import 'package:ShareJoy/http_service.dart';
-import 'package:ShareJoy/screens/favs_screen.dart';
 import 'package:ShareJoy/screens/home_page.dart';
 import 'package:ShareJoy/theme_data.dart';
 import 'package:flutter/material.dart';
 
+class Debouncer<T> {
+  Debouncer(this.duration, this.onValue);
+  final Duration duration;
+  void Function(T value) onValue;
+  T _value;
+  Timer _timer;
+  T get value => _value;
+  set value(T val) {
+    _value = val;
+    _timer?.cancel();
+    _timer = Timer(duration, () => onValue(_value));
+  }
+}
+
 class CustomSearchDelegate extends SearchDelegate {
+  CustomSearchDelegate() {
+    debouncer = Debouncer<String>(Duration(milliseconds: 500), (value) async {
+      completer.complete(await get(Config.baseUrl + "/search/" + value));
+    });
+  }
   String lastQuery;
   List lastResults;
+  Completer<Response> completer = Completer<Response>();
+  Debouncer debouncer;
   @override
   List<Widget> buildActions(BuildContext context) {
     return <Widget>[
@@ -45,7 +67,6 @@ class CustomSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    // TODO: implement buildSuggestions
     print(query);
     if (query.length == 0) {
       return Center(child: Text("Type something and hit search"));
@@ -53,8 +74,12 @@ class CustomSearchDelegate extends SearchDelegate {
     if (query == lastQuery) {
       return Results(res: lastResults);
     }
+    completer = Completer<Response>();
+
+    debouncer.value = query;
+
     return FutureBuilder(
-        future: get(Config.baseUrl + "/search/" + query),
+        future: completer.future,
         builder: (context, AsyncSnapshot<Response> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -90,8 +115,11 @@ class Results extends StatelessWidget {
       itemBuilder: (ctx, index) {
         final item = res[index];
         return ListTile(
-          onTap: () => HomePage.route(
-              context, item['type'], {"category_ids": item['id'].toString()}),
+          onTap: () {
+            print(item['id']);
+            HomePage.route(
+                context, item['type'], {"category_ids": item['id'].toString()});
+          },
           title: RichText(
             text: TextSpan(
               text: item['name'] + " in ",

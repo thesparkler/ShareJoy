@@ -15,9 +15,12 @@ class MemesScreen extends StatelessWidget {
   final PostProvider memeProvider = PostProvider.instance();
 
   MemesScreen({Key key, this.type, this.filter}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    print(filter);
     memeProvider.applyMapFilter(filter);
+    print(memeProvider.filters);
     memeProvider.setType(this.type);
 
     memeProvider.setScrollController(scroll);

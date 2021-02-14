@@ -48,8 +48,7 @@ class PostList extends StatelessWidget {
                 inGridView: true,
               );
             },
-            staggeredTileBuilder: (int index) =>
-                new StaggeredTile.count(2, index.isEven ? 3 : 2),
+            staggeredTileBuilder: (int index) => new StaggeredTile.fit(2),
             mainAxisSpacing: 4.0,
             crossAxisSpacing: 4.0,
           );
@@ -101,7 +100,8 @@ class PostWidget extends StatelessWidget {
             context, index, Provider.of<PostProvider>(context, listen: false)),
         item: item,
         child: Card(
-          elevation: 5.0,
+          // elevation: 5.0,
+          clipBehavior: Clip.hardEdge,
           shape: RoundedRectangleBorder(
               side: BorderSide(color: Colors.transparent, width: 0.5),
               borderRadius: BorderRadius.circular(15)),
@@ -175,7 +175,7 @@ class TextPost extends StatelessWidget {
       padding: inGridView
           ? EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0)
           : EdgeInsets.all(30.0),
-      height: MediaQuery.of(context).size.height * 0.5,
+      height: MediaQuery.of(context).size.height * (inGridView ? 0.3 : 0.5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
         color: item.bg,

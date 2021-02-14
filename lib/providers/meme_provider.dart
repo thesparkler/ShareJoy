@@ -27,7 +27,7 @@ class PostProvider extends ChangeNotifier {
   // view states
   ViewState categoryState = ViewState.loading;
   ViewState memeState = ViewState.loading;
-
+  bool isPreFilter = false;
   // always get latest result.
   String lastCategoryUrl;
   String lastPostUrl;
@@ -64,7 +64,11 @@ class PostProvider extends ChangeNotifier {
     if (this.type != newType) {
       print("setting new type $newType");
       this.type = newType;
-      this.filters = {};
+      if (isPreFilter) {
+        isPreFilter = false;
+      } else {
+        this.filters = {};
+      }
       this.currentPage = 1;
     }
 
@@ -228,6 +232,7 @@ class PostProvider extends ChangeNotifier {
   void applyMapFilter(Map filter) {
     if (filter == null) return;
     this.filters = filter;
+    isPreFilter = true;
   }
 
   List getSelectedCategories() {
