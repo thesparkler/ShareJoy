@@ -1,4 +1,21 @@
 <h3>ShareJoy</h3>
+
+ShareJoy is a memes, shayari and WhatsApp status app.
+
+The backend we used is PHP Laravel.
+
+We daily update the app with new memes and shayari from our admin panel.
+
+The features of app includes:
+
+1) You can download the memes and shayaris and even share it on your favourite 
+   social media platforms.
+
+2) You can edit the background color or background image of an shayari and status or even can change the font size of the text as well.
+
+We have uploaded this app on Playstore as well and gained <b>500+</b> users in 3.5 months. 
+
+Also, we have uses In-app update and Firebase Analytics and Crashlytics. 
   
  
   <img src="https://user-images.githubusercontent.com/41661723/174475995-d17f2aae-b23d-494c-8905-2497ec2703f8.png" height="480" width=550/> 
