@@ -16,11 +16,14 @@ The features of app includes:
 We have uploaded this app on Playstore as well and gained <b>500+</b> users in 3.5 months. 
 
 Also, we have uses In-app update and Firebase Analytics and Crashlytics. 
+
+
+Below added screenshots:
   
  
-  <img src="https://user-images.githubusercontent.com/41661723/174475995-d17f2aae-b23d-494c-8905-2497ec2703f8.png" height="480" width=550/> 
+<img src="https://user-images.githubusercontent.com/41661723/174475995-d17f2aae-b23d-494c-8905-2497ec2703f8.png" height="480" width=550/> 
   
-  <img src="https://user-images.githubusercontent.com/41661723/174476004-3e6074cb-e673-4ce5-9ed8-f2a5a44109e7.png" height="480" width=550 /> 
+<img src="https://user-images.githubusercontent.com/41661723/174476004-3e6074cb-e673-4ce5-9ed8-f2a5a44109e7.png" height="480" width=550 /> 
   
   
 <img align="left" src="https://user-images.githubusercontent.com/41661723/174480703-1db54b42-b070-4825-af79-2ba8ac858088.png" height="450" width=250/>  
